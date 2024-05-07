@@ -142,7 +142,7 @@ body {
   margin: 0;
   font-size: 18px !important;
   font-weight: 600;
-  line-height: 20px;
+  line-height: 22px;
   color: #42526d;
 }
 
@@ -404,4 +404,8 @@ body {
 
 .status-text-volcano {
   color: #ad2102;
+}
+
+.error {
+  color: red;
 }
