@@ -16,7 +16,6 @@
         <ng-container *ngFor="let menuChild of menu.lstChild">
           <li
             nz-menu-item
-            nzMatchRouter
             style="position: relative; z-index: 99; padding-left: 36px"
             *ngIf="access(menuChild.role)"
             routerLink="{{ menuChild.url }}"
