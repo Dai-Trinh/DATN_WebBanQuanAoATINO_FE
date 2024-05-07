@@ -9,6 +9,11 @@ const routes: Routes = [
       import('./pages/home/home.module').then((m) => m.HomeModule),
   },
   {
+    path: 'admin',
+    loadChildren: () =>
+      import('./pages/admin/admin.module').then((m) => m.AdminModule),
+  },
+  {
     path: 'components-selector',
     loadChildren: () =>
       import('./pages/components-selector/components-selector.module').then(

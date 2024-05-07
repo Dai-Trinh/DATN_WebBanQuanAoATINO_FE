@@ -11,7 +11,6 @@ import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HttpClient, HttpClientModule, provideHttpClient } from '@angular/common/http';
-import { MenuComponent } from './setting/menu.component';
 import { NgZorroModuleExport } from './shared/modules/ng-zorro.module';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -26,7 +25,7 @@ export function createTranslateLoader(http: HttpClient) {
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

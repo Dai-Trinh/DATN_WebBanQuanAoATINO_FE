@@ -1,4 +1,4 @@
-/* :host {
+:host {
   display: flex;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -14,6 +14,7 @@
   z-index: 100;
   min-height: 100vh;
   box-shadow: 2px 0 3px rgba(0, 21, 41, 0.058);
+  /* position: absolute; */
   position: fixed;
   overflow: auto;
   height: 100%;
@@ -57,7 +58,10 @@ nz-header {
 }
 
 .sidebar-logo img {
+  /* background-color: #fff; */
   display: inline-block;
+  /* height: 32px; */
+  /* width: 32px; */
   width: 48px;
   vertical-align: middle;
 }
@@ -89,7 +93,9 @@ nz-header {
 }
 
 .app-header {
+  /* position: relative; */
   height: 50px;
+  /* padding: 0; */
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
   width: 100%;
@@ -116,8 +122,13 @@ nz-content {
 }
 
 .inner-content {
+  /* padding: 24px; */
+  /* background: #fff; */
   height: fit-content;
   margin-top: 50px;
+  /* margin-right: 12px; */
+  /* overflow: scroll; */
+  /* margin-left: 10px; */
 }
 
 [nz-icon]:hover {
@@ -129,9 +140,15 @@ nz-content {
 }
 
 footer {
+  /* background-color: #ffffff; */
   position: fixed;
   bottom: 0;
-  margin-right: 24px;
+  /* bottom: 27px;
+
+  /* transform: translateX(85%); */
+  /* padding-bottom: 10px; */
+  /* margin-left: 24px;
+  margin-right: 24px; */
   width: 100%;
   background-clip: content-box;
   z-index: 10;
@@ -139,6 +156,8 @@ footer {
 
 .container-footer {
   margin: 0 auto;
+  /* padding: 0 24px; */
+  /* margin-left: 8px; */
 }
 
 .footer-content {
@@ -154,10 +173,14 @@ footer {
 
 .footer-collapse {
   padding-left: 80px;
+  /* background-color: #ffffff; */
+
 }
 
 .footer-uncollapse {
   padding-left: 256px;
+  /* padding-right: 37px; */
+  /* background-color: #ffffff; */
 }
 
 .language-change {
@@ -207,4 +230,4 @@ footer {
 
 .i-notification {
   font-size: 18px;
-} */
+}
