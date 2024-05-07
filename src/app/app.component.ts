@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { NzI18nService, en_US, vi_VN } from 'ng-zorro-antd/i18n';
 import { DOCUMENT } from '@angular/common';
-import { KeycloakService } from 'keycloak-angular';
+// import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ import { KeycloakService } from 'keycloak-angular';
 export class AppComponent {
   constructor(
     private __translateSerice: TranslateService,
-    private __keycloakService: KeycloakService,
+    // private __keycloakService: KeycloakService,
     @Inject(DOCUMENT) private document: any
   ) {}
 
@@ -42,15 +42,15 @@ export class AppComponent {
         this.__translateSerice.use('vi');
       }
     }
-    this.getName();
+    // this.getName();
   }
 
-  async getName() {
-    await this.__keycloakService.loadUserProfile().then((item) => {
-      let username = item.username ? item.username : '';
-      this.name = `${username}`;
-    });
-  }
+  // async getName() {
+  //   await this.__keycloakService.loadUserProfile().then((item) => {
+  //     let username = item.username ? item.username : '';
+  //     this.name = `${username}`;
+  //   });
+  // }
 
   // Hàm xử lý chức năng thay đổi ngôn ngữ
   changeLanguage(language: any): void {

@@ -17,7 +17,7 @@ import { NgZorroModuleExport } from './shared/modules/ng-zorro.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ComponentCommonModule } from './shared/component-common.module';
-import { KeycloakAngularModule } from 'keycloak-angular';
+// import { KeycloakAngularModule } from 'keycloak-angular';
 import { ToastrModule } from 'ngx-toastr';
 import { ExceptionModule } from './shared/exception/exception.module';
 export function createTranslateLoader(http: HttpClient) {
@@ -47,7 +47,7 @@ registerLocaleData(en);
       countDuplicates: true,
       resetTimeoutOnDuplicate: true,
     }),
-    KeycloakAngularModule,
+    // KeycloakAngularModule,
     ComponentCommonModule,
     ExceptionModule
   ],
