@@ -25,7 +25,6 @@ export class SelectComponent {
   @Input() allowAdd: boolean = true;
   @Input() listItemDisable: any[] = [];
   @Input() placeholder: string = 'message.select';
-  @Input() country: boolean = false;
   @Input() typeModel: string = 'object';
 
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
