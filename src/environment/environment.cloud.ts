@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  api_end_point: 'http://apiitc.xfactory.vn',
+  api_end_point: 'http://localhost:9090',
   api_end_point_preview: 'http://apiitc.xfactory.vn/assets',
   api_end_point_download: 'http://apiitc.xfactory.vn/api/assets',
   keycloak: {

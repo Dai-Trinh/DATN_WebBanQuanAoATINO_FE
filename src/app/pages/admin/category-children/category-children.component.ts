@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { MessageService } from '../../../services/message.service';
 import moment from 'moment';
@@ -26,36 +26,36 @@ export class CategoryChildrenComponent {
     categoryName: '',
   };
   lstData: any[] = [
-    {
-      stt: 1,
-      categoryName: 'Áo 2',
-      updatedAt: new Date(),
-      categoryParent: {
-        id: 1,
-        categoryName: 'Áo',
-      },
-      parentId: 1,
-    },
-    {
-      stt: 2,
-      categoryName: 'Quần 2',
-      updatedAt: new Date(),
-      categoryParent: {
-        id: 2,
-        categoryName: 'Quần',
-      },
-      parentId: 2,
-    },
+    // {
+    //   stt: 1,
+    //   categoryName: 'Áo 2',
+    //   updatedAt: new Date(),
+    //   categoryParent: {
+    //     id: 1,
+    //     categoryName: 'Áo',
+    //   },
+    //   parentId: 1,
+    // },
+    // {
+    //   stt: 2,
+    //   categoryName: 'Quần 2',
+    //   updatedAt: new Date(),
+    //   categoryParent: {
+    //     id: 2,
+    //     categoryName: 'Quần',
+    //   },
+    //   parentId: 2,
+    // },
   ];
   lstCategoryParent: any[] = [
-    {
-      id: 1,
-      categoryName: 'Áo',
-    },
-    {
-      id: 2,
-      categoryName: 'Quần',
-    },
+    // {
+    //   id: 1,
+    //   categoryName: 'Áo',
+    // },
+    // {
+    //   id: 2,
+    //   categoryName: 'Quần',
+    // },
   ];
   visibleModal: boolean = false;
   action: string = '';
@@ -64,7 +64,6 @@ export class CategoryChildrenComponent {
     categoryName: null,
   };
 
-  ngOnInit() {}
 
   async getLstData() {
     let dataRequest = {
@@ -84,21 +83,63 @@ export class CategoryChildrenComponent {
       sortProperty: this.sortProperty,
       sortOrder: this.sortOrder,
     };
-    console.log(dataRequest);
-    // try {
-    //   await this._categoryService.getListCategory(dataRequest).then((item) => {
-    //     this.spin = false;
-    //     if (item.result.responseCode == '00') {
-    //       this.lstData = item.data.map((item: any, index: number) => ({
-    //         ...item,
-    //         stt: (this.page - 1) * this.perPage + index + 1,
-    //       }));
-    //       this.total = item.dataCount;
-    //     }
-    //   });
-    // } catch (error) {
-    //   this.spin = false;
-    // }
+    console.log('chạy vào đây');
+    try {
+      await this._categoryService.getListCategory(dataRequest).then((item) => {
+        this.spin = false;
+        console.log(item)
+        if (item?.result?.responseCode == '00') {
+          this.lstData = item.data.map((item: any, index: number) => ({
+            ...item,
+            stt: (this.page - 1) * this.perPage + index + 1,
+          }));
+          this.total = item.dataCount;
+          console.log(this.lstData)
+        }
+      });
+    } catch (error) {
+      this.spin = false;
+      console.log(error)
+    }
+  }
+
+  async getDataParent() {
+    let dataRequest = {
+      pageNumber: 0,
+      pageSize: 0,
+      filter: {
+        // categoryName: this.filter.categoryName,
+        // parentId: this.filter.parentId,
+        // updatedAtSearch:
+        //   this.filter.updatedAtSearch.length > 0
+        //     ? [
+        //         moment(this.filter.updatedAtSearch[0]).format('YYYY-MM-DD'),
+        //         moment(this.filter.updatedAtSearch[1]).format('YYYY-MM-DD'),
+        //       ]
+        //     : [],
+      },
+      sortProperty: this.sortProperty,
+      sortOrder: this.sortOrder,
+    };
+    try {
+      await this._categoryService.getListCategoryParent(dataRequest).then((item) => {
+        this.spin = false;
+        console.log(item)
+        if (item?.result?.responseCode == '00') {
+          this.lstCategoryParent = item.data.map((item: any, index: number) => ({
+            ...item,
+            stt: (this.page - 1) * this.perPage + index + 1,
+          }));
+        }
+      });
+    } catch (error) {
+      this.spin = false;
+    }
+  }
+
+  ngOnInit() {
+    this.getLstData();
+    this.getDataParent();
   }
 
   onHandleChangeColumn($event: any) {
@@ -147,6 +188,8 @@ export class CategoryChildrenComponent {
     this.visibleModal = true;
     this.titleModal = 'Thêm mới danh mục con';
     this.dataInformation.categoryName = '';
+    this.dataInformation.createdBy = 'admin',
+    this.dataInformation.updatedBy = 'admin'
   }
 
   handleUpdate(row: any) {
@@ -154,10 +197,14 @@ export class CategoryChildrenComponent {
     this.visibleModal = true;
     this.titleModal = 'Cập nhật danh mục con';
     this.dataInformation = {
+      id: row.id,
       categoryName: row.categoryName,
-      parentId: row.parentId,
+      parentId: row?.categoryParent?.id,
       updatedAt: row.updatedAt,
+      createdBy: 'admin',
+      updatedBy: 'admin'
     };
+    console.log(this.dataInformation)
   }
 
   handleRead(row: any) {
@@ -175,6 +222,7 @@ export class CategoryChildrenComponent {
   handleDelete(row: any) {
     this.visibleModalDelete = true;
     this.dataInformation = {
+      id: row.id,
       categoryName: row.categoryName,
       parentId: row.parentId,
       updatedAt: row.updatedAt,
@@ -183,6 +231,7 @@ export class CategoryChildrenComponent {
 
   handleConfirmDelete() {
     // Xử lý xóa  (Khi gọi API thành công set dataInformation = {})
+    this.deleteCategory();
   }
 
   onHandleCancel() {
@@ -200,11 +249,77 @@ export class CategoryChildrenComponent {
       return;
     } else {
       if (this.action == 'create') {
+        console.log(this.dataInformation);
         /// Xử lý thêm mới (Khi gọi API thành công set dataInformation = {})
+        this.saveCategoryChild();
       }
       if (this.action == 'update') {
         /// Xử lý cập nhật (Khi gọi API thành công set dataInformation = {})
+        this.updateCategory();
       }
+    }
+  }
+
+  async saveCategoryChild(){
+    this.spin = true;
+    try {
+      this._categoryService.saveCategory(this.dataInformation).then((item) => {
+        console.log('item: ', item)
+        if(item.result.responseCode == '00'){
+          this.dataInformation = {};
+          this._messageService.notificationSuccess(item.result.message)
+          this.spin = false;
+        } else {
+          this._messageService.notificationError(item.result.message)
+          this.spin = false;
+        }
+        this.visibleModal = false;
+        this.getLstData();
+      })
+    } catch (error) {
+      this._messageService.notificationError('Lỗi server')
+      this.spin = false;
+      this.visibleModal = false;
+    }
+  }
+
+  async updateCategory() {
+    this.spin = true;
+    try {
+      await this._categoryService.updateCategory(this.dataInformation.id, this.dataInformation).then((item) => {
+        if(item.result.responseCode == '00'){
+          this.dataInformation = {};
+          this._messageService.notificationSuccess(item.result.message);
+          this.getLstData();
+        } else {
+          this._messageService.notificationError(item.result.message);
+        }
+        this.spin = false;
+        this.visibleModal = false;
+      })
+    } catch (error) {
+      this.spin = false;
+      this.visibleModal = false;
+      console.log(error)
+    }
+  }
+
+  async deleteCategory(){
+    this.spin = true;
+    try {
+      await this._categoryService.deleteCategory(this.dataInformation.id).then((item) => {
+        if(item.result.responseCode == '00'){
+          this._messageService.notificationSuccess(item.result.message);
+          this.getLstData()
+        } else {
+          this._messageService.notificationError(item.result.message);
+        }
+        this.spin = false;
+        this.visibleModalDelete = false;
+      })
+    } catch (error) {
+      this.spin = false;
+      this.visibleModalDelete = false;
     }
   }
 

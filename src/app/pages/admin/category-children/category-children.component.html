@@ -186,7 +186,7 @@
             </ng-container>
             <ng-container *ngIf="column.visible && column.key == 'updatedAt'">
               <td nzAlign="right">
-                {{ row[column.key] | date : "dd/MM/yyyy" }}
+                {{ row[column.key] * 1000 | date : "dd/MM/yyyy" }}
               </td>
             </ng-container>
           </ng-container>

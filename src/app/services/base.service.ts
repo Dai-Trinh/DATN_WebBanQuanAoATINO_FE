@@ -30,7 +30,7 @@ export class BaseService {
         observe: 'response',
       })
     );
-    return response;
+    return response.body;
   }
 
   async postData(url: string, data: any): Promise<any> {
@@ -44,7 +44,7 @@ export class BaseService {
         observe: 'response',
       })
     );
-    return response;
+    return response?.body;
   }
 
   async deleteData(url: string): Promise<any> {
@@ -58,7 +58,7 @@ export class BaseService {
         observe: 'response',
       })
     );
-    return response;
+    return response.body;
   }
 
   async putData(url: string, data: object): Promise<any> {
@@ -72,6 +72,6 @@ export class BaseService {
         observe: 'response',
       })
     );
-    return response;
+    return response.body;
   }
 }

@@ -26,16 +26,16 @@ export class CategoryParentComponent {
     categoryName: '',
   };
   lstData: any[] = [
-    {
-      stt: 1,
-      categoryName: 'Áo',
-      updatedAt: new Date(),
-    },
-    {
-      stt: 2,
-      categoryName: 'Quần',
-      updatedAt: new Date(),
-    },
+    // {
+    //   stt: 1,
+    //   categoryName: 'Áo',
+    //   updatedAt: new Date(),
+    // },
+    // {
+    //   stt: 2,
+    //   categoryName: 'Quần',
+    //   updatedAt: new Date(),
+    // },
   ];
   visibleModal: boolean = false;
   action: string = '';
@@ -44,7 +44,9 @@ export class CategoryParentComponent {
     categoryName: null,
   };
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getLstData()
+  }
 
   async getLstData() {
     let dataRequest = {
@@ -64,7 +66,7 @@ export class CategoryParentComponent {
       sortOrder: this.sortOrder,
     };
     try {
-      await this._categoryService.getListCategory(dataRequest).then((item) => {
+      await this._categoryService.getListCategoryParent(dataRequest).then((item) => {
         this.spin = false;
         if (item.result.responseCode == '00') {
           this.lstData = item.data.map((item: any, index: number) => ({
@@ -132,6 +134,7 @@ export class CategoryParentComponent {
     this.visibleModal = true;
     this.titleModal = 'Cập nhật danh mục cha';
     this.dataInformation = {
+      id: row.id,
       categoryName: row.categoryName,
       updatedAt: row.updatedAt,
     };
@@ -151,6 +154,7 @@ export class CategoryParentComponent {
   handleDelete(row: any) {
     this.visibleModalDelete = true;
     this.dataInformation = {
+      id: row.id,
       categoryName: row.categoryName,
       updatedAt: row.updatedAt,
     };
@@ -158,6 +162,7 @@ export class CategoryParentComponent {
 
   handleConfirmDelete() {
     // Xử lý xóa  (Khi gọi API thành công set dataInformation = {})
+    this.deleteCategoryParent();
   }
 
   onHandleCancel() {
@@ -176,10 +181,72 @@ export class CategoryParentComponent {
     } else {
       if (this.action == 'create') {
         /// Xử lý thêm mới (Khi gọi API thành công set dataInformation = {})
+        this.createCategoryParent()
       }
       if (this.action == 'update') {
         /// Xử lý cập nhật (Khi gọi API thành công set dataInformation = {})
+        this.updateCategoryParent();
       }
+    }
+  }
+
+  async createCategoryParent(){
+    this.spin = true;
+    try {
+      await this._categoryService.saveCategory(this.dataInformation).then((item) => {
+        if(item.result.responseCode == '00'){
+          this._messageService.notificationSuccess(item.result.message);
+          this.getLstData();
+        } else {
+          this._messageService.notificationError(item.result.message);
+        }
+        this.visibleModal = false;
+        this.spin = false;
+        this.dataInformation = {};
+      })
+    } catch (error) {
+      this.visibleModal = false;
+      this.spin = false;
+    }
+  }
+
+  async updateCategoryParent(){
+    this.spin = true;
+    try {
+      await this._categoryService.updateCategory(this.dataInformation.id ,this.dataInformation).then((item) => {
+        if(item.result.responseCode == '00'){
+          this._messageService.notificationSuccess(item.result.message);
+          this.getLstData();
+        } else {
+          this._messageService.notificationError(item.result.message);
+        }
+        this.visibleModal = false;
+        this.spin = false;
+        this.dataInformation = {};
+      })
+    } catch (error) {
+      this.visibleModal = false;
+      this.spin = false;
+    }
+  }
+
+  async deleteCategoryParent(){
+    this.spin = true;
+    try {
+      await this._categoryService.deleteCategory(this.dataInformation.id).then((item) => {
+        if(item.result.responseCode == '00'){
+          this._messageService.notificationSuccess(item.result.message);
+          this.getLstData();
+        } else {
+          this._messageService.notificationError(item.result.message);
+        }
+        this.visibleModalDelete = false;
+        this.spin = false;
+        this.dataInformation = {};
+      })
+    } catch (error) {
+      this.visibleModalDelete = false;
+      this.spin = false;
     }
   }
 
