@@ -3,6 +3,9 @@ import { MessageService } from '../../../services/message.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NzResizeEvent } from 'ng-zorro-antd/resizable';
+import { FileService } from '../../../services/file.service';
+import { AdminService } from '../admin.service';
+import { environment } from '../../../../environment/environment.cloud';
 
 @Component({
   selector: 'app-information-banner',
@@ -14,12 +17,20 @@ export class InformationBannerComponent {
   constructor(
     private _messageService: MessageService,
     private _router: Router,
-    private _translateService: TranslateService
+    private _translateService: TranslateService,
+    private __fileService: FileService,
+    private __bannerService: AdminService
   ) {
     this._translateService
       .get('notification.valid_action') // <- lấy theo key nào (Ex: 'notification.valid_action', ...)
       .subscribe((item) => (this.validAction = item)); // <- lấy dữ liệu từ file JSON ngôn ngữ
   }
+
+  //khai báo up file
+  currentDataUpload: any = {};
+  tempFileDocument: File[] = [];
+  savedFileName: any[] = [];
+  urlPreview: string = environment.api_end_point_preview;
 
   title: string = "Danh sách Banner"
   total: number = 10
@@ -28,9 +39,17 @@ export class InformationBannerComponent {
   sortOrder: string = 'DESC';
   sortProperty: string = 'updatedAt';
   filter: any = {};
+  action: string = "";
+  
+  dataInformation: any = {
+  }
+
+  titleModal: string = "";
+  visibleModalDelete: boolean = false;
+  
 
   // TODO: selector app-pagination
-  page: number = 0;
+  page: number = 1;
   perPage: number = 10;
 
   lstData: any[] = [];
@@ -48,7 +67,7 @@ export class InformationBannerComponent {
     {
       title: 'Ẩn/hiện',
       key: 'visible',
-      width: '150px',
+      width: '100px',
       visible: true,
       sortOrder: '',
     },
@@ -64,13 +83,53 @@ export class InformationBannerComponent {
 
   onHandlePagination(event: any) {}
 
-  handleClickButton(){
+  ngOnInit() {
+    this.getListData()
+  }
 
+  handleCreate(){
+    this.visibleModal = true;
+    this.titleModal = "Thêm mới banner";
+    this.action = 'create';
+    this.dataInformation.imageBanner = '';
   }
 
   onHandleChangeColumn($event: any) {
     this.columns = [...$event];
     // localStorage.setItem('columnShipBunkering', JSON.stringify(this.columns));
+  }
+
+  async getListData(){
+    let dataRequest = {
+      pageNumber: this.page - 1,
+      pageSize: this.perPage,
+      filter: {
+        //categoryName: this.filter.ban,
+        // updatedAtSearch:
+        //   this.filter.updatedAtSearch.length > 0
+        //     ? [
+        //         moment(this.filter.updatedAtSearch[0]).format('YYYY-MM-DD'),
+        //         moment(this.filter.updatedAtSearch[1]).format('YYYY-MM-DD'),
+        //       ]
+        //     : [],
+      },
+      sortProperty: this.sortProperty,
+      sortOrder: this.sortOrder,
+    };
+    try {
+      await this.__bannerService.getListBanner(dataRequest).then((res) => {
+        if (res.result.responseCode == '00') {
+          this.lstData = res.data.map((item: any, index: number) => ({
+            ...item,
+            stt: (this.page - 1) * this.perPage + index + 1,
+          }));
+          this.total = res.dataCount;
+          console.log('data: ', this.lstData)
+        }
+      })
+    } catch (error) {
+      
+    }
   }
 
   id = -1;
@@ -118,7 +177,31 @@ export class InformationBannerComponent {
   }
 
   handleConfirm() {
-    alert('Click confirm');
+    
+    if(this.savedFileName.length > 0){
+      this.dataInformation = {
+        imageBanner: this.savedFileName[0].savedFileName,
+        isVisible: true,
+        createdBy: 'admin',
+        updatedBy: 'admin'
+      }
+      this.saveBanner()
+      this.getListData();
+    }
+    
+  }
+
+  async saveBanner(){
+    try {
+      await this.__bannerService.saveBanner(this.dataInformation).then((res) => {
+        if(res.result.responseCode == '00'){
+          this.visibleModal = false;
+          this._messageService.notificationSuccess(res.result.message)
+        }
+      })
+    } catch (error) {
+      
+    }
   }
 
   // TODO: selector: app-breadscrumb
@@ -137,6 +220,52 @@ export class InformationBannerComponent {
     },
   ];
 
+  handleUpdate(row: any){
+    this.action = "update";
+    this.visibleModal = true;
+    this.titleModal = "Cập nhật banner"
+
+  }
+
+  handleRead(row: any){
+    this.action = 'read';
+    this.visibleModal = true;
+    this.titleModal = "Xem chi tiết banner"
+  }
+  
+  handleDelete(row: any){
+
+  }
+
+  onHandleCancel(){
+    this.visibleModal = false;
+  }
+
+  handleConfirmDelete(){
+    this.visibleModalDelete = false;
+  }
+
+  async uploadBanner(event: any){
+    console.log(event);
+    this.tempFileDocument = event;
+    const formData = new FormData();
+    this.tempFileDocument.forEach((file) => {
+      formData.append('files', file, file.name);
+    });
+
+    const response = await this.__fileService.uploadFileDocument(formData);
+
+    
+    if (response.result.responseCode == '00') {
+      let listFile = response.data.map((item: any) => ({
+        savedFileName: item.savedFileName,
+        fileName: item.fileName,
+      }));
+      console.log(listFile);
+
+      this.savedFileName = listFile;
+    }
+  }
 
 
 }

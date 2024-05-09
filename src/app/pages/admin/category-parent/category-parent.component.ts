@@ -21,6 +21,7 @@ export class CategoryParentComponent {
   total: number = 5;
   sortOrder: string = 'DESC';
   sortProperty: string = 'updatedAt';
+
   filter: any = {
     updatedAtSearch: [],
     categoryName: '',
@@ -49,6 +50,7 @@ export class CategoryParentComponent {
   }
 
   async getLstData() {
+    this.spin = true;
     let dataRequest = {
       pageNumber: this.page - 1,
       pageSize: this.perPage,
@@ -67,7 +69,6 @@ export class CategoryParentComponent {
     };
     try {
       await this._categoryService.getListCategoryParent(dataRequest).then((item) => {
-        this.spin = false;
         if (item.result.responseCode == '00') {
           this.lstData = item.data.map((item: any, index: number) => ({
             ...item,
@@ -75,6 +76,7 @@ export class CategoryParentComponent {
           }));
           this.total = item.dataCount;
         }
+        this.spin = false;
       });
     } catch (error) {
       this.spin = false;

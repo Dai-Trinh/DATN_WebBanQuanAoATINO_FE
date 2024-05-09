@@ -1,3 +1,4 @@
+<nz-spin [nzSpinning]="spin">
 <div nz-row nzAlign="middle" nzJustify="space-between">
   <nz-col>
     <p class="d-flex a-center p-title">
@@ -8,51 +9,28 @@
   <nz-col>
     <nz-row nzGutter="8" nzAlign="middle">
       <nz-col>
-        <app-button
-          [btnType]="'primary'"
-          [btnIconType]="'plus-circle'"
-          [btnTitle]="'button.add_new'"
-          (btnClick)="handleCreate()"
-        >
+        <app-button [btnType]="'primary'" [btnIconType]="'plus-circle'" [btnTitle]="'button.add_new'"
+          (btnClick)="handleCreate()">
         </app-button>
       </nz-col>
       <nz-col>
-        <app-visible-column
-          [allChecked]="true"
-          [indeterminate]="false"
-          [listItem]="columns"
-          (itemListChange)="onHandleChangeColumn($event)"
-        />
+        <app-visible-column [allChecked]="true" [indeterminate]="false" [listItem]="columns"
+          (itemListChange)="onHandleChangeColumn($event)" />
       </nz-col>
     </nz-row>
   </nz-col>
 </div>
 
 <div class="mt-12">
-  <nz-table
-    #dataItems
-    class="w-100"
-    nzSize="small"
-    [nzScroll]="{ x: 'auto' }"
-    [nzBordered]="true"
-    [nzFrontPagination]="false"
-    [nzShowPagination]="false"
-    [nzData]="lstData"
-    [nzNoResult]="noResult"
-  >
+  <nz-table #dataItems class="w-100" nzSize="small" [nzScroll]="{ x: 'auto' }" [nzBordered]="true"
+    [nzFrontPagination]="false" [nzShowPagination]="false" [nzData]="lstData" [nzNoResult]="noResult">
     <thead>
       <tr>
         <th nzAlign="center" nzWidth="50px">{{ "message.stt" | translate }}</th>
         <ng-container *ngFor="let column of columns; let i = index">
           <ng-container *ngIf="column.visible">
-            <th
-              nz-resizable
-              nzAlign="center"
-              [nzWidth]="column.width"
-              (nzResize)="onResize($event, i)"
-              [nzMaxWidth]="500"
-              [nzMinWidth]="50"
-            >
+            <th nz-resizable nzAlign="center" [nzWidth]="column.width" (nzResize)="onResize($event, i)"
+              [nzMaxWidth]="500" [nzMinWidth]="50">
               <div style="text-align: center" class="editable-cell">
                 <nz-resize-handle nzDirection="right">
                   <div class="resize-trigger"></div>
@@ -61,10 +39,7 @@
                   {{ column.title | translate }}
                 </span>
               </div>
-              <app-sort-icon
-                [column]="column"
-                (sortChange)="handleSort(column, $event)"
-              />
+              <app-sort-icon [column]="column" (sortChange)="handleSort(column, $event)" />
             </th>
           </ng-container>
         </ng-container>
@@ -75,79 +50,39 @@
       <tr>
         <td></td>
         <ng-container *ngFor="let column of columns">
-          <ng-container
-            *ngIf="
+          <ng-container *ngIf="
               column.visible &&
               column.key != 'updatedAt' &&
               column.key != 'categoryParent'
-            "
-          >
+            ">
             <td>
-              <nz-input-group
-                nzSearch
-                [nzPrefix]="prefix"
-                [nzSuffix]="suffix"
-                style="border: none"
-              >
-                <input
-                  type="text"
-                  nz-input
-                  placeholder="{{ 'search' | translate }}"
-                  [(ngModel)]="filter[column.key]"
-                  (keyup)="onHandleFilter($event)"
-                />
+              <nz-input-group nzSearch [nzPrefix]="prefix" [nzSuffix]="suffix" style="border: none">
+                <input type="text" nz-input placeholder="{{ 'search' | translate }}" [(ngModel)]="filter[column.key]"
+                  (keyup)="onHandleFilter($event)" />
               </nz-input-group>
               <ng-template #prefix>
-                <span
-                  nz-icon
-                  class="search-click"
-                  nzType="search"
-                  (click)="onHandleFilter($event)"
-                ></span>
+                <span nz-icon class="search-click" nzType="search" (click)="onHandleFilter($event)"></span>
               </ng-template>
               <ng-template #suffix>
-                <span
-                  *ngIf="filter[column.key]"
-                  nz-icon
-                  nzTheme="fill"
-                  class="ant-input-clear-icon"
-                  nzType="close-circle"
-                  (click)="onHandleClearFilter(column.key)"
-                ></span>
+                <span *ngIf="filter[column.key]" nz-icon nzTheme="fill" class="ant-input-clear-icon"
+                  nzType="close-circle" (click)="onHandleClearFilter(column.key)"></span>
               </ng-template>
             </td>
           </ng-container>
-          <ng-container
-            *ngIf="column.visible && column.key == 'categoryParent'"
-          >
+          <ng-container *ngIf="column.visible && column.key == 'categoryParent'">
             <td>
-              <app-select
-                [model]="filter.parentId"
-                [listOption]="lstCategoryParent"
-                [hasBorderLess]="true"
-                [allowAdd]="false"
-                mode="default"
-                placeholder="search"
-                typeModel="value"
-                label="categoryName"
-                value="id"
-                (valueChange)="filter.parentId = $event; getLstData()"
-              />
+              <app-select [model]="filter.parentId" [listOption]="lstCategoryParent" [hasBorderLess]="true"
+                [allowAdd]="false" mode="default" placeholder="search" typeModel="value" label="categoryName" value="id"
+                (valueChange)="filter.parentId = $event; getLstData()" />
             </td>
           </ng-container>
           <ng-container *ngIf="column.visible && column.key == 'updatedAt'">
             <td>
-              <nz-range-picker
-                class="w-100"
-                [(ngModel)]="filter.updatedAtSearch"
-                (ngModelChange)="getLstData()"
+              <nz-range-picker class="w-100" [(ngModel)]="filter.updatedAtSearch" (ngModelChange)="getLstData()"
                 [nzPlaceHolder]="[
                   'Từ ngày' | translate,
                   'Đến ngày' | translate
-                ]"
-                [nzFormat]="'dd/MM/yyyy'"
-                [nzBorderless]="true"
-              ></nz-range-picker>
+                ]" [nzFormat]="'dd/MM/yyyy'" [nzBorderless]="true"></nz-range-picker>
             </td>
           </ng-container>
         </ng-container>
@@ -157,29 +92,20 @@
         <tr>
           <td nzAlign="center">{{ row.stt }}</td>
           <ng-container *ngFor="let column of columns">
-            <ng-container
-              *ngIf="
+            <ng-container *ngIf="
                 column.visible &&
                 column.key != 'updatedAt' &&
                 column.key != 'categoryParent'
-              "
-            >
+              ">
               <td>
-                <span
-                  nz-typography
-                  nzEllipsis
-                  [nz-tooltip]="row[column.key]"
-                  [ngStyle]="{
+                <span nz-typography nzEllipsis [nz-tooltip]="row[column.key]" [ngStyle]="{
                     width: column.width
-                  }"
-                >
+                  }">
                   {{ row[column.key] }}
                 </span>
               </td>
             </ng-container>
-            <ng-container
-              *ngIf="column.visible && column.key == 'categoryParent'"
-            >
+            <ng-container *ngIf="column.visible && column.key == 'categoryParent'">
               <td>
                 {{ row?.categoryParent?.categoryName }}
               </td>
@@ -193,30 +119,15 @@
           <td nzRight>
             <div class="d-flex j-center a-center">
               <div>
-                <app-button
-                  btnType="text"
-                  btnIconType="edit"
-                  btnIconTheme="outline"
-                  (btnClick)="handleUpdate(row)"
-                >
+                <app-button btnType="text" btnIconType="edit" btnIconTheme="outline" (btnClick)="handleUpdate(row)">
                 </app-button>
               </div>
               <div>
-                <app-button
-                  btnType="text"
-                  btnIconType="eye"
-                  btnIconTheme="outline"
-                  (btnClick)="handleRead(row)"
-                >
+                <app-button btnType="text" btnIconType="eye" btnIconTheme="outline" (btnClick)="handleRead(row)">
                 </app-button>
               </div>
               <div>
-                <app-button
-                  btnType="text"
-                  btnIconType="delete"
-                  btnIconTheme="outline"
-                  (btnClick)="handleDelete(row)"
-                >
+                <app-button btnType="text" btnIconType="delete" btnIconTheme="outline" (btnClick)="handleDelete(row)">
                 </app-button>
               </div>
             </div>
@@ -226,35 +137,20 @@
     </tbody>
   </nz-table>
   <div class="mt-12">
-    <app-pagination
-      [page]="page"
-      [perPage]="perPage"
-      [total]="total"
-      (emitPage)="onHandlePagination($event)"
-    />
+    <app-pagination [page]="page" [perPage]="perPage" [total]="total" (emitPage)="onHandlePagination($event)" />
   </div>
   <ng-template #noResult>
     <app-no-data></app-no-data>
   </ng-template>
 </div>
 
-<nz-modal
-  [(nzVisible)]="visibleModal"
-  [nzFooter]="null"
-  [nzTitle]="modalTitle"
-  [nzContent]="modalContent"
-  [nzWidth]="'500px'"
-  [nzBodyStyle]="{
+<nz-modal [(nzVisible)]="visibleModal" [nzFooter]="null" [nzTitle]="modalTitle" [nzContent]="modalContent"
+  [nzWidth]="'500px'" [nzBodyStyle]="{
     padding: '12px 24px'
-  }"
-  (nzOnCancel)="onHandleCancel()"
->
+  }" (nzOnCancel)="onHandleCancel()">
   <ng-template #modalTitle>
     <div style="font-size: 20px; font-weight: 700; color: #244a64">
-      <img
-        style="height: 20px; margin-right: 12px"
-        src="./../../../../assets/icons/information.svg"
-      />
+      <img style="height: 20px; margin-right: 12px" src="./../../../../assets/icons/information.svg" />
       {{ titleModal | translate }}
     </div>
   </ng-template>
@@ -266,22 +162,13 @@
         </div>
         <div nz-col nzSpan="24">
           <nz-input-group [nzSuffix]="suffixCategoryName">
-            <input
-              nz-input
-              [(ngModel)]="dataInformation.categoryName"
-              [placeholder]="'Nhập tên danh mục con'"
-              [disabled]="action == 'read'"
-            />
+            <input nz-input [(ngModel)]="dataInformation.categoryName" [placeholder]="'Nhập tên danh mục con'"
+              [disabled]="action == 'read'" />
           </nz-input-group>
           <ng-template #suffixCategoryName>
-            <span
-              nz-icon
-              class="ant-input-clear-icon"
-              nzTheme="fill"
-              nzType="close-circle"
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle"
               *ngIf="dataInformation.categoryName && action !== 'read'"
-              (click)="dataInformation.categoryName = ''"
-            ></span>
+              (click)="dataInformation.categoryName = ''"></span>
           </ng-template>
           <div *ngIf="!dataInformation.categoryName" class="error">
             Trường này yêu cầu bắt buộc
@@ -293,19 +180,9 @@
           <span style="font-weight: bold; font-size: 16px">Danh mục cha</span>
         </div>
         <div nz-col nzSpan="24">
-          <app-select
-            [model]="dataInformation.parentId"
-            [listOption]="lstCategoryParent"
-            [hasBorderLess]="false"
-            [allowAdd]="false"
-            [disabled]="action == 'read'"
-            mode="default"
-            placeholder="search"
-            typeModel="value"
-            label="categoryName"
-            value="id"
-            (valueChange)="dataInformation.parentId = $event"
-          />
+          <app-select [model]="dataInformation.parentId" [listOption]="lstCategoryParent" [hasBorderLess]="false"
+            [allowAdd]="false" [disabled]="action == 'read'" mode="default" placeholder="search" typeModel="value"
+            label="categoryName" value="id" (valueChange)="dataInformation.parentId = $event" />
           <div *ngIf="!dataInformation.parentId" class="error">
             Trường này yêu cầu bắt buộc
           </div>
@@ -316,30 +193,18 @@
           <span style="font-weight: bold; font-size: 16px">Ngày cập nhật</span>
         </div>
         <div nz-col nzSpan="24">
-          <nz-date-picker
-            [nzDisabled]="true"
-            [(ngModel)]="dataInformation.updatedAt"
-            class="w-100"
-            nzFormat="dd/MM/yyyy"
-          ></nz-date-picker>
+          <nz-date-picker [nzDisabled]="true" [(ngModel)]="dataInformation.updatedAt" class="w-100"
+            nzFormat="dd/MM/yyyy"></nz-date-picker>
         </div>
       </div>
       <div nz-row class="mt-12" nzJustify="end">
         <div>
-          <app-button
-            btnClass="btn-cancel"
-            btnType="primary"
-            [btnTitle]="action == 'read' ? 'button.close' : 'button.cancel'"
-            (btnClick)="onHandleCancel()"
-          >
+          <app-button btnClass="btn-cancel" btnType="primary"
+            [btnTitle]="action == 'read' ? 'button.close' : 'button.cancel'" (btnClick)="onHandleCancel()">
           </app-button>
         </div>
         <div *ngIf="action !== 'read'" class="ml-12">
-          <app-button
-            btnType="primary"
-            btnTitle="button.confirm"
-            (btnClick)="handleConfirm()"
-          >
+          <app-button btnType="primary" btnTitle="button.confirm" (btnClick)="handleConfirm()">
           </app-button>
         </div>
       </div>
@@ -347,19 +212,11 @@
   </ng-template>
 </nz-modal>
 
-<app-modal-content
-  [show]="visibleModalDelete"
-  title="Xóa danh mục sản phẩm"
-  header="
+<app-modal-content [show]="visibleModalDelete" title="Xóa danh mục sản phẩm" header="
     Bạn có xác nhận xóa danh mục sản phẩm {{ dataInformation.categoryName }}
-  "
-  content="
+  " content="
     Nếu bạn xác nhận, hệ thống sẽ xóa danh mục sản phẩm {{
     dataInformation.categoryName
   }} khỏi danh sách và cập nhật lại danh sách
-  "
-  titleBtnConfirm="button.confirm"
-  titleBtnCancel="button.cancel"
-  (cancelChange)="visibleModal = $event"
-  (confirmChange)="handleConfirmDelete()"
-/>
+  " titleBtnConfirm="button.confirm" titleBtnCancel="button.cancel" (cancelChange)="visibleModal = $event"
+  (confirmChange)="handleConfirmDelete()" />

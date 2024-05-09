@@ -17,6 +17,10 @@ import { ModalContentComponent } from './components/modal-content/modal-content.
 import { ModalContentNoWarningComponent } from './components/modal-content-no-warning/modal-content-no-warning.component';
 import { BreadscrumbComponent } from './components/breadscrumb/breadscrumb.component';
 import { InputSearchTextComponent } from './components/input-search-text/input-search-text.component';
+import { UploadFileComponent } from './components/upload-file/upload-file.component';
+import { ModalDeleteComponent } from './components/modal-delete/modal-delete.component';
+import { AreaUploadComponent } from './components/area-upload/area-upload.component';
+import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +38,10 @@ import { InputSearchTextComponent } from './components/input-search-text/input-s
     ModalContentNoWarningComponent,
     BreadscrumbComponent,
     InputSearchTextComponent,
+    UploadFileComponent,
+    ModalDeleteComponent,
+    AreaUploadComponent,
+    ModalConfirmComponent,
   ],
   exports: [
     SafePipe,
@@ -49,7 +57,11 @@ import { InputSearchTextComponent } from './components/input-search-text/input-s
     ModalContentComponent,
     ModalContentNoWarningComponent,
     BreadscrumbComponent,
-    InputSearchTextComponent
+    InputSearchTextComponent,
+    UploadFileComponent,
+    ModalDeleteComponent,
+    AreaUploadComponent,
+    ModalConfirmComponent,
   ],
   imports: [CommonModule, NgZorroModuleExport, TranslateModule, FormsModule],
 })

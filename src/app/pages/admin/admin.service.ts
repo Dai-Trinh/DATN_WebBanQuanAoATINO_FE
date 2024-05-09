@@ -28,4 +28,14 @@ export class AdminService {
   getListCategoryParent(dataRequest: any) {
     return this._baseService.postData(`admin/category/parent`, dataRequest);
   }
+
+
+  //TODO: QUẢN LÝ BANNER
+  getListBanner(dataRequest: any){
+    return this._baseService.postData(`admin/banner`, dataRequest);
+  }
+
+  saveBanner(dataRequest: any){
+    return this._baseService.postData(`admin/banner/save`, dataRequest);
+  }
 }
