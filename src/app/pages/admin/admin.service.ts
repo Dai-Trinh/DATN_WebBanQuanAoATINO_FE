@@ -38,4 +38,12 @@ export class AdminService {
   saveBanner(dataRequest: any){
     return this._baseService.postData(`admin/banner/save`, dataRequest);
   }
+
+  changeBanner(id: any){
+    return this._baseService.getData(`admin/banner/${id}/change`)
+  }
+
+  deleteBanner(id: any){
+    return this._baseService.deleteData(`admin/banner/delete/${id}`)
+  }
 }

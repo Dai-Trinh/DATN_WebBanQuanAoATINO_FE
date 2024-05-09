@@ -160,7 +160,7 @@ export class UploadService {
       let response = await firstValueFrom(this.http
         .post<any>(`${this.path}/${url}`, formData, {
           headers: new HttpHeaders({
-            'Content-Type': 'image/png',
+            //'Content-Type': 'image/png',
             'Access-Control-Allow-Origin': '*',
             Authorization: `Bearer ${this.token}`,
           }),
@@ -191,6 +191,7 @@ export class UploadService {
       throw error;
     }
   }
+
 
   saveFile(blob: Blob, fileName: string) {
     saveAs(blob, fileName);

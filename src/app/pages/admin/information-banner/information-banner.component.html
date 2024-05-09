@@ -1,4 +1,4 @@
-<nz-spin [nzSpinning]="false">
+<nz-spin [nzSpinning]="spin">
     <div class="table mt-12">
         
           <div nz-row nzAlign="middle" nzJustify="space-between">
@@ -49,7 +49,7 @@
             >
               <thead>
                 <tr>
-                  <th nzLeft nzWidth="50px">{{ "message.stt" | translate }}</th>
+                  <th nzLeft nzWidth="50px" nzAlign="center">{{ "message.stt" | translate }}</th>
                   <ng-container *ngFor="let column of columns; let i = index">
                     <ng-container *ngIf="column.visible">
                       <th
@@ -75,7 +75,7 @@
                       </th>
                     </ng-container>
                   </ng-container>
-                  <th nzRight nzWidth="50px"></th>
+                  <th nzRight nzWidth="100px" nzAlign="center">Thao tác</th>
                 </tr>
               </thead>
               <tbody [ngClass]="lstData.length > 0 ? 'striped' : ''">
@@ -160,6 +160,13 @@
                         </td>
                       </ng-container>
                       <ng-container
+                        *ngIf="column.visible && column.key == 'visible'"
+                      >
+                        <td nzAlign="center">
+                          <nz-switch [(ngModel)]="row.visible" (ngModelChange)="handleChangeVisible(row.id)"></nz-switch>
+                        </td>
+                      </ng-container>
+                      <ng-container
                         *ngIf="column.visible && column.key == 'status'"
                       >
                         <td nzAlign="center">
@@ -185,14 +192,14 @@
                     </ng-container>
                     <td nzRight>
                       <div class="d-flex j-center a-center">
-                        <div>
+                        <!-- <div>
                           <app-button btnType="text" btnIconType="edit" btnIconTheme="outline" (btnClick)="handleUpdate(row)">
                           </app-button>
-                        </div>
-                        <div>
+                        </div> -->
+                        <!-- <div>
                           <app-button btnType="text" btnIconType="eye" btnIconTheme="outline" (btnClick)="handleRead(row)">
                           </app-button>
-                        </div>
+                        </div> -->
                         <div>
                           <app-button btnType="text" btnIconType="delete" btnIconTheme="outline" (btnClick)="handleDelete(row)">
                           </app-button>

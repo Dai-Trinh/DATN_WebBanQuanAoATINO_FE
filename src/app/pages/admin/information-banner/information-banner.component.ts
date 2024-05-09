@@ -43,6 +43,7 @@ export class InformationBannerComponent {
   
   dataInformation: any = {
   }
+  spin: any = false;
 
   titleModal: string = "";
   visibleModalDelete: boolean = false;
@@ -53,6 +54,7 @@ export class InformationBannerComponent {
   perPage: number = 10;
 
   lstData: any[] = [];
+  switchValue = false;
 
 
   columns: any[] = [
@@ -100,6 +102,7 @@ export class InformationBannerComponent {
   }
 
   async getListData(){
+    this.spin = true;
     let dataRequest = {
       pageNumber: this.page - 1,
       pageSize: this.perPage,
@@ -126,9 +129,10 @@ export class InformationBannerComponent {
           this.total = res.dataCount;
           console.log('data: ', this.lstData)
         }
+        this.spin = false;
       })
     } catch (error) {
-      
+      this.spin = false;
     }
   }
 
@@ -181,12 +185,11 @@ export class InformationBannerComponent {
     if(this.savedFileName.length > 0){
       this.dataInformation = {
         imageBanner: this.savedFileName[0].savedFileName,
-        isVisible: true,
         createdBy: 'admin',
         updatedBy: 'admin'
       }
       this.saveBanner()
-      this.getListData();
+      
     }
     
   }
@@ -197,6 +200,7 @@ export class InformationBannerComponent {
         if(res.result.responseCode == '00'){
           this.visibleModal = false;
           this._messageService.notificationSuccess(res.result.message)
+          this.getListData(); 
         }
       })
     } catch (error) {
@@ -234,6 +238,8 @@ export class InformationBannerComponent {
   }
   
   handleDelete(row: any){
+    this.visibleModalDelete = true;
+    this.dataInformation.id = row.id;
 
   }
 
@@ -243,6 +249,20 @@ export class InformationBannerComponent {
 
   handleConfirmDelete(){
     this.visibleModalDelete = false;
+    this.deleteBanner()
+  }
+
+  handleChangeVisible(id: any){
+    this.changeVisible(id);
+  }
+
+  async changeVisible(id: any){
+    await this.__bannerService.changeBanner(id).then((item) => {
+      if(item.result.responseCode == '00'){
+        this.getListData();
+        this._messageService.notificationSuccess(item.result.message);
+      }
+    })
   }
 
   async uploadBanner(event: any){
@@ -265,6 +285,16 @@ export class InformationBannerComponent {
 
       this.savedFileName = listFile;
     }
+  }
+
+  async deleteBanner(){
+    this.spin = true;
+    await this.__bannerService.deleteBanner(this.dataInformation.id).then((item) => {
+      if(item.result.responseCode == '00'){
+        this.getListData();
+        this._messageService.notificationSuccess(item.result.message);
+      }
+    })
   }
 
 

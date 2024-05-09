@@ -49,7 +49,7 @@
             >
               <thead>
                 <tr>
-                  <th nzLeft nzWidth="50px">{{ "message.stt" | translate }}</th>
+                  <th nzLeft nzWidth="50px" nzAlign="center">{{ "message.stt" | translate }}</th>
                   <ng-container *ngFor="let column of columns; let i = index">
                     <ng-container *ngIf="column.visible">
                       <th
@@ -75,7 +75,7 @@
                       </th>
                     </ng-container>
                   </ng-container>
-                  <th nzRight nzWidth="50px"></th>
+                  <th nzRight nzWidth="50px" nzAlign="center">Thao tác</th>
                 </tr>
               </thead>
               <tbody [ngClass]="lstData.length > 0 ? 'striped' : ''">
