@@ -4,6 +4,7 @@ import { MessageService } from '../../../services/message.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AdminService } from '../admin.service';
+import { environment } from '../../../../environment/environment.cloud';
 
 @Component({
   selector: 'app-product-information',
@@ -23,6 +24,8 @@ export class ProductInformationComponent {
       .subscribe((item) => (this.validAction = item)); // <- lấy dữ liệu từ file JSON ngôn ngữ
   }
 
+  urlPreview = environment.api_end_point_preview;
+
   title: string = "Danh sách sản phẩm"
   total: number = 10
   validAction: string = ""
@@ -41,11 +44,12 @@ export class ProductInformationComponent {
     parentId: 0
   }
 
-  id = -1;
+  listCategory: any[] = [];
 
   titleModal: string = "";
   visibleModalDelete: boolean = false;
 
+  id = -1;
   // TODO: selector app-pagination
   page: number = 1;
   perPage: number = 10;
@@ -65,6 +69,13 @@ export class ProductInformationComponent {
     {
       title: 'Ảnh',
       key: 'avatar',
+      width: '200px',
+      visible: true,
+      sortOrder: '',
+    },
+    {
+      title: 'Danh mục sản phẩm',
+      key: 'category',
       width: '200px',
       visible: true,
       sortOrder: '',
@@ -106,7 +117,7 @@ export class ProductInformationComponent {
     },
     {
       title: 'Size',
-      key: 'phoneNumber',
+      key: 'productSize',
       width: '200px',
       visible: true,
       sortOrder: '',
@@ -150,7 +161,8 @@ export class ProductInformationComponent {
   ];
 
   ngOnInit(){
-    
+    this.getListProduct();
+    this.getListCate();
   }
 
   onHandlePagination(event: any) {}
@@ -189,8 +201,9 @@ export class ProductInformationComponent {
   }
 
   onHandleFilter(event: any, column: any) {
-    this.filter[column.key] = event;
-    console.log(event);
+    // this.filter[column.key] = event;
+    this.getListProduct();
+    
   }
 
   onHandleClearFilter(column: any) {
@@ -234,40 +247,84 @@ export class ProductInformationComponent {
 
   handleUpdate(row: any){
     this.action = "update";
-    this.visibleModal = true;
-    this.titleModal = "Cập nhật cửa hàng"
-    this.dataInformation = {
-      id: row.id,
-      shopName: row.shopName,
-      address: row.address,
-      phoneNumber: row.phoneNumber
-    }
+    this._router.navigate(['./admin/product/information/' + this.action + '/' + row.id])
 
   }
 
   handleRead(row: any){
-    this.action = 'read';
-    this.visibleModal = true;
-    this.titleModal = "Xem chi tiết cửa hàng"
-    this.dataInformation = {
-      id: row.id,
-      shopName: row.shopName,
-      address: row.address,
-      phoneNumber: row.phoneNumber
-    }
+    this.action = "read";
+    this._router.navigate(['./admin/product/information/' + this.action + '/' + row.id])
   }
   
   handleDelete(row: any){
-    this.dataInformation.id = row.id;
     this.visibleModalDelete = true;
+    this.dataInformation.id = row.id;
   }
 
   onHandleCancel(){
+    this.visibleModalDelete = false;
     this.visibleModal = false;
   }
 
   handleConfirmDelete(){
-    
+    this.deleteProduct();
+  }
+
+  async getListCate(){
+    let dataRequestCate = {
+      pageNumber: 0,
+      pageSize: 0,
+      filter: {
+
+      }
+    }
+    await this._productService.getListCategory(dataRequestCate).then((res) => {
+      if(res.result.responseCode == '00'){
+        this.listCategory = res.data;
+      }
+    })
+  }
+
+  async getListProduct(){
+    this.spin = true;
+    let dataRequest = {
+      pageNumber: this.page - 1,
+      pageSize: this.perPage,
+      filter: {
+        productName: this.filter.productName,
+        price: this.filter.price,
+        quantity: this.filter.quantity,
+        totalQuantitySales: this.filter.totalQuantitySales,
+        totalQuantityImported: this.filter.totalQuantityImported,
+        description: this.filter.description,
+        productMaterial: this.filter.productMaterial,
+        // productSize: this.filter.productSize,
+        // productColor: this.filter.productColor,
+        productForm: this.filter.productForm,
+        sales: this.filter.sales,
+        category: this.filter.category
+      },
+      sortOrder: this.sortOrder,
+      sortProperty: this.sortProperty
+    }
+    await this._productService.getListProduct(dataRequest).then((res) => {
+      if(res.result.responseCode == '00'){
+        this.lstData = res.data;
+      }
+      this.spin = false;
+    })
+  }
+
+  async deleteProduct(){
+    this._productService.delete(this.dataInformation.id).then((res) => {
+      if(res.result.responseCode == '00'){
+        this.visibleModalDelete = false;
+        this.getListProduct();
+        this._messageService.notificationSuccess(res.result.message);
+      } else {
+        this._messageService.notificationError(res.result.message);
+      }
+    })
   }
 
 }

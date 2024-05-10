@@ -21,20 +21,31 @@
             <span *ngIf="column.isRequired" class="span-error">*</span>
           </p>
           <ng-container
-            *ngIf="(column.key === 'productColor' || column.key === 'productSize') ; else textAreaInput"
+            *ngIf="(column.key === 'productColor' || column.key === 'productSize' || column.key === 'category') ; else textAreaInput"
           > 
           </ng-container>
           <ng-container
             *ngIf="(column.key === 'productColor')"
           > 
           <nz-select
+          [disabled]="action == 'read' ? true : false"
           [nzMaxTagCount]="10"
-          
           nzMode="multiple"
           nzPlaceHolder="Chọn màu sắc"
           [(ngModel)]="listOfSelectedValueColor"
         >
-            <nz-option *ngFor="let item of listColor" [nzLabel]="item.color" [nzValue]="item.size"></nz-option>
+            <nz-option *ngFor="let item of listColor" [nzLabel]="item.color" [nzValue]="item.color"></nz-option>
+        </nz-select>
+          </ng-container>
+          <ng-container
+            *ngIf="(column.key === 'category')"
+          > 
+          <nz-select
+          [disabled]="action == 'read' ? true : false"
+          nzPlaceHolder="Chọn danh mục sản sản phẩm"
+          [(ngModel)]="selectedValueCategory"
+        >
+            <nz-option *ngFor="let item of listCate" [nzLabel]="item.categoryName" [nzValue]="item.id"></nz-option>
         </nz-select>
           </ng-container>
           <ng-container
@@ -42,7 +53,7 @@
           > 
           <nz-select
           [nzMaxTagCount]="10"
-          
+          [disabled]="action == 'read' ? true : false"
           nzMode="multiple"
           nzPlaceHolder="Chọn size"
           [(ngModel)]="listOfSelectedValueSize"
@@ -52,10 +63,13 @@
           </ng-container>
           <ng-template #textAreaInput>
             <nz-input-group
+              [ariaDisabled]="action == 'read' ? true : false"
               [nzSuffix]="suffixSeaport"
               class="ant-input-affix-wrapper-textarea-with-clear-btn"
             >
               <textarea
+                [disabled]="action == 'read' ? true : false"
+                [ariaDisabled]="action == 'read' ? true : false"
                 nz-input
                 [(ngModel)]="dataInformation[column.key]"
                 rows="1"
@@ -75,54 +89,69 @@
           <p
             class="m-0 span-error"
             *ngIf="
-              column.isRequired && !dataInformation[column.keyName] ? true : false
+              column.isRequired && !dataInformation[column.key] ? true : false
             "
           >
             {{ "message.required" | translate }}
           </p>
         </nz-col>
       </ng-container>
+      <ng-container>
+        <nz-col>
+
+        </nz-col>
+        <nz-col>
+          <div>
+            <p class="m-0 p-label">
+              Hình ảnh mô tả
+              <!-- <span class="span-error">*</span> -->
+            </p>
+            <app-upload-file
+              
+            ></app-upload-file>
+          </div>
+        </nz-col>
+      </ng-container>
     </nz-row>
     <!-- File Upload Section for PAD -->
-    <div class="mb-20">
-      <p class="m-0 p-label">
-        Hình ảnh mô tả
-        <!-- <span class="span-error">*</span> -->
-      </p>
-      <app-upload-file
-        
-      ></app-upload-file>
-      <!-- <p class="m-0 span-error" *ngIf="listFileImage.length == 0 ? true : false">
-        {{ "message.required" | translate }}
-      </p> -->
-    </div>
+    
     <!-- Action Buttons -->
     <nz-row nzAlign="top" nzGutter="24" nzJustify="end">
       <nz-col>
         <app-button
           [btnType]="'primary'"
-          [btnClass]="'common-btn-cancel'"
+          [btnClass]="'btn-cancel'"
           [btnTitle]="'Quay lại'"
-          
+          (btnClick)="openModalBack($event)"
         >
         </app-button>
       </nz-col>
-      <nz-col>
-        <app-button
-          
-          [btnType]="'primary'"
-          [btnTitle]="'Thêm mới'"
-          
-        >
-        </app-button>
-      </nz-col>
+      <ng-container *ngIf="action == 'update'">
+        <nz-col>
+          <app-button
+            (btnClick)="onHandleUpdate($event)"
+            [btnType]="'primary'"
+            [btnTitle]="'Cập nhật'"
+            
+          >
+          </app-button>
+        </nz-col>
+      </ng-container>
     </nz-row>
   </nz-card>
-  <app-modal-confirm
-    [titleBtnPrimary]="'button.confirm'"
-    [titleModal]="'Thông báo'"
-    [headerContent]="'Bạn có chắc chắn muốn quay lại danh sách cảng'"
-    [contentModal]="'Sau khi bạn xác nhận, thông tin cảng chưa được lưu'"
-    
-  ></app-modal-confirm>
+  <app-modal-confirm 
+  [isShowModal]="isVisibaleModalNavigate" [titleBtnPrimary]="'Xác nhận'" [titleModal]="'Thông báo'"
+  [headerContent]="'Bạn có chắc chắn muốn quay lại danh sách sản phẩm'"
+  [contentModal]="'Sau khi bạn xác nhận, thông tin sản phẩm chưa được lưu'"
+  (isCancelDelete)="onHandleCancelModalNavigate($event)"
+  (isConfirmDelete)="onHandleConfirmNavigate($event)">
+</app-modal-confirm>
+
+<app-modal-confirm 
+  [isShowModal]="isVisibaleModalNavigateUpdate" [titleBtnPrimary]="'Xác nhận'" [titleModal]="'Thông báo'"
+  [headerContent]="'Bạn có chắc chắn muốn cập nhật sản phẩm'"
+  [contentModal]="'Sau khi bạn xác nhận, thông tin sản phẩm sẽ được thay đổi'"
+  (isCancelDelete)="onHandleCancelModalNavigateUpdate($event)"
+  (isConfirmDelete)="onHandleConfirmNavigateUpdate($event)">
+</app-modal-confirm>
   

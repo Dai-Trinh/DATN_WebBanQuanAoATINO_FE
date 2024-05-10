@@ -40,9 +40,7 @@ export class ProductAddComponent {
   sortProperty: string = 'updatedAt';
   filter: any = {
     updatedAtSearch: [],
-    shopName: "",
-    address: "",
-    phoneNumber: ""
+    
   };
   action: string = "";
   spin: boolean = false;
@@ -83,14 +81,7 @@ export class ProductAddComponent {
       sortOrder: '',
       isRequired: true
     },
-    {
-      title: 'Ảnh',
-      key: 'avatar',
-      width: '200px',
-      visible: true,
-      sortOrder: '',
-      isRequired: true
-    },
+    
     {
       title: 'Giá bán',
       key: 'price',
@@ -132,7 +123,7 @@ export class ProductAddComponent {
     },
     {
       title: 'Chất liệu',
-      key: 'phoneNumber',
+      key: 'productMaterial',
       width: '200px',
       visible: true,
       sortOrder: '',
@@ -145,11 +136,20 @@ export class ProductAddComponent {
       sortOrder: '',
     },
     {
+      title: 'Ảnh',
+      key: 'avatar',
+      width: '200px',
+      visible: true,
+      sortOrder: '',
+      isRequired: true
+    },
+    {
       title: 'Danh mục sản phẩn',
       key: 'category',
       width: '200px',
       visible: true,
       sortOrder: '',
+      isRequired: true
     }
     
   ];
@@ -187,11 +187,12 @@ export class ProductAddComponent {
     this.dataInformation.productColor = this.listOfSelectedValueColor;
     this.dataInformation.productSize = this.listOfSelectedValueSize;
     this.dataInformation.imageDescription = this.descriptionUrl;
+    this.dataInformation.category = this.listOfSelectCategory;
     
     if(this.validate()){
       this.dataInformation.avatar = this.avatarUrl[0].savedFileName;
       this.saveProduct();
-      this._router.navigate(['./admin/product/information'])
+      
     }
     //this._router.navigate(['./admin/product/information']);
   }
@@ -263,15 +264,15 @@ export class ProductAddComponent {
 
   async uploadAvatar(event: any){
     console.log(event);
-    this.tempFileDocument = event;
+
+    if(event.length !== 0) {
+      this.tempFileDocument = event;
     const formData = new FormData();
     this.tempFileDocument.forEach((file) => {
       formData.append('files', file, file.name);
     });
 
     const response = await this.__fileService.uploadFileDocument(formData);
-
-    
     if (response.result.responseCode == '00') {
       let listFile = response.data.map((item: any) => ({
         savedFileName: item.savedFileName,
@@ -281,36 +282,39 @@ export class ProductAddComponent {
 
       this.avatarUrl = listFile;
     }
+    }
   }
 
   async uploadDescriptionUrl(event: any){
-    console.log(event);
-    this.tempFileDocument = event;
+    
+    if(event && event.length !== 0) {
+      this.tempFileDocument = event;
     const formData = new FormData();
     this.tempFileDocument.forEach((file) => {
       formData.append('files', file, file.name);
     });
-
     const response = await this.__fileService.uploadFileDocument(formData);
-
-    
     if (response.result.responseCode == '00') {
       let listFile = response.data.map((item: any) => ({
         savedFileName: item.savedFileName,
         fileName: item.fileName,
       }));
-      console.log(listFile);
-
       this.descriptionUrl = listFile;
     }
+    }
+  }
+
+  async deleteFile(event: any){
+    this.avatarUrl = [];
   }
 
   async saveProduct(){
     try {
       await this._productService.saveProduct(this.dataInformation).then((res) => {
-        if(res.result.response == '00'){
+        if(res.result.responseCode == '00'){
           this._messageService.notificationSuccess(res.result.message);
         }
+        this._router.navigate(['./admin/product/information'])
       })
     } catch (error) {
       

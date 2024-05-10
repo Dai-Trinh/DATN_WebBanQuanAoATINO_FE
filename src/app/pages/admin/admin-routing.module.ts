@@ -52,6 +52,10 @@ const routes: Routes = [
         component: ProductAddComponent
       },
       {
+        path: 'product/information/:action/:id',
+        component: ProductReadComponent
+      },
+      {
         path: 'product/new',
         component: ProductNewComponent,
       },

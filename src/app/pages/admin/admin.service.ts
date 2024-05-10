@@ -83,10 +83,37 @@ export class AdminService {
   }
 
   getProduct(id: any){
-    return this._baseService.getData('/admin/product/' + id);
+    return this._baseService.getData('admin/product/' + id);
   }
 
   saveProduct(dataRequest: any){
     return this._baseService.postData('admin/product/save', dataRequest);
   }
+
+  updateProduct(id: any, dataRequest: any){
+    return this._baseService.putData('admin/product/update/' + id, dataRequest);
+  }
+
+  delete(id: any){
+    return this._baseService.deleteData('admin/product/delete/' + id);
+  }
+
+
+  //TODO PRODUCT NEW
+  getListProductNew(dataRequest: any){
+    return this._baseService.postData('admin/product-import', dataRequest)
+  }
+
+  saveProductImport(dateRequest: any){
+    return this._baseService.postData('admin/product-import/save', dateRequest);
+  }
+
+  updateProductImport(id: any, dataRequest: any){
+    return this._baseService.putData('admin/product-import/update/' + id, dataRequest)
+  }
+
+  deleteProductImpory(id: any){
+    return this._baseService.deleteData('admin/product-import/delete/' + id);
+  }
+
 }

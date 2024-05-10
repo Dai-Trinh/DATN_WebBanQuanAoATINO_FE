@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MessageService } from '../../../../services/message.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AdminService } from '../../admin.service';
 
@@ -15,7 +15,8 @@ export class ProductReadComponent {
     private _messageService: MessageService,
     private _router: Router,
     private _translateService: TranslateService,
-    private _productService: AdminService
+    private _productService: AdminService,
+    private _active: ActivatedRoute
 
   ) {
     this._translateService
@@ -23,6 +24,8 @@ export class ProductReadComponent {
       .subscribe((item) => (this.validAction = item)); // <- lấy dữ liệu từ file JSON ngôn ngữ
   }
 
+  id: any = this._active.snapshot.params['id'];
+  action = this._active.snapshot.params['action'];
   title: string = "Cập nhật sản phẩm"
   total: number = 10
   validAction: string = ""
@@ -35,13 +38,11 @@ export class ProductReadComponent {
     address: "",
     phoneNumber: ""
   };
-  action: string = "";
   spin: boolean = false;
   dataInformation: any = {
-    parentId: 0
+    
   }
 
-  id = -1;
 
   titleModal: string = "";
   visibleModalDelete: boolean = false;
@@ -53,9 +54,13 @@ export class ProductReadComponent {
   lstData: any[] = [];
   listSize: any[] = [];
   listColor: any[] = [];
+  listCate: any[] = [];
   listOfSelectedValueColor: any[] = [];
   listOfSelectedValueSize: any[] = [];
+  selectedValueCategory: any = -1;
 
+  isVisibaleModalNavigate: boolean = false;
+  isVisibaleModalNavigateUpdate: boolean = false;
 
 
   columns: any[] = [
@@ -67,13 +72,6 @@ export class ProductReadComponent {
       visible: true,
       sortOrder: '',
       isRequired: true
-    },
-    {
-      title: 'Ảnh',
-      key: 'avatar',
-      width: '200px',
-      visible: true,
-      sortOrder: '',
     },
     {
       title: 'Giá bán',
@@ -116,7 +114,7 @@ export class ProductReadComponent {
     },
     {
       title: 'Chất liệu',
-      key: 'phoneNumber',
+      key: 'productMaterial',
       width: '200px',
       visible: true,
       sortOrder: '',
@@ -129,18 +127,84 @@ export class ProductReadComponent {
       sortOrder: '',
     },
     {
-      title: 'Thời gian cập nhật',
-      key: 'updatedAt',
+      title: 'Ảnh',
+      key: 'avatar',
       width: '200px',
       visible: true,
       sortOrder: '',
+      isRequired: true
     },
+    {
+      title: 'Danh mục sản phẩn',
+      key: 'category',
+      width: '200px',
+      visible: true,
+      sortOrder: '',
+      isRequired: true
+    }
     
   ];
 
   ngOnInit(){
+    if(this.action == 'update'){
+      this.title = "Cập nhật sản phẩm";
+    } else {
+      this.title = "Xem chi tiết sản phẩm";
+    }
+    this.getDetail()
     this.getListColor();
-    this.getListSize()
+    this.getListSize();
+    this.getListCategory()
+  }
+
+  validate(){
+    for(let column of this.columns){
+      if(column.isRequired && this.dataInformation[column.key] == '' 
+      && column.key !== 'productSize' && column.key !== 'productColor' && column.key != 'avatar'){
+        this._messageService.notificationWarning('Bạn phải nhập đầy đủ thông tin bắt buộc')
+        return false;
+      }
+      if((column.key == 'productSize' || column.key == 'productColor')
+      && (this.listOfSelectedValueColor.length <= 0 || this.listOfSelectedValueSize.length <= 0)){
+        this._messageService.notificationWarning('Bạn phải nhập đầy đủ thông tin bắt buộc Size')
+        return false;
+      }
+      if(column.key != 'avatar' && this.dataInformation.avatarUrl.length <= 0){
+        this._messageService.notificationWarning('Bạn phải nhập đầy đủ thông tin bắt buộc Ảnh')
+        return false;
+      }
+    }
+    return true;
+  }
+
+  onHandleUpdate(event: any){
+    this.isVisibaleModalNavigateUpdate = true;
+    this.dataInformation.category = this.selectedValueCategory;
+    this.dataInformation.productSize = this.listOfSelectedValueSize;
+    this.dataInformation.productColor = this.listOfSelectedValueColor;
+    // this.dataInformation.avatar = this.
+  }
+
+  onHandleCancelModalNavigateUpdate(event: any){
+    this.isVisibaleModalNavigateUpdate = false;
+  }
+
+  onHandleConfirmNavigateUpdate(event: any){
+    this.isVisibaleModalNavigateUpdate = false;
+    this._router.navigate(['./admin/product/information']);
+  }
+
+  openModalBack(event: any){
+    this.isVisibaleModalNavigate = true;
+  }
+
+  onHandleCancelModalNavigate(event: any){
+    this.isVisibaleModalNavigate = false
+  }
+
+  onHandleConfirmNavigate(event: any){
+    this.isVisibaleModalNavigate = false;
+    this._router.navigate(['./admin/product/information'])
   }
 
   async getListColor(){
@@ -170,6 +234,44 @@ export class ProductReadComponent {
     await this._productService.getListSize(dataRequestSize).then((res) => {
       if(res.result.responseCode == '00'){
         this.listSize = res.data;
+      }
+    })
+  }
+
+
+  async getListCategory(){
+    let dataRequestColor = {
+      pageNumber: 0,
+      pageSize: 0,
+      filter: {
+
+      }
+    }
+    await this._productService.getListCategory(dataRequestColor).then((res) => {
+      if(res.result.responseCode == '00'){
+        this.listCate = res.data;
+      }
+    })
+  }
+
+  async getDetail(){
+    this.spin = true;
+    this._productService.getProduct(this.id).then((res) => {
+      if(res.result.responseCode == '00'){
+        this.dataInformation = res.data;
+        this.listOfSelectedValueColor = this.dataInformation.productColor;
+        this.listOfSelectedValueSize = this.dataInformation.productSize;
+        this.selectedValueCategory = this.dataInformation.category.id;
+      }
+      this.spin = false;
+    })
+  }
+
+  async updateProduct(){
+    await this._productService.updateProduct(this.id, this.dataInformation).then((res) => {
+      if(res.result.responseCode == '00'){
+        this._messageService.notificationSuccess(res.result.message);
+        this._router.navigate(['./admin/product/information']);
       }
     })
   }

@@ -36,7 +36,7 @@
                 </ng-container>
                 <ng-container *ngIf="column.key === 'avatar'">
                     <app-upload-file
-                    [maxFiles]="1" (outputListFile)="uploadAvatar($event)"
+                    [maxFiles]="1" (outputListFile)="uploadAvatar($event)" (outputListFileFromBE)="deleteFile($event)"
                     ></app-upload-file>
                 </ng-container>
                 <ng-template #textAreaInput>
@@ -55,18 +55,36 @@
                 </p>
             </nz-col>
         </ng-container>
+        <ng-container>
+            <nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="12" nzXl="12" nzXXl="12" class="mb-20">
+                <img
+        nz-image
+        width="100px"
+        height="100px"
+        [nzSrc]="
+            avatarUrl.length > 0
+            ? urlPreview + '/' + avatarUrl[0].savedFileName
+            : './../../../../assets/img/avatar-default.svg'
+                "
+            alt="Ảnh đại diện"
+            class="hover-cursor"
+            />
+            </nz-col>
+            <nz-col>
+                <p class="m-0 p-label">
+                    Hình ảnh mô tả
+                    <!-- <span class="span-error">*</span> -->
+                </p>
+                <app-upload-file (outputListFile)="uploadDescriptionUrl($event)"></app-upload-file>
+                <!-- <p class="m-0 span-error" *ngIf="listFileImage.length == 0 ? true : false">
+              {{ "message.required" | translate }}
+            </p> -->
+            </nz-col>
+        </ng-container>
     </nz-row>
     <!-- File Upload Section for PAD -->
-    <div class="mb-20">
-        <p class="m-0 p-label">
-            Hình ảnh mô tả
-            <!-- <span class="span-error">*</span> -->
-        </p>
-        <app-upload-file (outputListFile)="uploadDescriptionUrl($event)"></app-upload-file>
-        <!-- <p class="m-0 span-error" *ngIf="listFileImage.length == 0 ? true : false">
-      {{ "message.required" | translate }}
-    </p> -->
-    </div>
+    
+
     <!-- Action Buttons -->
     <nz-row nzAlign="top" nzGutter="24" nzJustify="end">
         <nz-col>
@@ -80,11 +98,13 @@
         </nz-col>
     </nz-row>
 </nz-card>
-<app-modal-confirm [isShowModal]="isVisibaleModalNavigate" [titleBtnPrimary]="'Xác nhận'" [titleModal]="'Thông báo'"
+<app-modal-confirm 
+    [isShowModal]="isVisibaleModalNavigate" [titleBtnPrimary]="'Xác nhận'" [titleModal]="'Thông báo'"
     [headerContent]="'Bạn có chắc chắn muốn quay lại danh sách sản phẩm'"
     [contentModal]="'Sau khi bạn xác nhận, thông tin sản phẩm chưa được lưu'"
     (isCancelDelete)="onHandleCancelModalNavigate($event)"
-    (isConfirmDelete)="onHandleConfirmNavigate($event)"></app-modal-confirm>
+    (isConfirmDelete)="onHandleConfirmNavigate($event)">
+</app-modal-confirm>
 
     <app-modal-confirm [isShowModal]="isVisibaleModalSave" [titleBtnPrimary]="'Xác nhận'" [titleModal]="'Thông báo'"
     [headerContent]="'Bạn có chắc chắn muốn lưu sản phẩm'"
