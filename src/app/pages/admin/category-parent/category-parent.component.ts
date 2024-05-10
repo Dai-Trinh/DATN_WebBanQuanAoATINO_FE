@@ -129,6 +129,8 @@ export class CategoryParentComponent {
     this.visibleModal = true;
     this.titleModal = 'Thêm mới danh mục cha';
     this.dataInformation.categoryName = '';
+    this.dataInformation.createdBy = 'admin',
+    this.dataInformation.updatedBy = 'admin'
   }
 
   handleUpdate(row: any) {

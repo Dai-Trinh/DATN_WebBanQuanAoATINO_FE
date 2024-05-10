@@ -46,4 +46,47 @@ export class AdminService {
   deleteBanner(id: any){
     return this._baseService.deleteData(`admin/banner/delete/${id}`)
   }
+
+
+  //TODO: QUẢN LÝ SHOP
+  getListShop(dataRequest: any){
+    return this._baseService.postData('admin/shop', dataRequest)
+  }
+
+  saveShop(dataRequest: any){
+    return this._baseService.postData('admin/shop/save', dataRequest)
+  }
+
+  updateShop(dataRequest: any){
+    return this._baseService.putData('admin/shop/update', dataRequest);
+  }
+
+  deleteShop(id: any){
+    return this._baseService.deleteData(`admin/shop/delete/${id}`)
+  }
+
+  //TODO: QUẢN LÝ MÀU SẮC
+  getListColor(dataRequest: any){
+    return this._baseService.postData('admin/color', dataRequest)
+  }
+
+
+  //TODO: QUẢN LÝ SIZE
+  getListSize(dataRequest: any){
+    return this._baseService.postData('admin/size', dataRequest)
+  }
+
+
+  //TODO: QUẢN LÝ SẢN PHẨM
+  getListProduct(dataRequest: any){
+    return this._baseService.postData('admin/product', dataRequest);
+  }
+
+  getProduct(id: any){
+    return this._baseService.getData('/admin/product/' + id);
+  }
+
+  saveProduct(dataRequest: any){
+    return this._baseService.postData('admin/product/save', dataRequest);
+  }
 }

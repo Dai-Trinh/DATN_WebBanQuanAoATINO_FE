@@ -57,6 +57,10 @@
     "note": "Lưu ý",
     "titleBreadscrumb": "Thông báo",
     "headerBreadscrumb": "Bạn có chắc chắn muốn thực hiện chức năng này",
-    "contentBreadscrumb": "Sau khi bạn xác nhận, dữ liệu chưa được lưu sẽ bị mất"
+    "contentBreadscrumb": "Sau khi bạn xác nhận, dữ liệu chưa được lưu sẽ bị mất",
+    "required": "Trường này yêu cầu bắt buộc."
+  },
+  "modal": {
+    "hintWarning": "Lưu ý"
   }
 }

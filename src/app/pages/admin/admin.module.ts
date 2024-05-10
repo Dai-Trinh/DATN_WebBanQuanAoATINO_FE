@@ -18,6 +18,8 @@ import { ProductInformationComponent } from './product-information/product-infor
 import { ProductNewComponent } from './product-new/product-new.component';
 import { CategoryParentComponent } from './category-parent/category-parent.component';
 import { CategoryChildrenComponent } from './category-children/category-children.component';
+import { ProductReadComponent } from './product-information/product-read/product-read.component';
+import { ProductAddComponent } from './product-information/product-add/product-add.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { CategoryChildrenComponent } from './category-children/category-children
     ProductNewComponent,
     CategoryParentComponent,
     CategoryChildrenComponent,
+    ProductReadComponent,
+    ProductAddComponent,
   ],
   imports: [
     CommonModule,

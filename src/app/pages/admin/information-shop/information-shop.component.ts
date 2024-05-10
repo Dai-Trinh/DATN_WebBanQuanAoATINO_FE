@@ -3,6 +3,8 @@ import { NzResizeEvent } from 'ng-zorro-antd/resizable';
 import { MessageService } from '../../../services/message.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { AdminService } from '../admin.service';
+import moment from 'moment';
 
 @Component({
   selector: 'app-information-shop',
@@ -14,7 +16,8 @@ export class InformationShopComponent {
   constructor(
     private _messageService: MessageService,
     private _router: Router,
-    private _translateService: TranslateService
+    private _translateService: TranslateService,
+    private _shopService: AdminService
   ) {
     this._translateService
       .get('notification.valid_action') // <- lấy theo key nào (Ex: 'notification.valid_action', ...)
@@ -27,17 +30,25 @@ export class InformationShopComponent {
   countSort = 0;
   sortOrder: string = 'DESC';
   sortProperty: string = 'updatedAt';
-  filter: any = {};
+  filter: any = {
+    updatedAtSearch: [],
+    shopName: "",
+    address: "",
+    phoneNumber: ""
+  };
   action: string = "";
+  spin: boolean = false;
   dataInformation: any = {
     parentId: 0
   }
+
+  id = -1;
 
   titleModal: string = "";
   visibleModalDelete: boolean = false;
 
   // TODO: selector app-pagination
-  page: number = 0;
+  page: number = 1;
   perPage: number = 10;
 
   lstData: any[] = [];
@@ -47,21 +58,21 @@ export class InformationShopComponent {
    
     {
       title: 'Tên cửa hàng',
-      key: 'imageBanner',
+      key: 'shopName',
       width: '150px',
       visible: true,
       sortOrder: '',
     },
     {
       title: 'Địa chỉ',
-      key: 'visible',
+      key: 'address',
       width: '150px',
       visible: true,
       sortOrder: '',
     },
     {
       title: 'Số điện thoại',
-      key: 'updatedAt',
+      key: 'phoneNumber',
       width: '150px',
       visible: true,
       sortOrder: '',
@@ -76,12 +87,20 @@ export class InformationShopComponent {
     
   ];
 
+  ngOnInit(){
+    this.getListData();
+  }
+
   onHandlePagination(event: any) {}
 
   handleClickButton(){
     this.visibleModal = true;
-    this.titleModal = "Thêm mới banner";
+    this.titleModal = "Thêm mới cửa hàng";
     this.action = 'create';
+    this.dataInformation = {
+      createdBy: 'admin',
+      updatedBy: 'admin'
+    }
   }
 
   onHandleChangeColumn($event: any) {
@@ -89,7 +108,7 @@ export class InformationShopComponent {
     // localStorage.setItem('columnShipBunkering', JSON.stringify(this.columns));
   }
 
-  id = -1;
+  
   onResize({ width }: NzResizeEvent, i: number): void {
     cancelAnimationFrame(this.id);
     this.id = requestAnimationFrame(() => {
@@ -134,7 +153,11 @@ export class InformationShopComponent {
   }
 
   handleConfirm() {
-    alert('Click confirm');
+    if(this.action == 'create'){
+      this.saveShop();
+    } else if(this.action == 'update'){
+      this.updateShop()
+    }
   }
 
   // TODO: selector: app-breadscrumb
@@ -156,18 +179,31 @@ export class InformationShopComponent {
   handleUpdate(row: any){
     this.action = "update";
     this.visibleModal = true;
-    this.titleModal = "Cập nhật banner"
+    this.titleModal = "Cập nhật cửa hàng"
+    this.dataInformation = {
+      id: row.id,
+      shopName: row.shopName,
+      address: row.address,
+      phoneNumber: row.phoneNumber
+    }
 
   }
 
   handleRead(row: any){
     this.action = 'read';
     this.visibleModal = true;
-    this.titleModal = "Xem chi tiết banner"
+    this.titleModal = "Xem chi tiết cửa hàng"
+    this.dataInformation = {
+      id: row.id,
+      shopName: row.shopName,
+      address: row.address,
+      phoneNumber: row.phoneNumber
+    }
   }
   
   handleDelete(row: any){
-
+    this.dataInformation.id = row.id;
+    this.visibleModalDelete = true;
   }
 
   onHandleCancel(){
@@ -175,7 +211,83 @@ export class InformationShopComponent {
   }
 
   handleConfirmDelete(){
-    this.visibleModalDelete = false;
+    this.deleteShop();
+  }
+
+
+  async getListData(){
+    this.spin = true;
+    let dataRequest = {
+      pageNumber: this.page - 1,
+      pageSize: this.perPage,
+      filter: {
+        shopName: this.filter.shopName,
+        address: this.filter.address,
+        phoneNumber: this.filter.phoneNumber,
+        updatedAtSearch:
+          this.filter.updatedAtSearch.length > 0
+            ? [
+                moment(this.filter.updatedAtSearch[0]).format('YYYY-MM-DD'),
+                moment(this.filter.updatedAtSearch[1]).format('YYYY-MM-DD'),
+              ]
+            : [],
+      },
+      sortProperty: this.sortProperty,
+      sortOrder: this.sortOrder,
+    };
+    try {
+      await this._shopService.getListShop(dataRequest).then((res) => {
+        if (res.result.responseCode == '00') {
+          this.lstData = res.data.map((item: any, index: number) => ({
+            ...item,
+            stt: (this.page - 1) * this.perPage + index + 1,
+          }));
+          this.total = res.dataCount;
+        }
+        this.spin = false;
+      })
+    } catch (error) {
+      this.spin = false;
+    }
+  }
+
+  async saveShop(){
+    this.spin = true;
+    await this._shopService.saveShop(this.dataInformation).then((res) => {
+      if(res.result.responseCode == '00'){
+        this.getListData();
+        this._messageService.notificationSuccess(res.result.message);
+      }
+      this.spin = false;
+      this.visibleModal = false;
+      this.dataInformation = {};
+    })
+  }
+
+  async updateShop(){
+    this.spin = true;
+    await this._shopService.updateShop(this.dataInformation).then((res) => {
+      if(res.result.responseCode == '00'){
+        this.getListData();
+        this._messageService.notificationSuccess(res.result.message);
+      }
+      this.spin = false;
+      this.visibleModal = false;
+      this.dataInformation = {};
+    })
+  }
+
+  async deleteShop(){
+    this.spin = true;
+    await this._shopService.deleteShop(this.dataInformation.id).then((res) => {
+      if(res.result.responseCode == '00'){
+        this.getListData();
+        this._messageService.notificationSuccess(res.result.message);
+      }
+      this.spin = false;
+      this.visibleModalDelete = false;
+      this.dataInformation = {};
+    })
   }
 
 }

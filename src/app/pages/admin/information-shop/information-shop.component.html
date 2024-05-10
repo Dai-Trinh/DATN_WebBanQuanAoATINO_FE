@@ -1,4 +1,4 @@
-<nz-spin [nzSpinning]="false">
+<nz-spin [nzSpinning]="spin">
     <div class="table mt-12">
         
           <div nz-row nzAlign="middle" nzJustify="space-between">
@@ -82,7 +82,7 @@
                 <tr>
                   <td nzLeft></td>
                   <ng-container *ngFor="let column of columns">
-                    <ng-container *ngIf="column.visible && column.key !== 'status'">
+                    <ng-container *ngIf="column.visible && column.key !== 'status' && column.key !== 'updatedAt'">
                       <td>
                         <nz-input-group
                           nzSearch
@@ -95,6 +95,7 @@
                             nz-input
                             placeholder="{{ 'search' | translate }}"
                             [(ngModel)]="filter[column.key]"
+                            (ngModelChange)="getListData()"
                             (keyup)="onHandleFilter($event, column.key)"
                           />
                         </nz-input-group>
@@ -121,6 +122,21 @@
                           (handleSearchChange)="onHandleFilter($event, column)"
                           (handleClearChange)="onHandleClearFilter(column)"
                         /> -->
+                      </td>
+                    </ng-container>
+                    <ng-container *ngIf="column.visible && column.key == 'updatedAt'">
+                      <td>
+                        <nz-range-picker
+                          class="w-100"
+                          [(ngModel)]="filter.updatedAtSearch"
+                          (ngModelChange)="getListData()"
+                          [nzPlaceHolder]="[
+                            'Từ ngày' | translate,
+                            'Đến ngày' | translate
+                          ]"
+                          [nzFormat]="'dd/MM/yyyy'"
+                          [nzBorderless]="true"
+                        ></nz-range-picker>
                       </td>
                     </ng-container>
                     
@@ -242,16 +258,16 @@
           <span style="font-weight: bold; font-size: 16px">Tên cửa hàng</span>
         </div>
         <div nz-col nzSpan="24">
-          <nz-input-group [nzSuffix]="suffixBanner">
-            <input nz-input [(ngModel)]="dataInformation.categoryName" [placeholder]="'Nhập tên cửa hàng'"
+          <nz-input-group [nzSuffix]="suffixShop">
+            <input nz-input [(ngModel)]="dataInformation.shopName" [placeholder]="'Nhập tên cửa hàng'"
               [disabled]="action == 'read'" />
           </nz-input-group>
-          <ng-template #suffixBanner>
+          <ng-template #suffixShop>
             <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle"
-              *ngIf="dataInformation.categoryName && action !== 'read'"
-              (click)="dataInformation.categoryName = ''"></span>
+              *ngIf="dataInformation.shopName && action !== 'read'"
+              (click)="dataInformation.shopName = ''"></span>
           </ng-template>
-          <div *ngIf="!dataInformation.categoryName" class="error">
+          <div *ngIf="!dataInformation.shopName" class="error">
             Trường này yêu cầu bắt buộc
           </div>
         </div>
@@ -261,16 +277,16 @@
           <span style="font-weight: bold; font-size: 16px">Địa chỉ</span>
         </div>
         <div nz-col nzSpan="24">
-          <nz-input-group [nzSuffix]="suffixBanner">
-            <input nz-input [(ngModel)]="dataInformation.categoryName" [placeholder]="'Nhập địa chỉ'"
+          <nz-input-group [nzSuffix]="suffixAddress">
+            <input nz-input [(ngModel)]="dataInformation.address" [placeholder]="'Nhập địa chỉ'"
               [disabled]="action == 'read'" />
           </nz-input-group>
-          <ng-template #suffixBanner>
+          <ng-template #suffixAddress>
             <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle"
-              *ngIf="dataInformation.categoryName && action !== 'read'"
-              (click)="dataInformation.categoryName = ''"></span>
+              *ngIf="dataInformation.address && action !== 'read'"
+              (click)="dataInformation.address = ''"></span>
           </ng-template>
-          <div *ngIf="!dataInformation.categoryName" class="error">
+          <div *ngIf="!dataInformation.address" class="error">
             Trường này yêu cầu bắt buộc
           </div>
         </div>
@@ -280,16 +296,16 @@
           <span style="font-weight: bold; font-size: 16px">Số điện thoại</span>
         </div>
         <div nz-col nzSpan="24">
-          <nz-input-group [nzSuffix]="suffixBanner">
-            <input nz-input [(ngModel)]="dataInformation.categoryName" [placeholder]="'Nhập số điện thoại'"
+          <nz-input-group [nzSuffix]="suffixPhone">
+            <input nz-input [(ngModel)]="dataInformation.phoneNumber" [placeholder]="'Nhập số điện thoại'"
               [disabled]="action == 'read'" />
           </nz-input-group>
-          <ng-template #suffixBanner>
+          <ng-template #suffixPhone>
             <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle"
-              *ngIf="dataInformation.categoryName && action !== 'read'"
-              (click)="dataInformation.categoryName = ''"></span>
+              *ngIf="dataInformation.phoneNumber && action !== 'read'"
+              (click)="dataInformation.phoneNumber = ''"></span>
           </ng-template>
-          <div *ngIf="!dataInformation.categoryName" class="error">
+          <div *ngIf="!dataInformation.phoneNumber" class="error">
             Trường này yêu cầu bắt buộc
           </div>
         </div>
@@ -318,10 +334,10 @@
   </ng-template>
 </nz-modal>
 
-<app-modal-content [show]="visibleModalDelete" title="Xóa banner" header="
-    Bạn có xác nhận xóa banner
+<app-modal-content [show]="visibleModalDelete" title="Xóa cửa hàng" header="
+    Bạn có xác nhận xóa cửa hàng
   " content="
-    Nếu bạn xác nhận, hệ thống sẽ xóa banner khỏi danh sách và cập nhật lại danh sách
+    Nếu bạn xác nhận, hệ thống sẽ xóa cửa hàng khỏi danh sách và cập nhật lại danh sách
   " titleBtnConfirm="button.confirm" titleBtnCancel="button.cancel" (cancelChange)="visibleModal = $event"
   (confirmChange)="handleConfirmDelete()" />
 
