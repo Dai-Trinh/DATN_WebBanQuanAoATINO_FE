@@ -3,6 +3,8 @@ import { MessageService } from '../../../../services/message.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AdminService } from '../../admin.service';
+import { environment } from '../../../../../environment/environment.cloud';
+import { FileService } from '../../../../services/file.service';
 
 @Component({
   selector: 'app-product-read',
@@ -16,6 +18,7 @@ export class ProductReadComponent {
     private _router: Router,
     private _translateService: TranslateService,
     private _productService: AdminService,
+    private __fileService: FileService,
     private _active: ActivatedRoute
 
   ) {
@@ -24,6 +27,11 @@ export class ProductReadComponent {
       .subscribe((item) => (this.validAction = item)); // <- lấy dữ liệu từ file JSON ngôn ngữ
   }
 
+  currentDataUpload: any = {};
+  tempFileDocument: File[] = [];
+  savedFileName: any[] = [];
+  descriptionUrl: any[] = [];
+  urlPreview: string = environment.api_end_point_preview;
   id: any = this._active.snapshot.params['id'];
   action = this._active.snapshot.params['action'];
   title: string = "Cập nhật sản phẩm"
@@ -58,6 +66,8 @@ export class ProductReadComponent {
   listOfSelectedValueColor: any[] = [];
   listOfSelectedValueSize: any[] = [];
   selectedValueCategory: any = -1;
+
+  avatarUrl: any[] = [];
 
   isVisibaleModalNavigate: boolean = false;
   isVisibaleModalNavigateUpdate: boolean = false;
@@ -191,6 +201,13 @@ export class ProductReadComponent {
 
   onHandleConfirmNavigateUpdate(event: any){
     this.isVisibaleModalNavigateUpdate = false;
+    console.log(this.descriptionUrl)
+    for(let item of this.descriptionUrl){
+      if(item.response !== undefined){
+        this.dataInformation.imageDescription.push(item?.response)
+      }
+    }
+    console.log(this.dataInformation);
     this._router.navigate(['./admin/product/information']);
   }
 
@@ -262,6 +279,26 @@ export class ProductReadComponent {
         this.listOfSelectedValueColor = this.dataInformation.productColor;
         this.listOfSelectedValueSize = this.dataInformation.productSize;
         this.selectedValueCategory = this.dataInformation.category.id;
+        let avatar = {
+          savedFileName: this.dataInformation.avatar,
+        }
+        for(let item of this.dataInformation?.imageDescription){
+          let image = {
+              uid: item.id,
+              name: item.fileName,
+              status: 'done',
+              url: this.urlPreview + '/' + item.savedFileName,
+              //thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+              linkProps: {
+                download: this.urlPreview + '/' + item.savedFileName
+              }
+
+          }
+          this.descriptionUrl.push(image);
+          
+        }
+        console.log('desc: ' + JSON.stringify(this.descriptionUrl));
+        this.avatarUrl.push(avatar);
       }
       this.spin = false;
     })
@@ -276,5 +313,55 @@ export class ProductReadComponent {
     })
   }
 
+  async uploadAvatar(event: any){
+    if(event.length !== 0) {
+      this.tempFileDocument = event;
+    const formData = new FormData();
+    this.tempFileDocument.forEach((file) => {
+      formData.append('files', file, file.name);
+    });
+
+    const response = await this.__fileService.uploadFileDocument(formData);
+    if (response.result.responseCode == '00') {
+      let listFile = response.data.map((item: any) => ({
+        savedFileName: item.savedFileName,
+        fileName: item.fileName,
+      }));
+      console.log(listFile);
+
+      this.avatarUrl = listFile;
+    }
+    }
+  }
+
+  idFile: any = 0;
+
+  async uploadDescriptionUrl(event: any){
+    
+    if(event && event.length !== 0) {
+      this.tempFileDocument = event;
+    const formData = new FormData();
+    this.tempFileDocument.forEach((file) => {
+      formData.append('files', file, file.name);
+    });
+    const response = await this.__fileService.uploadFileDocument(formData);
+    if (response.result.responseCode == '00') {
+      let listFile = response.data.map((item: any) => ({
+        uid: this.idFile++,
+        savedFileName: item.savedFileName,
+        fileName: item.fileName,
+        name: item.fileName,
+        status: 'done',
+        url: this.urlPreview + '/' + item.savedFileName,
+      }));
+      
+      this.descriptionUrl = listFile;
+    }
+    }
+  }
+
+  async deleteFile(event: any){
+    this.avatarUrl = [];
+  }
 
 }

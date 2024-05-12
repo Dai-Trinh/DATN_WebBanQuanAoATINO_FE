@@ -75,7 +75,25 @@
                     Hình ảnh mô tả
                     <!-- <span class="span-error">*</span> -->
                 </p>
-                <app-upload-file (outputListFile)="uploadDescriptionUrl($event)"></app-upload-file>
+                <div class="clearfix">
+                  <nz-upload
+                   [nzMultiple]="true"
+                    class="upload-list-inline"
+                    nzAction="http://localhost:9090/api/assets/upload-file-one"
+                    nzListType="picture"
+                    [(nzFileList)]="descriptionUrl"
+                  >
+                  <button nz-button>
+                    <span>
+                      <span nz-icon nzType="upload"></span>
+                      Upload
+                    </span>
+                  </button>
+                    <!-- <app-upload-file
+               (outputListFile)="uploadDescriptionUrl($event)" (outputListFileFromBE)="deleteFile($event)"
+              ></app-upload-file> -->
+                  </nz-upload>
+                </div>
                 <!-- <p class="m-0 span-error" *ngIf="listFileImage.length == 0 ? true : false">
               {{ "message.required" | translate }}
             </p> -->

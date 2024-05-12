@@ -2,22 +2,25 @@ import { Component } from '@angular/core';
 import { MessageService } from '../../../../services/message.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { FileService } from '../../../../services/file.service';
 import { AdminService } from '../../admin.service';
 import { environment } from '../../../../../environment/environment.cloud';
-import { FileService } from '../../../../services/file.service';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
-  selector: 'app-product-add',
-  templateUrl: './product-add.component.html',
-  styleUrl: './product-add.component.css'
+  selector: 'app-add-news',
+  templateUrl: './add-news.component.html',
+  styleUrl: './add-news.component.css'
 })
-export class ProductAddComponent {
+export class AddNewsComponent {
+  public editor = ClassicEditor;
+
   constructor(
     private _messageService: MessageService,
     private _router: Router,
     private _translateService: TranslateService,
     private __fileService: FileService,
-    private _productService: AdminService
+    private _newsService: AdminService
 
   ) {
     this._translateService
@@ -32,7 +35,7 @@ export class ProductAddComponent {
   avatarUrl: any[] = [];
   descriptionUrl: any[] = [];
 
-  title: string = "Thêm mới sản phẩm"
+  title: string = "Thêm mới tin tức"
   total: number = 10
   validAction: string = ""
   countSort = 0;
@@ -46,7 +49,7 @@ export class ProductAddComponent {
   spin: boolean = false;
   dataInformation: any = {
     createdBy: 'admin',
-    imageDescription: []
+    content: '',
   }
 
   id = -1;
@@ -74,100 +77,51 @@ export class ProductAddComponent {
   columns: any[] = [
    
     {
-      title: 'Tên sản phẩm',
-      key: 'productName',
+      title: 'Tiêu đề',
+      key: 'title',
       width: '200px',
+      visible: true,
+      sortOrder: '',
+      isRequired: true,
+    },
+    {
+      title: 'Tác giả',
+      key: 'author',
+      width: '150px',
       visible: true,
       sortOrder: '',
       isRequired: true
     },
     
     {
-      title: 'Giá bán',
-      key: 'price',
-      width: '200px',
-      visible: true,
-      sortOrder: '',
-      isRequired: true
-    },
-    {
-      title: 'Giảm giá',
-      key: 'sales',
-      width: '200px',
-      visible: true,
-      sortOrder: '',
-    },
-    {
-      title: 'Size',
-      key: 'productSize',
-      width: '200px',
-      visible: true,
-      sortOrder: '',
-      isRequired: true
-    },
-    {
-      title: 'Màu sắc',
-      key: 'productColor',
-      width: '200px',
-      visible: true,
-      sortOrder: '',
-      isRequired: true
-    },
-    {
-      title: 'Kiểu dáng',
-      key: 'productForm',
-      width: '200px',
-      visible: true,
-      sortOrder: '',
-
-    },
-    {
-      title: 'Chất liệu',
-      key: 'productMaterial',
-      width: '200px',
-      visible: true,
-      sortOrder: '',
-    },
-    {
-      title: 'Thiết kế',
-      key: 'description',
-      width: '200px',
-      visible: true,
-      sortOrder: '',
-    },
-    {
       title: 'Ảnh',
       key: 'avatar',
-      width: '200px',
+      width: '150px',
       visible: true,
       sortOrder: '',
       isRequired: true
     },
     {
-      title: 'Danh mục sản phẩn',
-      key: 'category',
-      width: '200px',
+      title: 'Ẩn/hiện',
+      key: 'visible',
+      width: '150px',
       visible: true,
       sortOrder: '',
       isRequired: true
-    }
+    },
     
   ];
 
   validate(){
     for(let column of this.columns){
       if(column.isRequired && this.dataInformation[column.key] == '' 
-      && column.key !== 'productSize' && column.key !== 'productColor' && column.key != 'avatar'){
+      && (column.key === 'title' || column.key === 'author' || column.key == 'visiable')){
         this._messageService.notificationWarning('Bạn phải nhập đầy đủ thông tin bắt buộc')
         return false;
       }
-      if((column.key == 'productSize' || column.key == 'productColor')
-      && (this.listOfSelectedValueColor.length <= 0 || this.listOfSelectedValueSize.length <= 0)){
-        this._messageService.notificationWarning('Bạn phải nhập đầy đủ thông tin bắt buộc Size')
-        return false;
-      }
-      if(column.key != 'avatar' && this.avatarUrl.length <= 0){
-        this._messageService.notificationWarning('Bạn phải nhập đầy đủ thông tin bắt buộc Ảnh')
+     
+      if(column.key == 'avatar' && this.avatarUrl.length <= 0){
+        this._messageService.notificationWarning('Bạn phải nhập đầy đủ thông tin bắt buộc')
         return false;
       }
     }
@@ -184,26 +138,14 @@ export class ProductAddComponent {
 
   onHandleConfirmSave(event: any) {
     this.isVisibaleModalSave = false;
-    this.dataInformation.productColor = this.listOfSelectedValueColor;
-    this.dataInformation.productSize = this.listOfSelectedValueSize;
-    this.dataInformation.category = this.listOfSelectCategory;
     
     if(this.validate()){
       this.dataInformation.avatar = this.avatarUrl[0].savedFileName;
-      console.log(this.descriptionUrl)
-      for(let item of this.descriptionUrl){
-        this.dataInformation.imageDescription.push(item?.response)
-      }
-      this.saveProduct();
+      console.log(this.dataInformation)
+      this.saveNews();
       
     }
-    // this.dataInformation.avatar = this.avatarUrl[0].savedFileName;
-    //   console.log(this.descriptionUrl)
-    //   for(let item of this.descriptionUrl){
-    //     this.dataInformation.imageDescription.push(item?.response)
-    //   }
-      //this.saveProduct();
-    this._router.navigate(['./admin/product/information']);
+    //this._router.navigate(['./admin/product/information']);
   }
 
   onHandleNavigate() {
@@ -233,7 +175,7 @@ export class ProductAddComponent {
 
       }
     }
-    await this._productService.getListColor(dataRequestColor).then((res) => {
+    await this._newsService.getListColor(dataRequestColor).then((res) => {
       if(res.result.responseCode == '00'){
         this.listColor = res.data;
         console.log(this.listColor)
@@ -249,7 +191,7 @@ export class ProductAddComponent {
 
       }
     }
-    await this._productService.getListSize(dataRequestSize).then((res) => {
+    await this._newsService.getListSize(dataRequestSize).then((res) => {
       if(res.result.responseCode == '00'){
         this.listSize = res.data;
       }
@@ -264,7 +206,7 @@ export class ProductAddComponent {
 
       }
     }
-    await this._productService.getListCategory(dataRequestCate).then((res) => {
+    await this._newsService.getListCategory(dataRequestCate).then((res) => {
       if(res.result.responseCode == '00'){
         this.listCategory = res.data;
       }
@@ -294,36 +236,36 @@ export class ProductAddComponent {
     }
   }
 
-  // async uploadDescriptionUrl(event: any){
+  async uploadDescriptionUrl(event: any){
     
-  //   if(event && event.length !== 0) {
-  //     this.tempFileDocument = event;
-  //   const formData = new FormData();
-  //   this.tempFileDocument.forEach((file) => {
-  //     formData.append('files', file, file.name);
-  //   });
-  //   const response = await this.__fileService.uploadFileDocument(formData);
-  //   if (response.result.responseCode == '00') {
-  //     let listFile = response.data.map((item: any) => ({
-  //       savedFileName: item.savedFileName,
-  //       fileName: item.fileName,
-  //     }));
-  //     this.descriptionUrl = listFile;
-  //   }
-  //   }
-  // }
+    if(event && event.length !== 0) {
+      this.tempFileDocument = event;
+    const formData = new FormData();
+    this.tempFileDocument.forEach((file) => {
+      formData.append('files', file, file.name);
+    });
+    const response = await this.__fileService.uploadFileDocument(formData);
+    if (response.result.responseCode == '00') {
+      let listFile = response.data.map((item: any) => ({
+        savedFileName: item.savedFileName,
+        fileName: item.fileName,
+      }));
+      this.descriptionUrl = listFile;
+    }
+    }
+  }
 
   async deleteFile(event: any){
     this.avatarUrl = [];
   }
 
-  async saveProduct(){
+  async saveNews(){
     try {
-      await this._productService.saveProduct(this.dataInformation).then((res) => {
+      await this._newsService.saveNews(this.dataInformation).then((res) => {
         if(res.result.responseCode == '00'){
           this._messageService.notificationSuccess(res.result.message);
         }
-        this._router.navigate(['./admin/product/information'])
+        this._router.navigate(['./admin/information/news'])
       })
     } catch (error) {
       
