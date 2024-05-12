@@ -13,6 +13,8 @@ import { CategoryParentComponent } from './category-parent/category-parent.compo
 import { CategoryChildrenComponent } from './category-children/category-children.component';
 import { ProductReadComponent } from './product-information/product-read/product-read.component';
 import { ProductAddComponent } from './product-information/product-add/product-add.component';
+import { AddNewsComponent } from './information-news/add-news/add-news.component';
+import { ReadNewsComponent } from './information-news/read-news/read-news.component';
 
 const routes: Routes = [
   {
@@ -42,6 +44,14 @@ const routes: Routes = [
       {
         path: 'information/news',
         component: InformationNewsComponent,
+      },
+      {
+        path: 'information/news/add',
+        component: AddNewsComponent,
+      },
+      {
+        path: 'information/news/:action/:id',
+        component: ReadNewsComponent,
       },
       {
         path: 'product/information',

@@ -21,7 +21,7 @@
             <span *ngIf="column.isRequired" class="span-error">*</span>
           </p>
           <ng-container
-            *ngIf="(column.key === 'productColor' || column.key === 'productSize' || column.key === 'category') ; else textAreaInput"
+            *ngIf="(column.key == 'avatar' || column.key === 'productColor' || column.key === 'productSize' || column.key === 'category') ; else textAreaInput"
           > 
           </ng-container>
           <ng-container
@@ -48,6 +48,11 @@
             <nz-option *ngFor="let item of listCate" [nzLabel]="item.categoryName" [nzValue]="item.id"></nz-option>
         </nz-select>
           </ng-container>
+          <ng-container *ngIf="column.key === 'avatar' && action == 'update'">
+            <app-upload-file
+            [maxFiles]="1" (outputListFile)="uploadAvatar($event)" (outputListFileFromBE)="deleteFile($event)"
+            ></app-upload-file>
+        </ng-container>
           <ng-container
             *ngIf="(column.key === 'productSize')"
           > 
@@ -97,20 +102,52 @@
         </nz-col>
       </ng-container>
       <ng-container>
-        <nz-col>
-
-        </nz-col>
-        <nz-col>
-          <div>
-            <p class="m-0 p-label">
-              Hình ảnh mô tả
-              <!-- <span class="span-error">*</span> -->
-            </p>
-            <app-upload-file
-              
-            ></app-upload-file>
-          </div>
-        </nz-col>
+        <ng-container>
+          <nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="12" nzXl="12" nzXXl="12" class="mb-20">
+              <img
+      nz-image
+      width="100px"
+      height="100px"
+      [nzSrc]="
+          avatarUrl.length > 0
+          ? urlPreview + '/' + avatarUrl[0].savedFileName
+          : './../../../../assets/img/avatar-default.svg'
+              "
+          alt="Ảnh đại diện"
+          class="hover-cursor"
+          />
+          </nz-col>
+          <nz-col>
+              <p class="m-0 p-label">
+                  Hình ảnh mô tả
+                  <!-- <span class="span-error">*</span> -->
+              </p>
+              <div class="clearfix">
+                <nz-upload
+                 [nzMultiple]="true"
+                  class="upload-list-inline"
+                  nzAction="http://localhost:9090/api/assets/upload-file-one"
+                  nzListType="picture"
+                  [(nzFileList)]="descriptionUrl"
+                >
+                  <ng-container *ngIf="action == 'update'">
+                    <button nz-button>
+                      <span>
+                        <span nz-icon nzType="upload"></span>
+                        Upload
+                      </span>
+                    </button>
+                  </ng-container>
+                  <!-- <app-upload-file
+             (outputListFile)="uploadDescriptionUrl($event)" (outputListFileFromBE)="deleteFile($event)"
+            ></app-upload-file> -->
+                </nz-upload>
+              </div>
+              <!-- <p class="m-0 span-error" *ngIf="listFileImage.length == 0 ? true : false">
+            {{ "message.required" | translate }}
+          </p> -->
+          </nz-col>
+      </ng-container>
       </ng-container>
     </nz-row>
     <!-- File Upload Section for PAD -->

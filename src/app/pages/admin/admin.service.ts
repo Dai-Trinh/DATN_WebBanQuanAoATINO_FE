@@ -116,4 +116,29 @@ export class AdminService {
     return this._baseService.deleteData('admin/product-import/delete/' + id);
   }
 
+  //TODO QUẢN LÝ TIN TỨC
+  getListNews(dataRequest: any){
+    return this._baseService.postData('admin/news', dataRequest);
+  }
+
+  getNews(id: any){
+    return this._baseService.getData('admin/news/' + id);
+  }
+
+  saveNews(dataRequest: any){
+    return this._baseService.postData('admin/news/save', dataRequest);
+  }
+
+  updateNews(id: any, dataRequest: any){
+    return this._baseService.putData('admin/news/update/' + id, dataRequest);
+  }
+
+  deleteNews(id: any){
+    return this._baseService.deleteData('admin/news/delete/' + id);
+  }
+
+  changeNewsVisible(id: any){
+    return this._baseService.getData('admin/news/' +id +'/change-visible')
+  }
+
 }

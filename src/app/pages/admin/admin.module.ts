@@ -20,6 +20,9 @@ import { CategoryParentComponent } from './category-parent/category-parent.compo
 import { CategoryChildrenComponent } from './category-children/category-children.component';
 import { ProductReadComponent } from './product-information/product-read/product-read.component';
 import { ProductAddComponent } from './product-information/product-add/product-add.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { AddNewsComponent } from './information-news/add-news/add-news.component';
+import { ReadNewsComponent } from './information-news/read-news/read-news.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,8 @@ import { ProductAddComponent } from './product-information/product-add/product-a
     CategoryChildrenComponent,
     ProductReadComponent,
     ProductAddComponent,
+    AddNewsComponent,
+    ReadNewsComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +51,7 @@ import { ProductAddComponent } from './product-information/product-add/product-a
     TranslateModule,
     ComponentCommonModule,
     FormsModule,
+    CKEditorModule
   ],
 })
 export class AdminModule {}
