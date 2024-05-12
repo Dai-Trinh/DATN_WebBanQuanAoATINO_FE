@@ -1,0 +1,90 @@
+@import "../../../assets/icons/themify-icons/themify-icons.css";
+
+* {
+  font-family: "Open Sans", sans-serif;
+}
+
+.clear {
+  clear: both;
+}
+
+.header {
+  height: 60px;
+  border-bottom: none;
+  align-self: center;
+  align-content: center;
+  z-index: 10;
+  color: white;
+  position: fixed;
+  width: 100%;
+}
+
+.left {
+  font-size: 25px;
+  float: left;
+}
+
+.left > i {
+  padding: 0px 20px;
+}
+
+.right {
+  float: right;
+  font-size: 20px;
+  margin-right: 20px;
+  margin-top: 7px;
+}
+
+.right .icon-right {
+  margin: 0 20px;
+}
+
+.scroll {
+  height: 60px;
+  border-bottom: 0.5px solid gray;
+  align-self: center;
+  align-content: center;
+  z-index: 10;
+  color: black;
+  position: fixed;
+  width: 100%;
+  background-color: white;
+}
+
+.menu-user {
+  position: fixed;
+  z-index: 50;
+  width: 500px;
+  height: 100%;
+  background-color: white;
+  font-size: 12px;
+  border: none;
+  transition: opacity 2s ease;
+}
+
+.menu-user-open {
+  display: block;
+}
+
+.menu-user-close {
+  display: none;
+}
+
+.menu-parent {
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.menu-parent > ul > li {
+  text-transform: capitalize;
+}
+
+.close-menu {
+  font-size: 20px;
+  padding: 20px;
+}
+
+.close-menu :hover {
+  cursor: pointer;
+  color: red;
+}

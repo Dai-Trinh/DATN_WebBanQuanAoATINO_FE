@@ -10,7 +10,11 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { HttpClient, HttpClientModule, provideHttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  provideHttpClient,
+} from '@angular/common/http';
 import { NgZorroModuleExport } from './shared/modules/ng-zorro.module';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -31,6 +35,7 @@ registerLocaleData(en);
     AppRoutingModule,
     IconsProviderModule,
     FormsModule,
+    FormsModule,
     NgZorroModuleExport,
     HttpClientModule,
     TranslateModule.forRoot({
@@ -48,7 +53,7 @@ registerLocaleData(en);
     }),
     // KeycloakAngularModule,
     ComponentCommonModule,
-    ExceptionModule
+    ExceptionModule,
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

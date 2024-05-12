@@ -1,0 +1,65 @@
+<div class="banner">
+  <div [class]="slideClass[0]">
+    <img src="assets/img/Hero Banner 1 -1920x900.jpg" alt="" />
+  </div>
+  <div [class]="slideClass[1]">
+    <img src="assets/img/Banner 1 - 1920x900 - Hero banner.jpg" alt="" />
+  </div>
+</div>
+
+<div class="carousel-wrapp">
+  <div class="wrapper">
+    <span
+      nz-icon
+      nzType="left"
+      nzTheme="outline"
+      (click)="scroll('left')"
+    ></span>
+    <ul class="carousel" #carousel>
+      <li class="card" *ngFor="let card of cards">
+        <div class="img">
+          <img [src]="card.imageUrl" alt="img" />
+        </div>
+      </li>
+    </ul>
+    <span
+      nz-icon
+      nzType="right"
+      nzTheme="outline"
+      (click)="scroll('right')"
+    ></span>
+  </div>
+</div>
+
+<div class="home-categories">
+  <div class="title-home__categories-wrap">
+    <p class="title-categories">DANH MỤC NỔI BẬT</p>
+  </div>
+
+  <div class="wrapper">
+    <span
+      nz-icon
+      nzType="left"
+      nzTheme="outline"
+      (click)="scrollProduct('left')"
+    ></span>
+    <ul class="carousel" #carouselProduct>
+      <li class="card-product" *ngFor="let card of cards">
+        <div class="img">
+          <img [src]="card.imageUrl" alt="img" />
+        </div>
+        <div class="card-title">
+          <p class="title-image">
+            {{ card.title }}
+          </p>
+        </div>
+      </li>
+    </ul>
+    <span
+      nz-icon
+      nzType="right"
+      nzTheme="outline"
+      (click)="scrollProduct('right')"
+    ></span>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="header" [ngClass]="{ scroll: isScroll, header: !isScroll }">
+  <div class="left">
+    <i class="ti-menu" (click)="openMenu()"></i>
+    ATINO
+  </div>
+
+  <div class="right">
+    <i class="ti-search icon-right"></i>
+    <span nz-icon nzType="user" class="icon-right"></span>
+    <i class="ti-heart icon-right"></i>
+    <i class="ti-bag icon-right"></i>
+  </div>
+</div>
+<div class="clear"></div>
+
+<div
+  class="menu-user"
+  [ngClass]="{ 'menu-user-open': closeMenu, 'menu-user-close': !closeMenu }"
+>
+  <div class="close-menu">
+    <i class="ti-close" (click)="openMenu()"></i>
+  </div>
+  <ul nzMode="inline" nzTheme="light" nz-menu>
+    <li class="menu-parent" nz-submenu nzTitle="Bộ sưu tập">
+      <ul>
+        <li nz-menu-item>Bộ sưu tập mùa hè</li>
+        <li nz-menu-item>Bộ sưu tập mùa đông</li>
+      </ul>
+    </li>
+    <li class="menu-parent" nz-submenu nzTitle="Bộ sưu tập">
+      <ul>
+        <li nz-menu-item>Bộ sưu tập mùa hè</li>
+        <li nz-menu-item>Bộ sưu tập mùa đông</li>
+      </ul>
+    </li>
+    <li class="menu-parent" nz-submenu nzTitle="Bộ sưu tập">
+      <ul>
+        <li nz-menu-item>Bộ sưu tập mùa hè</li>
+        <li nz-menu-item>Bộ sưu tập mùa đông</li>
+      </ul>
+    </li>
+    <li class="menu-parent" nz-submenu nzTitle="Bộ sưu tập">
+      <ul>
+        <li nz-menu-item>Bộ sưu tập mùa hè</li>
+        <li nz-menu-item>Bộ sưu tập mùa đông</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,152 @@
+<div class="container">
+  <div class="header">
+    <div class="header-first">
+      <div class="header-arrow">
+        <span nz-icon nzType="arrow-left" nzTheme="outline"></span>
+      </div>
+      <div class="header-logo"></div>
+    </div>
+    <div class="header-last">
+      <div class="header-last__card">
+        <div class="card-icon">
+          <span nz-icon nzType="check" nzTheme="outline"></span>
+        </div>
+        <div class="card-content__wrap">
+          <p class="card-content">Giỏ hàng</p>
+        </div>
+      </div>
+      <div class="header-last__pay">
+        <div class="pay-icon__wrap">
+          <p class="pay-icon">2</p>
+        </div>
+        <div class="pay-content__wrap">
+          <p class="pay-content">Đặt hàng</p>
+        </div>
+      </div>
+      <div class="header-last__final">
+        <div class="final-icon__wrap">
+          <p class="final-icon">3</p>
+        </div>
+        <div class="final-content__wrap">
+          <p class="final-content">Hoàn thành đơn hàng</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="form-content__wrap">
+      <div class="form-title__wrap">
+        <p class="form-title">THÔNG TIN VẬN CHUYỂN</p>
+      </div>
+      <div class="form-content">
+        <nz-row nzGutter="48" nzAlign="top">
+          <ng-container *ngFor="let column of columns">
+            <nz-col
+              nzXs="48"
+              nzSm="48"
+              nzMd="48"
+              nzLg="24"
+              nzXl="24"
+              nzXXl="24"
+              class="mb-20"
+              *ngIf="column.keyName !== 'note'"
+            >
+              <p class="m-0 p-label">
+                {{ column.keyTitle }}
+                <span *ngIf="column.isRequired" class="span-error">*</span>
+              </p>
+
+              <div class="ant-input-affix-wrapper-textarea-with-clear-btn">
+                <textarea
+                  nz-input
+                  [(ngModel)]="dataInformation[column.keyName]"
+                  rows="1"
+                ></textarea>
+              </div>
+            </nz-col>
+
+            <nz-col
+              nzXs="48"
+              nzSm="48"
+              nzMd="48"
+              nzLg="24"
+              nzXl="24"
+              nzXXl="24"
+              class="mb-20"
+              *ngIf="column.keyName === 'note'"
+            >
+              <p class="m-0 p-label">
+                {{ column.keyTitle }}
+                <span *ngIf="column.isRequired" class="span-error">*</span>
+              </p>
+
+              <div class="ant-input-affix-wrapper-textarea-with-clear-btn">
+                <textarea
+                  nz-input
+                  [(ngModel)]="dataInformation[column.keyName]"
+                  rows="3"
+                ></textarea>
+              </div>
+            </nz-col>
+          </ng-container>
+        </nz-row>
+      </div>
+    </div>
+    <div class="form-information__line">
+      <div class="form-information__title">
+        <p class="title-information">THÔNG TIN ĐƠN HÀNG</p>
+      </div>
+      <div class="form-information__product">
+        <div class="form-information__product-image">
+          <img src="assets/image/ATINO.png" alt="" class="image-product" />
+        </div>
+        <div class="form-information__product-info">
+          <p class="form-information__product-name">
+            Áo sơ mi ngắn tay Aristino ASS103AZ màu Trắng in họa tiết AR
+          </p>
+          <p class="form-information__product-price">750.000đ</p>
+          <p class="form-information__product-des">Trắng in họa tiết AR</p>
+          <div class="form-information__product-num">
+            <p class="form-information__product-size">
+              Size: <span class="form-information__product-size-num">43</span>
+            </p>
+            <p class="form-information__product-quantity">
+              Số lượng:
+              <span class="form-information__product-size-num">1</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="form-infomation__product-voucher">
+        <input
+          type="text"
+          nz-input
+          appNumberInput
+          [(ngModel)]="dataInformation['voucher']"
+          placeholder="Nhập mã giảm giá"
+        />
+        <button nz-button (click)="addVoucher()" nzType="text">Áp dụng</button>
+      </div>
+
+      <div class="form-infomation__product-price">
+        <div class="form-infomation__product-expected">
+          <p class="form-infomation__expected-title">Tạm tính</p>
+          <p class="form-infomation__expected-price">30.000đ</p>
+        </div>
+        <div class="form-infomation__product-expected">
+          <p class="form-infomation__expected-title">Phí vận chuyển</p>
+          <p class="form-infomation__expected-price">30.000đ</p>
+        </div>
+        <div class="form-infomation__product-expected">
+          <p class="form-infomation__expected-title">Thành tiền</p>
+          <p class="form-infomation__expected-price">780.000đ</p>
+        </div>
+      </div>
+      <div class="form-infomation__pay">
+        <button nz-button (click)="payProduct()" nzType="text">
+          Thanh toán ngay
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

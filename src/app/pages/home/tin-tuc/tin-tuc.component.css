@@ -1,0 +1,75 @@
+.page-category {
+  margin: 10px;
+}
+.search-group button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 40px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.container {
+  max-width: 100%;
+  overflow: hidden;
+}
+.container img {
+  width: 100%;
+  height: auto;
+}
+.card {
+  margin: 10px;
+  max-width: 600px;
+}
+.card img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+.abc {
+  overflow: hidden;
+  margin: 0;
+}
+.content a {
+  display: inline-block;
+  text-decoration: none;
+  color: #817676;
+  font-weight: bold;
+}
+.content a:hover {
+  text-decoration: underline;
+}
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+.blog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.search-group {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.search-group .form-control {
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+}
+.search-group .form-control:focus {
+  border-color: #555;
+}
+.search-group .btn-search {
+  display: inline-block;
+  text-decoration: none;
+  color: #817676;
+  font-weight: bold;
+}

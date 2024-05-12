@@ -1,0 +1,44 @@
+<div class="collection">
+  <div class="content-collection">
+    <nz-breadcrumb nzSeparator=">">
+      <nz-breadcrumb-item>Trang chủ</nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a>Áo</a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>Áo sơ mi</nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </div>
+  <div class="collection-product">
+    <div
+      (mouseenter)="shoppingCartHover($event, i)"
+      (mouseleave)="shoppingCartHover($event, -1)"
+      class="content-product product"
+      *ngFor="let d of dataItem; index as i"
+    >
+      <img
+        src="../../../assets/image/Banner 1 - 1920x900 - Hero banner.jpg"
+        alt=""
+      />
+      <div class="product-infor">
+        <p>Áo sơ mi ngắn tay Aristino ASS028AZ màu Xanh kẻ dệt dobby</p>
+        <i class="ti-heart"></i>
+      </div>
+      <p class="price">850.000đ</p>
+      <div [class]="cartProductClass[i]">
+        <i class="ti-bag"></i>
+      </div>
+      <div class="new">
+        <p>NEW</p>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <div class="page">
+    <nz-pagination
+      [(nzPageIndex)]="current"
+      [nzTotal]="50"
+      [nzPageSize]="20"
+      [nzSize]="'small'"
+    ></nz-pagination>
+  </div>
+</div>

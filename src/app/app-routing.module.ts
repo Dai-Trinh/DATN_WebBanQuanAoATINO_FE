@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/home' },
+  { path: '', pathMatch: 'full', redirectTo: '/home/home-page' },
   {
     path: 'home',
     loadChildren: () =>
@@ -23,9 +23,7 @@ const routes: Routes = [
   {
     path: 'config',
     loadChildren: () =>
-      import('./pages/config/config.module').then(
-        (m) => m.ConfigModule
-      ),
+      import('./pages/config/config.module').then((m) => m.ConfigModule),
   },
   {
     path: '**',
