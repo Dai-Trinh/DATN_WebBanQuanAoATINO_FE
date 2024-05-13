@@ -6,9 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-detail.component.css'],
 })
 export class ProductDetailComponent implements OnInit {
+  
+  
+  
   quantity = 1;
   array = [1, 2, 3, 4];
   effect = 'scrollx';
+
 
   arraySize = [30, 31, 32, 33, 34, 35];
 

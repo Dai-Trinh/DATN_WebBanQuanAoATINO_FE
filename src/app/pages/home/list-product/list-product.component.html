@@ -13,17 +13,18 @@
       (mouseenter)="shoppingCartHover($event, i)"
       (mouseleave)="shoppingCartHover($event, -1)"
       class="content-product product"
-      *ngFor="let d of dataItem; index as i"
+      *ngFor="let product of listProduct; index as i"
+      (click)="handleProductDetail(product)"
     >
-      <img
-        src="../../../assets/image/Banner 1 - 1920x900 - Hero banner.jpg"
+      <img nz-image
+        [nzSrc]="urlPreview + '/' + product.avatar"
         alt=""
       />
       <div class="product-infor">
-        <p>Áo sơ mi ngắn tay Aristino ASS028AZ màu Xanh kẻ dệt dobby</p>
+        <p>{{product.productName}}</p>
         <i class="ti-heart"></i>
       </div>
-      <p class="price">850.000đ</p>
+      <p class="price">{{product.price}}</p>
       <div [class]="cartProductClass[i]">
         <i class="ti-bag"></i>
       </div>
@@ -36,8 +37,8 @@
   <div class="page">
     <nz-pagination
       [(nzPageIndex)]="current"
-      [nzTotal]="50"
-      [nzPageSize]="20"
+      [nzTotal]="total"
+      [nzPageSize]="pageSize"
       [nzSize]="'small'"
     ></nz-pagination>
   </div>

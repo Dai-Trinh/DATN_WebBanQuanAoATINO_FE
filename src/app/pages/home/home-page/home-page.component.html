@@ -1,10 +1,10 @@
 <div class="banner">
-  <div [class]="slideClass[0]">
-    <img src="assets/img/Hero Banner 1 -1920x900.jpg" alt="" />
+  <div *ngFor="let item of slideClass" [class]="item.class">
+    <img nz-image [nzSrc]=" urlPreview + '/' + item.urlImage" alt="" />
   </div>
-  <div [class]="slideClass[1]">
+  <!-- <div [class]="slideClass[1]">
     <img src="assets/img/Banner 1 - 1920x900 - Hero banner.jpg" alt="" />
-  </div>
+  </div> -->
 </div>
 
 <div class="carousel-wrapp">
@@ -44,13 +44,16 @@
       (click)="scrollProduct('left')"
     ></span>
     <ul class="carousel" #carouselProduct>
-      <li class="card-product" *ngFor="let card of cards">
+      <li class="card-product" *ngFor="let card of productSales">
         <div class="img">
-          <img [src]="card.imageUrl" alt="img" />
+          <img [src]="urlPreview + '/' + card.avatar" alt="img" />
         </div>
         <div class="card-title">
           <p class="title-image">
-            {{ card.title }}
+            {{ card.productName }}
+          </p>
+          <p class="price">
+            {{ card.price }}đ
           </p>
         </div>
       </li>

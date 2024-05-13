@@ -66,6 +66,11 @@
 .content-product .product-infor {
   display: flex;
   flex-direction: row;
+ 
+}
+
+.product-infor > p {
+  width: 360px;
 }
 
 .content-product .product-infor i {

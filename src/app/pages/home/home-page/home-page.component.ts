@@ -6,6 +6,9 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
+import { UserService } from '../user.service';
+import { filter } from 'rxjs';
+import { environment } from '../../../../environment/environment.cloud';
 
 @Component({
   selector: 'app-home-page',
@@ -18,13 +21,20 @@ export class HomePageComponent implements OnInit {
   @ViewChild('firstHorizontalScrollDiv') firstHorizontalScrollDiv!: ElementRef;
   //@ViewChild('secondHorizontalScrollDiv') secondHorizontalScrollDiv: ElementRef;
 
-  arrDem: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  constructor(private _userService: UserService,
+              private renderer: Renderer2){
 
-  slideClass: string[] = [];
+  }
+
+  urlPreview: string = environment.api_end_point_preview;
+
+  slideClass: any[] = [];
+
+  productSales: any[] = [];
 
   ngOnInit(): void {
-    this.slideClass[0] = 'banner-slide banner-fade';
-    this.slideClass[1] = 'banner-slide';
+    this.getAllProductSales();
+    this.getBanner()
     setInterval(() => {
       this.nextSlide();
     }, 10000); // Thay đổi ảnh sau mỗi 3 giây
@@ -53,36 +63,66 @@ export class HomePageComponent implements OnInit {
       'banner-slide banner-fade'
     );
     const nextSlideIndex = (currentSlideIndex + 1) % this.slideClass.length;
-    this.slideClass[currentSlideIndex] = 'banner-slide';
-    this.slideClass[nextSlideIndex] = 'banner-slide banner-fade';
+    this.slideClass[currentSlideIndex].class = 'banner-slide';
+    this.slideClass[nextSlideIndex].class = 'banner-slide banner-fade';
   }
 
-  constructor(private renderer: Renderer2) {}
+  async getBanner(){
+    let dataRequest = {
+      pageSize: 0,
+      filter: {}
+    }
+    await this._userService.getBanner(dataRequest).then((res) => {
+      if(res.result.responeCode == '00'){
+        
+        console.log('11 ', this.slideClass)
+      }
+      for(let i = 0; i < res.data.length; i++){
+        if(i == 0){
+          let dataBanner = {
+            class: 'banner-slide banner-fade',
+            urlImage:  res.data[i].imageBanner
+          }
+          this.slideClass.push(dataBanner);
+        } else {
+          let dataBanner = {
+            class: 'banner-slide',
+            urlImage: res.data[i].imageBanner
+          }
+          this.slideClass.push(dataBanner);
+        }
+      }
+      console.log('11 ', this.slideClass)
+      
+    })
+  }
+
+  async getAllProductSales(){
+    let dataRequest = {
+      pageSize: 0,
+      filter: {},
+      sortProperties: 'sortProperty',
+      sortOrder: 'DESC'
+    }
+    await this._userService.getProduct(dataRequest).then((res) => {
+      if(res.result.responseCode === '00'){
+        this.productSales = res.data;
+      }
+    })
+  }
+
+
 
   isScrolled = false;
 
   @HostListener('window:scroll', ['$event'])
   onScroll() {
-    this.isScrolled = window.scrollY > 150;
+    this.isScrolled = window.scrollY > 100;
     // Thực hiện các hành động khi trang được cuộn
     console.log('Trang đã cuộn!');
   }
 
-  onScrollHorizontal(event: MouseEvent) {
-    // Kiểm tra hướng scroll và thực hiện xử lý tương ứng
-    if (event.target === this.firstHorizontalScrollDiv.nativeElement) {
-      this.renderer.setProperty(
-        this.firstHorizontalScrollDiv.nativeElement,
-        'scrollLeft',
-        event.pageX
-      );
-      console.log('Trang đã cuộn Trái!');
-    }
-    // } else if (event.target === this.secondHorizontalScrollDiv.nativeElement) {
-    //   // Nếu sự kiện scroll được kích hoạt trên thẻ div thứ hai
-    //   console.log('Đã cuộn div thứ hai');
-    // }
-  }
+  
 
   cards = [
     { imageUrl: 'assets/img/img2a.jpg', title: 'suits' },
@@ -99,9 +139,9 @@ export class HomePageComponent implements OnInit {
   currentIndex = 0;
   interval: any;
   scroll(direction: 'left' | 'right'): void {
-    const carouselElement = this.carousel.nativeElement;
-    const cardWidth = carouselElement.querySelector('.card').clientWidth;
-    const wrapperWidth = carouselElement.clientWidth;
+    const carouselElement = this.carousel?.nativeElement;
+    const cardWidth = carouselElement?.querySelector('.card').clientWidth;
+    const wrapperWidth = carouselElement?.clientWidth;
     const visibleCards = Math.floor(wrapperWidth / (cardWidth + 16));
 
     if (direction === 'left') {
@@ -121,16 +161,16 @@ export class HomePageComponent implements OnInit {
       }
     }
 
-    carouselElement.scrollTo({
+    carouselElement?.scrollTo({
       left: this.currentIndex * (cardWidth + 16),
       behavior: 'smooth',
     });
   }
 
   scrollProduct(direction: 'left' | 'right'): void {
-    const carouselElement = this.carouselProduct.nativeElement;
+    const carouselElement = this.carouselProduct?.nativeElement;
     const cardWidth =
-      carouselElement.querySelector('.card-product').clientWidth;
+      carouselElement?.querySelector('.card-product').clientWidth;
     const wrapperWidth = carouselElement.clientWidth;
     const visibleCards = Math.floor(wrapperWidth / (cardWidth + 16));
 
@@ -151,7 +191,7 @@ export class HomePageComponent implements OnInit {
       }
     }
 
-    carouselElement.scrollTo({
+    carouselElement?.scrollTo({
       left: this.currentIndex * (cardWidth + 16),
       behavior: 'smooth',
     });

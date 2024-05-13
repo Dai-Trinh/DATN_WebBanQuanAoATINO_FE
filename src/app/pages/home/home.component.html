@@ -1,4 +1,4 @@
-<div class="header" [ngClass]="{ scroll: isScroll, header: !isScroll }">
+<div class="header" (scroll)="onScroll()" [ngClass]="{ scroll: isScroll, header: !isScroll }">
   <div class="left">
     <i class="ti-menu" (click)="openMenu()"></i>
     ATINO
@@ -27,25 +27,14 @@
         <li nz-menu-item>Bộ sưu tập mùa đông</li>
       </ul>
     </li>
-    <li class="menu-parent" nz-submenu nzTitle="Bộ sưu tập">
+    <li *ngFor="let item of listCate" class="menu-parent" nz-submenu [nzTitle]="item.categoryName">
       <ul>
-        <li nz-menu-item>Bộ sưu tập mùa hè</li>
-        <li nz-menu-item>Bộ sưu tập mùa đông</li>
+        <li *ngFor="let sub of item.categoryChild" nz-menu-item (click)="handleRoute(sub)">{{sub.categoryName}}</li>
       </ul>
     </li>
-    <li class="menu-parent" nz-submenu nzTitle="Bộ sưu tập">
-      <ul>
-        <li nz-menu-item>Bộ sưu tập mùa hè</li>
-        <li nz-menu-item>Bộ sưu tập mùa đông</li>
-      </ul>
-    </li>
-    <li class="menu-parent" nz-submenu nzTitle="Bộ sưu tập">
-      <ul>
-        <li nz-menu-item>Bộ sưu tập mùa hè</li>
-        <li nz-menu-item>Bộ sưu tập mùa đông</li>
-      </ul>
+    <li class="menu-parent"  nz-menu-item> TIN TỨC
     </li>
   </ul>
 </div>
 
-<router-outlet></router-outlet>
+<router-outlet #myOutlet></router-outlet>

@@ -41,7 +41,7 @@
 
 .scroll {
   height: 60px;
-  border-bottom: 0.5px solid gray;
+  /* border-bottom: 0.5px solid gray; */
   align-self: center;
   align-content: center;
   z-index: 10;
