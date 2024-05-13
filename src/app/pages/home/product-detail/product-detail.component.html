@@ -3,20 +3,18 @@
     <nz-carousel class="carousel-product" nzAutoPlay [nzEffect]="effect">
       <div
         nz-carousel-content
-        *ngFor="let index of array"
-        style="
-          background-image: url('../../../assets/image/Banner\ 1\ -\ 1920x900\ -\ Hero\ banner.jpg');
-        "
+        *ngFor="let index of product?.imageDescription"
+        [ngStyle]="{'background-image' : 'url(urlPreview/index.saveFileName)'}"
       ></div>
     </nz-carousel>
     <div class="left">
-      <p class="ten">Áo polo golf dài tay Aristino ALPG02W2</p>
+      <p class="ten">{{product.productName}}</p>
       <i class="ti-heart yeuthich"></i>
       <div class="clear"></div>
       <div class="avatar">
-        <img src="../../../assets/image/Hero Banner 1 -1920x900.jpg" alt="" />
+        <img nz-image [nzSrc]="urlPreview + '/' + product.avatar" alt="" />
       </div>
-      <p class="gia">1.650.000đ</p>
+      <p class="gia">{{product.price}}đ</p>
       <p class="mau">Màu: Đỏ 46</p>
       <div class="size">
         Chọn size

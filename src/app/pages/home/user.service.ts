@@ -18,6 +18,10 @@ export class UserService {
         return this._baseService.postData('product', dataRequest);
     }
 
+    getProductDetail(id: any){
+        return this._baseService.getData('product/' + id);
+    }
+
 
     //TODO GET CATEGORY
     getCategory(){
