@@ -28,8 +28,15 @@ export class ProductDetailComponent implements OnInit {
 
   arrayClassSize: string[] = [];
 
+  colorString = '';
+  sizeString = '';
+  size: string = '';
+  color: string = '';
+
+  spining = false;
+
   ngOnInit(): void {
-    this.getDetail()
+    this.getDetail();
     for (let i = 0; i < this.arraySize.length; i++) {
       this.arrayClassSize[i] = '';
     }
@@ -40,6 +47,7 @@ export class ProductDetailComponent implements OnInit {
       this.arrayClassSize[i] = '';
     }
     this.arrayClassSize[index] = 'is-size';
+    this.size = this.product.productSize[index];
   }
 
   clickQuantity(operation: any) {
@@ -53,11 +61,37 @@ export class ProductDetailComponent implements OnInit {
   }
 
   async getDetail(){
+    this.spining = true;
     await this._productService.getProductDetail(this.id).then((res) => {
       if(res.result.responseCode == '00'){
         this.product = res.data;
         this.arraySize = res.data.productSize;
+        this.colorAndSize();
       }
+      this.spining = false;
     })
+  }
+
+  colorAndSize(){
+    if(this.product.productSize.length > 0){
+      for(let i = 0; i < this.product.productSize.length; i++){
+        if(i == this.product.productSize.length - 1){
+          this.sizeString += this.product.productSize[i];
+        } else {
+          this.sizeString += this.product.productSize[i] + ', ';
+        }
+      }
+    }
+
+    if(this.product.productColor.length > 0){
+      this.color = this.product.productColor[0];
+      for(let i = 0; i < this.product.productColor.length; i++){
+        if(i == this.product.productSize.length - 1){
+          this.colorString += this.product.productColor[i];
+        } else {
+          this.colorString += this.product.productColor[i] + ', ';
+        }
+      }
+    }
   }
 }

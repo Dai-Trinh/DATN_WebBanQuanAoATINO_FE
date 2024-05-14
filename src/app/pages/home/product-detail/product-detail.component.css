@@ -1,3 +1,5 @@
+@import url('../../../../assets/icons/themify-icons/themify-icons.css');
+
 #chitetsanpham {
   width: 100%;
   padding-top: 80px;
@@ -41,14 +43,19 @@
 
 .left .si {
   margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  
 }
 
 .left .si > li {
-  padding: 7px;
-  width: 70px;
-  height: 70px;
+  width: 30px !important;
+  height: 30px !important;
   text-align: center;
-  display: inline;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  display: flex;
   border: 1px solid gray;
   border-radius: 50%;
   margin-right: 20px;
@@ -71,6 +78,7 @@
   font-weight: bold;
   float: left;
   margin-right: 20px;
+  width: 500px;
 }
 
 .left .gia {
@@ -186,7 +194,7 @@
 }
 
 
-.si > li {
-  height: 30px;
-  width: 30px;
+nz-select {
+  width: 200px;
+  margin-left: 35px;
 }

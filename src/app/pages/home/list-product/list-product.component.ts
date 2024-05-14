@@ -15,12 +15,6 @@ export class ListProductComponent implements OnInit {
     private _routerActive: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
-    this.getAllProduct()
-    for (let i = 0; i < this.listProduct.length; i++) {
-      this.cartProductClass[i] = 'shopping-cart shopping-cart-none';
-    }
-  }
 
   listProduct: any[] = []
   parentId: number = this._routerActive.snapshot.params['id'];
@@ -32,6 +26,16 @@ export class ListProductComponent implements OnInit {
   current: number = 1;
   pageSize: number = 10;
   total: number = 12;
+
+  ngOnInit(): void {
+    this._routerActive.paramMap.subscribe(params => {
+      this.parentId = this._routerActive.snapshot.params['id'];
+      this.getAllProduct()
+    });
+    for (let i = 0; i < this.listProduct.length; i++) {
+      this.cartProductClass[i] = 'shopping-cart shopping-cart-none';
+    }
+  }
 
   shoppingCartHover($event: MouseEvent, index: any) {
     for (let i = 0; i < this.dataItem.length; i++) {
@@ -45,7 +49,9 @@ export class ListProductComponent implements OnInit {
       pageNumber: this.current - 1,
       pageSize: this.pageSize,
       filter: {
-        parentId: this.parentId
+        category: {
+          id: this.parentId
+        }
       },
       sortProperty: 'updatedAt',
       sortOrder: 'DESC'

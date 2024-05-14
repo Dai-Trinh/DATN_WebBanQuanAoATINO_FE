@@ -19,10 +19,12 @@
   width: 100%;
 }
 
-.left {
+.left{
   font-size: 25px;
   float: left;
+  cursor: pointer;
 }
+
 
 .left > i {
   padding: 0px 20px;

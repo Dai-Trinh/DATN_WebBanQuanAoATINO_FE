@@ -9,6 +9,7 @@ import {
 import { UserService } from '../user.service';
 import { filter } from 'rxjs';
 import { environment } from '../../../../environment/environment.cloud';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
@@ -22,7 +23,8 @@ export class HomePageComponent implements OnInit {
   //@ViewChild('secondHorizontalScrollDiv') secondHorizontalScrollDiv: ElementRef;
 
   constructor(private _userService: UserService,
-              private renderer: Renderer2){
+              private renderer: Renderer2,
+              private _routerActive: ActivatedRoute){
 
   }
 
@@ -33,6 +35,9 @@ export class HomePageComponent implements OnInit {
   productSales: any[] = [];
 
   ngOnInit(): void {
+    if(this._routerActive.snapshot.routeConfig?.path != 'home-page'){
+      this.isScrolled = true;
+    }
     this.getAllProductSales();
     this.getBanner()
     setInterval(() => {
@@ -120,6 +125,7 @@ export class HomePageComponent implements OnInit {
     this.isScrolled = window.scrollY > 100;
     // Thực hiện các hành động khi trang được cuộn
     console.log('Trang đã cuộn!');
+    console.log(this._routerActive.snapshot.routeConfig?.path)
   }
 
   

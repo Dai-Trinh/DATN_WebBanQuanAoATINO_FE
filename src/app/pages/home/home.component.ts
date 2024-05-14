@@ -7,7 +7,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { UserService } from './user.service';
 
 @Component({
@@ -31,15 +31,22 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllCate();
-    
+    if(this._routerActive.snapshot.routeConfig?.path !== 'home-page'){
+      this.isScroll = true;
+    }
+    console.log('home: ' + this._routerActive.snapshot.routeConfig?.path)
   }
 
-  @Input() isScroll = false;
+  isScroll = false;
 
   closeMenu = false;
 
   openMenu(): void {
     this.closeMenu = !this.closeMenu;
+  }
+
+  handleLogo(){
+    this._router.navigate(['./home/home-page']);
   }
 
   ngOnDestroy() {
@@ -63,8 +70,9 @@ export class HomeComponent implements OnInit {
 
   constructor(private renderer: Renderer2, 
               private _homeService: UserService,
-              private _router: Router) {
-
+              private _router: Router,
+              private _routerActive: ActivatedRoute) {
+             
               }
 
   handleRoute(item: any){
@@ -75,7 +83,13 @@ export class HomeComponent implements OnInit {
 
   @HostListener('window:scroll', ['$event'])
   onScroll() {
-    this.isScroll = window.scrollY > 150;
+    if(this._routerActive.snapshot.routeConfig?.path == 'home'){
+      this.isScroll = window.scrollY > 150;
+    } else{
+      this.isScroll = true;
+    }
+  
+    console.log(this._routerActive.snapshot.routeConfig?.path)
   }
 
   
