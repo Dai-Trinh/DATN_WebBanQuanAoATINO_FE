@@ -34,7 +34,6 @@ export class HomeComponent implements OnInit {
     if(this._routerActive.snapshot.routeConfig?.path !== 'home-page'){
       this.isScroll = true;
     }
-    console.log('home: ' + this._routerActive.snapshot.routeConfig?.path)
   }
 
   isScroll = false;

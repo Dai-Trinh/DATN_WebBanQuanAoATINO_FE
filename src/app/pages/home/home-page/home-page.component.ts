@@ -9,7 +9,7 @@ import {
 import { UserService } from '../user.service';
 import { filter } from 'rxjs';
 import { environment } from '../../../../environment/environment.cloud';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
@@ -24,7 +24,8 @@ export class HomePageComponent implements OnInit {
 
   constructor(private _userService: UserService,
               private renderer: Renderer2,
-              private _routerActive: ActivatedRoute){
+              private _routerActive: ActivatedRoute,
+              private _router: Router){
 
   }
 
@@ -202,4 +203,9 @@ export class HomePageComponent implements OnInit {
       behavior: 'smooth',
     });
   }
+
+  handleProductDetail(item: any){
+    this._router.navigate(['./home/product-detail/' + item.id])
+  }
+
 }

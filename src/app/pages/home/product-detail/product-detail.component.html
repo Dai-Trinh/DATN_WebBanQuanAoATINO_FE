@@ -5,9 +5,8 @@
       <div
         nz-carousel-content
         *ngFor="let index of product?.imageDescription"
-        
       >
-      <img nz-image [nzSrc]="urlPreview  + '/' + index.savedFileName"/>
+      <img [src]="urlPreview  + '/' + index.savedFileName"/>
     </div>
     </nz-carousel>
     <div class="left">

@@ -16,8 +16,8 @@
       *ngFor="let product of listProduct; index as i"
       (click)="handleProductDetail(product)"
     >
-      <img nz-image
-        [nzSrc]="urlPreview + '/' + product.avatar"
+      <img
+        [src]="urlPreview + '/' + product.avatar"
         alt=""
       />
       <div class="product-infor">

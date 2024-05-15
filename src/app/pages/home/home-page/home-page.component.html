@@ -33,7 +33,7 @@
 
 <div class="home-categories">
   <div class="title-home__categories-wrap">
-    <p class="title-categories">DANH MỤC NỔI BẬT</p>
+    <p class="title-categories">SẢN PHẨM BÁN CHẠY</p>
   </div>
 
   <div class="wrapper">
@@ -45,7 +45,7 @@
     ></span>
     <ul class="carousel" #carouselProduct>
       <li class="card-product" *ngFor="let card of productSales">
-        <div class="img">
+        <div class="img" (click)="handleProductDetail(card)">
           <img [src]="urlPreview + '/' + card.avatar" alt="img" />
         </div>
         <div class="card-title">
