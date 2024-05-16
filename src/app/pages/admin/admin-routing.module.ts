@@ -15,6 +15,7 @@ import { ProductReadComponent } from './product-information/product-read/product
 import { ProductAddComponent } from './product-information/product-add/product-add.component';
 import { AddNewsComponent } from './information-news/add-news/add-news.component';
 import { ReadNewsComponent } from './information-news/read-news/read-news.component';
+import { CollectionComponent } from './collection/collection.component';
 
 const routes: Routes = [
   {
@@ -77,6 +78,10 @@ const routes: Routes = [
         path: 'category/children',
         component: CategoryChildrenComponent,
       },
+      {
+        path: 'collection',
+        component: CollectionComponent,
+      }
     ],
   },
 ];

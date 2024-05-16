@@ -141,4 +141,21 @@ export class AdminService {
     return this._baseService.getData('admin/news/' +id +'/change-visible')
   }
 
+  //QUẢN LÝ BỘ SƯU TẬP
+  getListCollection(dataRequest: any){
+    return this._baseService.postData('admin/collection', dataRequest);
+  }
+
+  saveCollection(dataRequest: any){
+    return this._baseService.postData("admin/collection/save", dataRequest);
+  }
+
+  updateCollection(id: any, dataRequest: any){
+    return this._baseService.putData("admin/collection/update/" + id, dataRequest);
+  }
+
+  deleteCollection(id: any){
+    return this._baseService.deleteData("admin/collection/" + id);
+  }
+
 }

@@ -23,6 +23,7 @@ import { ProductAddComponent } from './product-information/product-add/product-a
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { AddNewsComponent } from './information-news/add-news/add-news.component';
 import { ReadNewsComponent } from './information-news/read-news/read-news.component';
+import { CollectionComponent } from './collection/collection.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { ReadNewsComponent } from './information-news/read-news/read-news.compon
     ProductAddComponent,
     AddNewsComponent,
     ReadNewsComponent,
+    CollectionComponent,
   ],
   imports: [
     CommonModule,

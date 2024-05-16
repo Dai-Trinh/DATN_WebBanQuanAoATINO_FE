@@ -99,6 +99,13 @@ export class MenuComponent {
           role: null,
           lstChild: null,
         },
+        {
+          name: 'Bộ sưu tập',
+          url: 'collection',
+          classIcon: null,
+          role: null,
+          lstChild: null,
+        },
       ],
     },
     {
