@@ -130,5 +130,12 @@ export class MenuComponent {
         },
       ],
     },
+    {
+      name: 'Quản lý tài khoản',
+      url: 'user',
+      classIcon: 'person',
+      role: null,
+      lstChild: null,
+    },
   ];
 }

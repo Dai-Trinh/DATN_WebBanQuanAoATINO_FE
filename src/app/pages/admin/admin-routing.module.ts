@@ -16,6 +16,7 @@ import { ProductAddComponent } from './product-information/product-add/product-a
 import { AddNewsComponent } from './information-news/add-news/add-news.component';
 import { ReadNewsComponent } from './information-news/read-news/read-news.component';
 import { CollectionComponent } from './collection/collection.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   {
@@ -81,6 +82,10 @@ const routes: Routes = [
       {
         path: 'collection',
         component: CollectionComponent,
+      },
+      {
+        path: 'user',
+        component: UserComponent,
       }
     ],
   },

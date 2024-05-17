@@ -24,6 +24,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { AddNewsComponent } from './information-news/add-news/add-news.component';
 import { ReadNewsComponent } from './information-news/read-news/read-news.component';
 import { CollectionComponent } from './collection/collection.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { CollectionComponent } from './collection/collection.component';
     AddNewsComponent,
     ReadNewsComponent,
     CollectionComponent,
+    UserComponent,
   ],
   imports: [
     CommonModule,
