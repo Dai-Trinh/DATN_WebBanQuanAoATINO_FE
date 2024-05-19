@@ -102,6 +102,13 @@ export class AddNewsComponent {
       isRequired: true
     },
     {
+      title: 'Mô tả vắn tắt',
+      key: 'briefDescription',
+      width: '150px',
+      visible: true,
+      sortOrder: '',
+    },
+    {
       title: 'Ẩn/hiện',
       key: 'visible',
       width: '150px',
@@ -158,7 +165,7 @@ export class AddNewsComponent {
 
   onHandleConfirmNavigate(event: any) {
     this.isVisibaleModalNavigate = false;
-    this._router.navigate(['./admin/product/information']);
+    this._router.navigate(['./admin/information/news']);
   }
 
   ngOnInit(){

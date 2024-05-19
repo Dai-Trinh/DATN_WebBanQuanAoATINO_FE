@@ -17,6 +17,7 @@
   color: white;
   position: fixed;
   width: 100%;
+  margin-top: 0;
 }
 
 .left{
@@ -90,3 +91,86 @@
   cursor: pointer;
   color: red;
 }
+
+#footer {
+  margin-top: 30px;
+  border-top: 1px solid black;
+  font-size: 13px;
+  width: 100%;
+  padding-left: 100px;
+  height: 200px;
+  padding-top: 30px;
+}
+
+#footer .right {
+  float: left;
+  margin-right: 80px;
+}
+
+#footer .right p {
+  font-weight: bold;
+  font-size: 15px;
+  margin-left: 40px;
+}
+
+#footer .right ul {
+  margin-top: 20px; 
+}
+
+#footer .right ul li {
+  list-style-type: none;
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+#footer .left {
+  float: right;
+  margin-right: 250px;
+} 
+
+#footer .left .theodoi {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+
+#footer .left .email {
+  margin-top: 20px;
+  height: 30px;
+  border: 1px solid black;
+  font-size: 13px;
+}
+
+#footer .left .email input {
+  border: none;
+  height: 30px;
+  padding-left: 10px;
+  width: 200px;
+  font-size: 13px;
+}
+
+
+#footer .left .email button {
+  height: 30px;
+  background-color: black;
+  color: white;
+  width: 80px;
+}
+
+.ketnoi {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.icon {
+  margin-top: 5px;
+}
+
+.icon i {
+  margin-right: 5px;
+  font-size: 20px;
+}
+
+input {
+  outline: none;
+}
+

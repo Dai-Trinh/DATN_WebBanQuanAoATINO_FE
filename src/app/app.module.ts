@@ -8,7 +8,7 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
   HttpClient,
@@ -23,18 +23,18 @@ import { ComponentCommonModule } from './shared/component-common.module';
 // import { KeycloakAngularModule } from 'keycloak-angular';
 import { ToastrModule } from 'ngx-toastr';
 import { ExceptionModule } from './shared/exception/exception.module';
+import { LoginComponent } from './pages/login/login.component';
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     IconsProviderModule,
-    FormsModule,
     FormsModule,
     NgZorroModuleExport,
     HttpClientModule,
@@ -54,6 +54,7 @@ registerLocaleData(en);
     // KeycloakAngularModule,
     ComponentCommonModule,
     ExceptionModule,
+    ReactiveFormsModule,
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

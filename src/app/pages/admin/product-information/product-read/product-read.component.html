@@ -123,7 +123,7 @@
                   <!-- <span class="span-error">*</span> -->
               </p>
               <div class="clearfix">
-                <nz-upload
+                <!-- <nz-upload
                  [nzMultiple]="true"
                   class="upload-list-inline"
                   nzAction="http://localhost:9090/api/assets/upload-file-one"
@@ -137,11 +137,11 @@
                         Upload
                       </span>
                     </button>
-                  </ng-container>
-                  <!-- <app-upload-file
+                  </ng-container> -->
+                  <app-upload-file
              (outputListFile)="uploadDescriptionUrl($event)" (outputListFileFromBE)="deleteFile($event)"
-            ></app-upload-file> -->
-                </nz-upload>
+            ></app-upload-file>
+                <!-- </nz-upload> -->
               </div>
               <!-- <p class="m-0 span-error" *ngIf="listFileImage.length == 0 ? true : false">
             {{ "message.required" | translate }}

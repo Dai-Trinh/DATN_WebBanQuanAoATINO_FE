@@ -161,7 +161,7 @@ export class UploadService {
         .post<any>(`${this.path}/${url}`, formData, {
           headers: new HttpHeaders({
             //'Content-Type': 'image/png',
-            'Access-Control-Allow-Origin': '*',
+            //'Access-Control-Allow-Origin': '*',
             Authorization: `Bearer ${this.token}`,
           }),
           observe: 'response',

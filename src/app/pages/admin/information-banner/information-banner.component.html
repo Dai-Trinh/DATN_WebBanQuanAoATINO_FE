@@ -128,7 +128,7 @@
                     <td nzLeft nzAlign="center">{{ i+1 }}</td>
                     <ng-container *ngFor="let column of columns">
                       <ng-container
-                        *ngIf="column.visible && column.key !== 'status' && column.key !== 'visible' && column.key !== 'imageBanner'"
+                        *ngIf="column.visible && column.key !== 'updatedAt' && column.key !== 'status' && column.key !== 'visible' && column.key !== 'imageBanner'"
                       >
                         <td>
                           <span
@@ -166,6 +166,13 @@
                           <nz-switch [(ngModel)]="row.visible" (ngModelChange)="handleChangeVisible(row.id)"></nz-switch>
                         </td>
                       </ng-container>
+                      <ng-container
+                      *ngIf="column.visible && column.key == 'updatedAt'"
+                    >
+                      <td nzAlign="left">
+                        {{row[column.key] * 1000 | date:'dd/MM/yyyy'}}
+                      </td>
+                    </ng-container>
                       <ng-container
                         *ngIf="column.visible && column.key == 'status'"
                       >
@@ -264,7 +271,7 @@
         </div>
         <app-upload-file (outputListFile)="uploadBanner($event)" [maxFiles]="1"></app-upload-file>
       </div>
-      <div nz-row class="mt-12" *ngIf="action != 'create'">
+      <!-- <div nz-row class="mt-12" *ngIf="action != 'create'">
         <div nz-col nzSpan="24">
           <span style="font-weight: bold; font-size: 16px">Ngày cập nhật</span>
         </div>
@@ -272,7 +279,7 @@
           <nz-date-picker [nzDisabled]="true" [(ngModel)]="dataInformation.updatedAt" class="w-100"
             nzFormat="dd/MM/yyyy"></nz-date-picker>
         </div>
-      </div>
+      </div> -->
       <div nz-row class="mt-12" nzJustify="end">
         <div>
           <app-button btnClass="btn-cancel" btnType="primary"

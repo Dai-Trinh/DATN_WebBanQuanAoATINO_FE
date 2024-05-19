@@ -128,7 +128,7 @@
                     <td nzLeft nzAlign="center">{{ i+1 }}</td>
                     <ng-container *ngFor="let column of columns">
                       <ng-container
-                        *ngIf="column.visible && column.key !== 'status' && column.key !== 'visible' && column.key !== 'avatar'"
+                        *ngIf="column.visible && column.key !== 'status' && column.key !== 'visible' && column.key !== 'avatar' && column.key != 'updatedAt'"
                       >
                         <td>
                           <span
@@ -164,6 +164,13 @@
                       >
                         <td nzAlign="center">
                           <nz-switch [(ngModel)]="row.visible" (ngModelChange)="changeVisible(row.id)"></nz-switch>
+                        </td>
+                      </ng-container>
+                      <ng-container
+                        *ngIf="column.visible && column.key == 'updatedAt'"
+                      >
+                        <td nzAlign="center">
+                          {{row[column.key] * 1000 | date:'dd/MM/yyyy'}}
                         </td>
                       </ng-container>
                       <ng-container

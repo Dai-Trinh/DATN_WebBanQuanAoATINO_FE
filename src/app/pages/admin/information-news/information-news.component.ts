@@ -83,6 +83,13 @@ export class InformationNewsComponent {
       sortOrder: '',
     },
     {
+      title: 'Mô tả vắn tắt',
+      key: 'briefDescription',
+      width: '150px',
+      visible: true,
+      sortOrder: '',
+    },
+    {
       title: 'Ẩn/hiện',
       key: 'visible',
       width: '150px',

@@ -8,7 +8,7 @@
     <i class="ti-search icon-right"></i>
     <span nz-icon nzType="user" class="icon-right"></span>
     <i class="ti-heart icon-right"></i>
-    <i class="ti-bag icon-right"></i>
+    <i class="ti-bag icon-right" (click)="toShoppingCart()"></i>
   </div>
 </div>
 <div class="clear"></div>
@@ -21,20 +21,66 @@
     <i class="ti-close" (click)="openMenu()"></i>
   </div>
   <ul nzMode="inline" nzTheme="light" nz-menu>
-    <li class="menu-parent" nz-submenu nzTitle="Bộ sưu tập">
-      <ul>
-        <li nz-menu-item>Bộ sưu tập mùa hè</li>
-        <li nz-menu-item>Bộ sưu tập mùa đông</li>
-      </ul>
+    <li class="menu-parent" nz-menu-item routerLink="colection">Bộ sưu tập
     </li>
     <li *ngFor="let item of listCate" class="menu-parent" nz-submenu [nzTitle]="item.categoryName">
       <ul>
         <li *ngFor="let sub of item.categoryChild" nz-menu-item (click)="handleRoute(sub)">{{sub.categoryName}}</li>
       </ul>
     </li>
-    <li class="menu-parent"  nz-menu-item> TIN TỨC
+    <li class="menu-parent"  nz-menu-item routerLink="new"> TIN TỨC
+    </li>
+    <li class="menu-parent"  nz-menu-item> CỬA HÀNG
     </li>
   </ul>
 </div>
 
+
 <router-outlet #myOutlet></router-outlet>
+
+<div style="clear: both;"></div>
+<div id="footer">
+  <div class="right">
+      <p>VỀ CHÚNG TÔI</p>
+      <ul>
+          <li>Câu chuyện thương hiệu</li>
+          <li>Tin tức</li>
+          <li>Đôi cánh yêu thương</li>
+          <li>Liên hệ</li>
+      </ul>
+  </div>
+  <div class="right">
+      <p>CHÍNH SÁCH BÁN HÀNG</p>
+      <ul>
+          <li>Chính sách đổi hàng</li>
+          <li>Chính sách bảo hành</li>
+          <li>Chính sách hội viên</li>
+          <li>Chính sách giao nhận</li>
+          <li>Hướng dẫn mua hàng</li>
+          <li>Chính sách bảo mật</li>
+      </ul>
+  </div>
+  <div class="right">
+      <p>TƯ VẤN</p>
+      <ul>
+          <li>Tư vấn phong cách</li>
+          <li>Tư vấn chọn size</li>
+          <li>Đôi cánh yêu thương</li>
+          <li>Hỏi đáp</li>
+      </ul>
+  </div>
+  <div class="left">
+      <p class="theodoi">THEO DÕI BẢN TIN CỦA CHÚNG TÔI</p>
+      <div class="email">
+          <input type="email" placeholder="Nhập email của bạn...">
+          <button>ĐĂNG KÝ</button>
+      </div>
+      <p class="ketnoi">Kết nối với chúng tôi</p>
+      <p class="icon"><i class="ti-facebook"></i>
+          <i class="ti-instagram"></i>
+          <i class="ti-headphone"></i>
+          <i class="ti-twitter"></i>
+          <i class="ti-youtube"></i>
+      </p>
+  </div>
+</div>

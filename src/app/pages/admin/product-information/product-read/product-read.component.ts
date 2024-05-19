@@ -189,7 +189,7 @@ export class ProductReadComponent {
 
   onHandleUpdate(event: any){
     this.isVisibaleModalNavigateUpdate = true;
-    this.dataInformation.category = this.selectedValueCategory;
+    this.dataInformation.category.id = this.selectedValueCategory;
     this.dataInformation.productSize = this.listOfSelectedValueSize;
     this.dataInformation.productColor = this.listOfSelectedValueColor;
     // this.dataInformation.avatar = this.
@@ -201,13 +201,15 @@ export class ProductReadComponent {
 
   onHandleConfirmNavigateUpdate(event: any){
     this.isVisibaleModalNavigateUpdate = false;
-    console.log(this.descriptionUrl)
-    for(let item of this.descriptionUrl){
-      if(item.response !== undefined){
-        this.dataInformation.imageDescription.push(item?.response)
-      }
-    }
+    //console.log(this.descriptionUrl)
+    // for(let item of this.descriptionUrl){
+    //   if(item.response !== undefined){
+    //     this.dataInformation.imageDescription.push(item?.response)
+    //   }
+    // }
+  
     console.log(this.dataInformation);
+    this.updateProduct()
     this._router.navigate(['./admin/product/information']);
   }
 
@@ -282,22 +284,6 @@ export class ProductReadComponent {
         let avatar = {
           savedFileName: this.dataInformation.avatar,
         }
-        for(let item of this.dataInformation?.imageDescription){
-          let image = {
-              uid: item.id,
-              name: item.fileName,
-              status: 'done',
-              url: this.urlPreview + '/' + item.savedFileName,
-              //thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-              linkProps: {
-                download: this.urlPreview + '/' + item.savedFileName
-              }
-
-          }
-          this.descriptionUrl.push(image);
-          
-        }
-        console.log('desc: ' + JSON.stringify(this.descriptionUrl));
         this.avatarUrl.push(avatar);
       }
       this.spin = false;
@@ -346,16 +332,11 @@ export class ProductReadComponent {
     });
     const response = await this.__fileService.uploadFileDocument(formData);
     if (response.result.responseCode == '00') {
-      let listFile = response.data.map((item: any) => ({
-        uid: this.idFile++,
-        savedFileName: item.savedFileName,
-        fileName: item.fileName,
-        name: item.fileName,
-        status: 'done',
-        url: this.urlPreview + '/' + item.savedFileName,
-      }));
+      let listFile = response.data;
+      for(let item of listFile){
+        this.dataInformation.imageDescription.push(item);
+      }
       
-      this.descriptionUrl = listFile;
     }
     }
   }

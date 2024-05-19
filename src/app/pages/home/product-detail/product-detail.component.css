@@ -174,23 +174,17 @@
 }
 
 [nz-carousel-content] {
-  height: 600px;
-  width: 400px;
+  height: 700px;
+  width: 600px;
   overflow: hidden;
   background-size: cover;
 }
 
 .carousel-product {
-  height: 600px;
-  width: 400px;
+  height: 700px;
+  width: 600px;
   float: left;
   margin-right: 100px;
-}
-
-.avatar img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
 }
 
 

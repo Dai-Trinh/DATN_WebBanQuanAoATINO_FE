@@ -31,9 +31,12 @@ export class HomePageComponent implements OnInit {
 
   urlPreview: string = environment.api_end_point_preview;
 
-  slideClass: any[] = [];
+  slideClass: any[] = [
+  ];
 
   productSales: any[] = [];
+
+  collection: any[] = [];
 
   ngOnInit(): void {
     if(this._routerActive.snapshot.routeConfig?.path != 'home-page'){
@@ -41,36 +44,55 @@ export class HomePageComponent implements OnInit {
     }
     this.getAllProductSales();
     this.getBanner()
+    this.getAllProductCollection();
     setInterval(() => {
       this.nextSlide();
     }, 10000); // Thay đổi ảnh sau mỗi 3 giây
   }
 
-  ngAfterViewInit() {
-    this.startAutoplay();
-  }
+  // ngAfterViewInit() {
+  //   this.startAutoplay();
+  // }
 
-  ngOnDestroy() {
-    this.stopAutoplay();
-  }
+  // ngOnDestroy() {
+  //   this.stopAutoplay();
+  // }
 
-  startAutoplay() {
-    this.interval = setInterval(() => {
-      this.scroll('right');
-    }, 5000);
-  }
+  // startAutoplay() {
+  //   this.interval = setInterval(() => {
+  //     this.scroll('right');
+  //   }, 5000);
+  // }
 
-  stopAutoplay() {
-    clearInterval(this.interval);
-  }
+  // stopAutoplay() {
+  //   clearInterval(this.interval);
+  // }
+  currentSlideIndex: number = 0;
 
   nextSlide() {
-    const currentSlideIndex = this.slideClass.indexOf(
-      'banner-slide banner-fade'
-    );
-    const nextSlideIndex = (currentSlideIndex + 1) % this.slideClass.length;
-    this.slideClass[currentSlideIndex].class = 'banner-slide';
-    this.slideClass[nextSlideIndex].class = 'banner-slide banner-fade';
+  
+    //  this.slideClass.indexOf(
+    //   'banner-slide banner-fade'
+    // );
+    for(let i = 0; i < this.slideClass.length; i++){
+      if(this.slideClass[i].class == 'banner-slide banner-fade'){
+        this.currentSlideIndex = i;
+        break;
+      }
+    }
+    let nextSlideIndex = this.currentSlideIndex + 1;
+    if(nextSlideIndex >= this.slideClass.length){
+      nextSlideIndex = 0;
+    }
+    this.slideClass[this.currentSlideIndex] = {
+      urlImage: this.slideClass[this.currentSlideIndex].urlImage,
+      class: 'banner-slide',
+    };
+    this.slideClass[nextSlideIndex] = {
+      urlImage: this.slideClass[nextSlideIndex].urlImage,
+      class: 'banner-slide banner-fade'
+    };
+    console.log(this.slideClass)
   }
 
   async getBanner(){
@@ -117,6 +139,20 @@ export class HomePageComponent implements OnInit {
     })
   }
 
+  async getAllProductCollection(){
+    let dataRequest = {
+      pageSize: 0,
+      filter: {},
+      sortProperties: 'sortProperty',
+      sortOrder: 'DESC'
+    }
+    await this._userService.getCollection(dataRequest).then((res) => {
+      if(res.result.responseCode === '00'){
+        this.collection = res.data;
+      }
+    })
+  }
+
 
 
   isScrolled = false;
@@ -125,8 +161,7 @@ export class HomePageComponent implements OnInit {
   onScroll() {
     this.isScrolled = window.scrollY > 100;
     // Thực hiện các hành động khi trang được cuộn
-    console.log('Trang đã cuộn!');
-    console.log(this._routerActive.snapshot.routeConfig?.path)
+  
   }
 
   

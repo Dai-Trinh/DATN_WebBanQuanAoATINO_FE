@@ -24,7 +24,7 @@ export class BaseService {
       this.httpClient.get<any>(`${path}/${url}`, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          //'Access-Control-Allow-Origin': '**',
           'Accept-language': this.accpetLanguage,
         }),
         observe: 'response',
@@ -38,7 +38,7 @@ export class BaseService {
       this.httpClient.post<any>(`${path}/${url}`, data, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          //'Access-Control-Allow-Origin': '**',
           'Accept-language': this.accpetLanguage,
         }),
         observe: 'response',
@@ -52,7 +52,7 @@ export class BaseService {
       this.httpClient.delete<any>(`${path}/${url}`, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          //'Access-Control-Allow-Origin': '**',
           'Accept-language': this.accpetLanguage,
         }),
         observe: 'response',
@@ -66,7 +66,7 @@ export class BaseService {
       this.httpClient.put<any>(`${path}/${url}`, data, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          //'Access-Control-Allow-Origin': '*',
           'Accept-language': this.accpetLanguage,
         }),
         observe: 'response',

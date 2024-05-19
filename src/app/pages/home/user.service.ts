@@ -13,6 +13,11 @@ export class UserService {
        return this._baseService.postData('banner', dataRequest);
     }
   
+    //TODO GET COLLECTION
+    getCollection(dataRequest: any){
+        return this._baseService.postData('collection', dataRequest);
+    }
+
     //TODO GET PRODUCT
     getProduct(dataRequest: any){
         return this._baseService.postData('product', dataRequest);
@@ -26,6 +31,11 @@ export class UserService {
     //TODO GET CATEGORY
     getCategory(){
         return this._baseService.getData('category');
+    }
+
+    //TODO GET NEWS
+    getNews(){
+        return this._baseService.getData('news')
     }
 
   }

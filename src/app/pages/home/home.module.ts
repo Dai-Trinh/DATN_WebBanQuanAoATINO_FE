@@ -18,6 +18,7 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { ListProductComponent } from './list-product/list-product.component';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { GioHangComponent } from './gio-hang/gio-hang.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     PaymentComponent,
     ListProductComponent,
     ProductDetailComponent,
+    GioHangComponent,
   ],
   imports: [
     CommonModule,

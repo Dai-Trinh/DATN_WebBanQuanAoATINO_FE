@@ -16,10 +16,11 @@
       (click)="scroll('left')"
     ></span>
     <ul class="carousel" #carousel>
-      <li class="card" *ngFor="let card of cards">
+      <li class="card" *ngFor="let item of collection">
         <div class="img">
-          <img [src]="card.imageUrl" alt="img" />
+          <img [src]="item?.files[0] ? urlPreview + '/' + item?.files[0]?.savedFileName : ''" alt="img" />
         </div>
+        <p style="font-size: 16px;">{{item.name}}</p>
       </li>
     </ul>
     <span

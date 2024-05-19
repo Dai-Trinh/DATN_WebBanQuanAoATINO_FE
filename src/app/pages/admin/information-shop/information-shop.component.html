@@ -148,7 +148,7 @@
                     <td nzLeft nzAlign="center">{{ i+1 }}</td>
                     <ng-container *ngFor="let column of columns">
                       <ng-container
-                        *ngIf="column.visible && column.key !== 'status'"
+                        *ngIf="column.visible && column.key !== 'status' && column.key !== 'updatedAt'"
                       >
                         <td>
                           <span
@@ -159,6 +159,13 @@
                           >
                             {{ row[column.key] }}
                           </span>
+                        </td>
+                      </ng-container>
+                      <ng-container
+                        *ngIf="column.visible && column.key == 'updatedAt'"
+                      >
+                        <td>
+                          {{ row[column.key] * 1000 | date: 'dd/MM/yyyy' }}
                         </td>
                       </ng-container>
                       <ng-container

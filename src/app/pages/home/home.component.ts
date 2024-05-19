@@ -104,4 +104,8 @@ export class HomeComponent implements OnInit {
       }
     })
   }
+
+  toShoppingCart(){
+    this._router.navigate(['./home/shopping-cart']);
+  }
 }

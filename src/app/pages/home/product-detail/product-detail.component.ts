@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HomeService } from '../home.service';
 import { UserService } from '../user.service';
 import { environment } from '../../../../environment/environment.cloud';
+import { MessageService } from '../../../services/message.service';
+import { LocalStorage } from '../../../services/localstorage.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -13,7 +15,9 @@ export class ProductDetailComponent implements OnInit {
   
   constructor(private _router: Router,
     private _productService: UserService,
-    private _activeRouter: ActivatedRoute
+    private _activeRouter: ActivatedRoute,
+    private _messageService: MessageService,
+    private _localStorage: LocalStorage
   ){}
 
   id: number = this._activeRouter.snapshot.params['id'];
@@ -35,12 +39,15 @@ export class ProductDetailComponent implements OnInit {
 
   spining = false;
 
+  dataSaveCart: any = {};
+
   ngOnInit(): void {
     this.getDetail();
     for (let i = 0; i < this.arraySize.length; i++) {
       this.arrayClassSize[i] = '';
     }
   }
+
 
   clickSize(index: any) {
     for (let i = 0; i < this.arraySize.length; i++) {
@@ -94,4 +101,22 @@ export class ProductDetailComponent implements OnInit {
       }
     }
   }
+
+  saveCart(){
+    this.dataSaveCart.id = this.product.id;
+    this.dataSaveCart.productName = this.product.productName;
+    this.dataSaveCart.avatar = this.product.avatar;
+    this.dataSaveCart.size = this.size;
+    this.dataSaveCart.color = this.color;
+    this.dataSaveCart.quantity = this.quantity;
+    this.dataSaveCart.price = this.product.price;
+    if(this.size === '' || this.color === ''){
+      this._messageService.notificationWarning('Bạn phải chọn màu sắc và size');
+      return;
+    }
+    this._localStorage.setShoppingCart(this.dataSaveCart);
+    this.dataSaveCart = {};
+    console.log(localStorage.getItem('shoppingCart'))
+  }
+
 }
