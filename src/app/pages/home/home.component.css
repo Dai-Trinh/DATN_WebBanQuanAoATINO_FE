@@ -20,12 +20,11 @@
   margin-top: 0;
 }
 
-.left{
+.left {
   font-size: 25px;
   float: left;
   cursor: pointer;
 }
-
 
 .left > i {
   padding: 0px 20px;
@@ -62,15 +61,17 @@
   background-color: white;
   font-size: 12px;
   border: none;
-  transition: opacity 2s ease;
+  transition: 0.2 ease;
 }
 
 .menu-user-open {
   display: block;
+  transition: 0.2s ease;
 }
 
 .menu-user-close {
   display: none;
+  transition: 0.2s ease;
 }
 
 .menu-parent {
@@ -114,7 +115,7 @@
 }
 
 #footer .right ul {
-  margin-top: 20px; 
+  margin-top: 20px;
 }
 
 #footer .right ul li {
@@ -125,13 +126,12 @@
 #footer .left {
   float: right;
   margin-right: 250px;
-} 
+}
 
 #footer .left .theodoi {
   font-weight: bold;
   font-size: 15px;
 }
-
 
 #footer .left .email {
   margin-top: 20px;
@@ -147,7 +147,6 @@
   width: 200px;
   font-size: 13px;
 }
-
 
 #footer .left .email button {
   height: 30px;
@@ -173,4 +172,3 @@
 input {
   outline: none;
 }
-
