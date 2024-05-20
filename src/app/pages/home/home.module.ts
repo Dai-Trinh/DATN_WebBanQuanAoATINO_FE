@@ -11,7 +11,6 @@ import { PaymentComponent } from './payment/payment.component';
 import { FormsModule } from '@angular/forms';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import {
-  NzPaginationComponent,
   NzPaginationModule,
 } from 'ng-zorro-antd/pagination';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
@@ -19,6 +18,7 @@ import { ListProductComponent } from './list-product/list-product.component';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { GioHangComponent } from './gio-hang/gio-hang.component';
+import { TinTucComponent } from './tin-tuc/tin-tuc.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +28,7 @@ import { GioHangComponent } from './gio-hang/gio-hang.component';
     ListProductComponent,
     ProductDetailComponent,
     GioHangComponent,
+    TinTucComponent,
   ],
   imports: [
     CommonModule,

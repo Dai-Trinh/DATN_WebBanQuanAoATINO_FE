@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
+import { environment } from '../../../../environment/environment.cloud';
 
 @Component({
   selector: 'app-tin-tuc',
   templateUrl: './tin-tuc.component.html',
   styleUrls: ['./tin-tuc.component.css']
 })
-export class TinTucComponent implements OnInit {
+export class TinTucComponent {
 
   constructor(private _newsService: UserService) { }
 
   listNew: any[] = [];
 
-  ngOnInit() {
+  urlPreview: string = environment.api_end_point_preview;
+
+  ngOnInit(): void {
     this.getDataNews();
   }
 
