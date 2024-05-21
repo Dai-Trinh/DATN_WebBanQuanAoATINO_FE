@@ -19,12 +19,10 @@
   width: 100%;
   height: auto;
 }
-
-
-.card {
+.card-content {
   margin: 10px;
   max-width: 800px;
-  height: 600px;
+  height: 520px;
 }
 .card img {
   width: 100%;
@@ -47,7 +45,7 @@
 }
 .row {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
   gap: 20px;
 }
 .blog-header {
@@ -76,4 +74,29 @@
   text-decoration: none;
   color: #817676;
   font-weight: bold;
+}
+
+.button-more {
+  margin: 10px;
+}
+
+.button-content {
+  font-size: 16px;
+  color: black;
+}
+
+.button-content:hover {
+  color: blue;
+}
+
+.card-content__img {
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+}
+
+.content-title{
+  color: black !important;
+  font-weight: 600;
+  font-size: 18px;
 }

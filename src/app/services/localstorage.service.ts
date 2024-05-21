@@ -51,4 +51,8 @@ export class LocalStorage{
         return localStorage.getItem(this.keyCard);
     }
 
+    removeAllShoppingCart(){
+        localStorage.removeItem(this.keyCard);
+    }
+
 }

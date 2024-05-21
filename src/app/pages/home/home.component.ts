@@ -87,8 +87,7 @@ export class HomeComponent implements OnInit {
     } else{
       this.isScroll = true;
     }
-  
-    console.log(this._routerActive.snapshot.routeConfig?.path)
+
   }
 
   

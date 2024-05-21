@@ -92,7 +92,7 @@ export class HomePageComponent implements OnInit {
       urlImage: this.slideClass[nextSlideIndex].urlImage,
       class: 'banner-slide banner-fade'
     };
-    console.log(this.slideClass)
+  
   }
 
   async getBanner(){
@@ -101,26 +101,24 @@ export class HomePageComponent implements OnInit {
       filter: {}
     }
     await this._userService.getBanner(dataRequest).then((res) => {
-      if(res.result.responeCode == '00'){
-        
-        console.log('11 ', this.slideClass)
-      }
-      for(let i = 0; i < res.data.length; i++){
-        if(i == 0){
-          let dataBanner = {
-            class: 'banner-slide banner-fade',
-            urlImage:  res.data[i].imageBanner
+      if(res.result.responseCode == '00'){
+        for(let i = 0; i < res.data.length; i++){
+          if(i == 0){
+            let dataBanner = {
+              class: 'banner-slide banner-fade',
+              urlImage:  res.data[i].imageBanner
+            }
+            this.slideClass.push(dataBanner);
+          } else {
+            let dataBanner = {
+              class: 'banner-slide',
+              urlImage: res.data[i].imageBanner
+            }
+            this.slideClass.push(dataBanner);
           }
-          this.slideClass.push(dataBanner);
-        } else {
-          let dataBanner = {
-            class: 'banner-slide',
-            urlImage: res.data[i].imageBanner
-          }
-          this.slideClass.push(dataBanner);
         }
       }
-      console.log('11 ', this.slideClass)
+      
       
     })
   }

@@ -9,7 +9,9 @@
     <div class="header-last">
       <div class="header-last__card">
         <div class="card-icon">
-          <span nz-icon nzType="check" nzTheme="outline"></span>
+          <div class="final-icon__wrap">
+            <p class="final-icon">1</p>
+          </div>
         </div>
         <div class="card-content__wrap">
           <p class="card-content">Giỏ hàng</p>
@@ -17,7 +19,7 @@
       </div>
       <div class="header-last__pay">
         <div class="pay-icon__wrap">
-          <p class="pay-icon">2</p>
+          <span class="pay-icon" nz-icon nzType="check" nzTheme="outline"></span>
         </div>
         <div class="pay-content__wrap">
           <p class="pay-content">Đặt hàng</p>
@@ -96,27 +98,31 @@
       <div class="form-information__title">
         <p class="title-information">THÔNG TIN ĐƠN HÀNG</p>
       </div>
-      <div class="form-information__product">
-        <div class="form-information__product-image">
-          <img src="assets/image/ATINO.png" alt="" class="image-product" />
-        </div>
-        <div class="form-information__product-info">
-          <p class="form-information__product-name">
-            Áo sơ mi ngắn tay Aristino ASS103AZ màu Trắng in họa tiết AR
-          </p>
-          <p class="form-information__product-price">750.000đ</p>
-          <p class="form-information__product-des">Trắng in họa tiết AR</p>
-          <div class="form-information__product-num">
-            <p class="form-information__product-size">
-              Size: <span class="form-information__product-size-num">43</span>
+      <div class="list-product">
+        <div class="form-information__product" *ngFor="let item of listProduct">
+          <div class="form-information__product-image">
+            <img [src]="urlPreview + '/' + item.avatar" alt="" class="image-product" />
+          </div>
+          <div class="form-information__product-info">
+            <p class="form-information__product-name">
+              {{item.productName}}
             </p>
-            <p class="form-information__product-quantity">
-              Số lượng:
-              <span class="form-information__product-size-num">1</span>
-            </p>
+            <p class="form-information__product-price">{{item.price | number}}đ</p>
+            <p class="form-information__product-des">{{item.color}}</p>
+            <div class="form-information__product-num">
+              <p class="form-information__product-size">
+                Size: <span class="form-information__product-size-num">{{item.size}}</span>
+              </p>
+              <p class="form-information__product-quantity">
+                Số lượng:
+                <span class="form-information__product-size-num">{{item.quantity}}</span>
+              </p>
+            </div>
           </div>
         </div>
+        
       </div>
+      
       <div class="form-infomation__product-voucher">
         <input
           type="text"
@@ -131,15 +137,15 @@
       <div class="form-infomation__product-price">
         <div class="form-infomation__product-expected">
           <p class="form-infomation__expected-title">Tạm tính</p>
-          <p class="form-infomation__expected-price">30.000đ</p>
+          <p class="form-infomation__expected-price">{{tolal | number}}đ</p>
         </div>
         <div class="form-infomation__product-expected">
           <p class="form-infomation__expected-title">Phí vận chuyển</p>
-          <p class="form-infomation__expected-price">30.000đ</p>
+          <p class="form-infomation__expected-price">0đ</p>
         </div>
         <div class="form-infomation__product-expected">
           <p class="form-infomation__expected-title">Thành tiền</p>
-          <p class="form-infomation__expected-price">780.000đ</p>
+          <p class="form-infomation__expected-price">{{tolal | number}}đ</p>
         </div>
       </div>
       <div class="form-infomation__pay">

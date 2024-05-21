@@ -237,6 +237,15 @@ header .tieude {
   .header-last__final {
     flex: 0.15;
   }
+
+  .header-last__card {
+    border-bottom: 2px solid black;
+   
+  }
+
+  .card-content__wrap {
+    margin-top: 0;
+  }
   
   .card-icon,
   .card-content__wrap,
@@ -250,10 +259,7 @@ header .tieude {
     text-align: center;
   }
   
-  .card-icon {
-    margin-bottom: 20px;
-  }
-  
+
  span,
   .final-icon {
     height: 50px;
@@ -278,11 +284,16 @@ header .tieude {
     border-radius: 50%;
     font-size: 1.25rem;
     border: 1px solid #c1c1c1;
+    color: #c1c1c1;
   }
   
   .card-content,
   .final-content {
     font-size: 16px;
+  }
+
+  .card-content {
+    color: black;
   }
   
   .pay-content {

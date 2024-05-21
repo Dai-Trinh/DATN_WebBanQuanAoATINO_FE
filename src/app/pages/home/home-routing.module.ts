@@ -7,6 +7,7 @@ import { ListProductComponent } from './list-product/list-product.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { TinTucComponent } from './tin-tuc/tin-tuc.component';
 import { GioHangComponent } from './gio-hang/gio-hang.component';
+import { ChiTietTinTucComponent } from './tin-tuc/chi-tiet-tin-tuc/chi-tiet-tin-tuc.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
       {
         path: 'new',
         component: TinTucComponent
+      },
+      {
+        path: 'new/detail/:id',
+        component: ChiTietTinTucComponent
       },
       {
         path: 'shopping-cart',

@@ -17,6 +17,8 @@ import { AddNewsComponent } from './information-news/add-news/add-news.component
 import { ReadNewsComponent } from './information-news/read-news/read-news.component';
 import { CollectionComponent } from './collection/collection.component';
 import { UserComponent } from './user/user.component';
+import { BillComponent } from './bill/bill.component';
+import { BillDetailComponent } from './bill/bill-detail/bill-detail.component';
 
 const routes: Routes = [
   {
@@ -86,6 +88,14 @@ const routes: Routes = [
       {
         path: 'user',
         component: UserComponent,
+      },
+      {
+        path: 'bill',
+        component: BillComponent,
+      },
+      {
+        path: 'bill/detail/:id',
+        component: BillDetailComponent,
       }
     ],
   },

@@ -38,5 +38,14 @@ export class UserService {
         return this._baseService.getData('news')
     }
 
+    getNewsDetail(id: any){
+        return this._baseService.getData('news/' + id);
+    }
+
+    //SAVE BILL
+    saveBill(dataRequest: any){
+        return this._baseService.postData('bills/create', dataRequest);
+    }
+
   }
   

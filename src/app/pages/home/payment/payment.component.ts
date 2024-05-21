@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { LocalStorage } from '../../../services/localstorage.service';
+import { Router } from '@angular/router';
+import { environment } from '../../../../environment/environment.cloud';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-payment',
@@ -7,37 +11,67 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentComponent implements OnInit {
   dataInformation: any = {};
-  constructor() {}
+  constructor(private _localStorage: LocalStorage,
+    private _router: Router,
+    private _paymentService: UserService
+  ){}
 
-  ngOnInit() {}
+  urlPreview: string = environment.api_end_point_preview;
+
+  listProduct: any[] = [];
+
+  tolal: any = 0;
+
+  billProduct: any[] = [];
+
+
+
+  ngOnInit() {
+    const data = this._localStorage.getShoppingCart()
+    this.listProduct = data ? JSON.parse(data) : [];
+    this.totalPrice();
+  }
+
+  totalPrice(){
+    this.tolal = 0;
+    this.listProduct.map((item) => {
+      this.tolal += item.price * item.quantity;
+    })
+  }
 
   columns: any[] = [
     {
-      keyName: 'name',
+      keyName: 'reciver',
       keyTitle: 'Họ và tên người nhận',
       check: true,
       isRequired: true,
     },
     {
-      keyName: 'name',
+      keyName: 'phoneNumber',
       keyTitle: 'Số điện thoại',
       check: true,
       isRequired: true,
     },
     {
-      keyName: 'name',
-      keyTitle: 'Tỉnh thành phố, Quận/Huyện',
+      keyName: 'email',
+      keyTitle: 'Email',
+      check: true,
+      isRequired: false,
+    },
+    {
+      keyName: 'address',
+      keyTitle: 'Địa chỉ nhận hàng',
       check: true,
       isRequired: true,
     },
+    // {
+    //   keyName: 'name',
+    //   keyTitle: 'Địa chỉ nhà cụ thể',
+    //   check: true,
+    //   isRequired: true,
+    // },
     {
-      keyName: 'name',
-      keyTitle: 'Địa chỉ nhà cụ thể',
-      check: true,
-      isRequired: true,
-    },
-    {
-      keyName: 'note',
+      keyName: 'billNote',
       keyTitle: 'Lời nhắn',
       check: true,
     },
@@ -45,5 +79,30 @@ export class PaymentComponent implements OnInit {
 
   addVoucher() {}
 
-  payProduct() {}
+  async payProduct() {
+    this.dataInformation.totalPrice = this.tolal;
+    this.dataInformation.status = 1;
+    this.listProduct.map((item: any) => {
+      let data = {
+        product: {
+          id: item.id
+        },
+        quantity: item.quantity,
+        price: item.price,
+        size: item.size,
+        color: item.color,
+        //sales: item.sales
+      }
+      this.billProduct.push(data);
+    })
+    this.dataInformation.productBill = this.billProduct;
+    await this._paymentService.saveBill(this.dataInformation).then((item) => {
+      console.log(item)
+      if(item.result.responseCode == '00'){
+        this.dataInformation = {};
+        this._localStorage.removeAllShoppingCart();
+      }
+    })
+    
+  }
 }

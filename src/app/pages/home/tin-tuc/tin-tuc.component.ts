@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { environment } from '../../../../environment/environment.cloud';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-tin-tuc',
@@ -9,7 +10,7 @@ import { environment } from '../../../../environment/environment.cloud';
 })
 export class TinTucComponent {
 
-  constructor(private _newsService: UserService) { }
+  constructor(private _newsService: UserService, private _router: Router) { }
 
   listNew: any[] = [];
 
@@ -28,5 +29,17 @@ export class TinTucComponent {
     })
   }
 
+  getFileDisplayName(name: string, limit: number): string {
+    
+    if (name?.length <= limit) {
+      return name;
+    } else {
+      return name?.substring(0, limit) + '...';
+    }
+  }
+
+  naviateDetail(id: any){
+    this._router.navigate(['./home/new/detail/' + id])
+  }
 
 }

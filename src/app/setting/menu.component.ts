@@ -131,9 +131,16 @@ export class MenuComponent {
       ],
     },
     {
+      name: 'Quản lý hóa đơn',
+      url: 'bill',
+      classIcon: 'file-done',
+      role: null,
+      lstChild: null,
+    },
+    {
       name: 'Quản lý tài khoản',
       url: 'user',
-      classIcon: 'person',
+      classIcon: 'user',
       role: null,
       lstChild: null,
     },

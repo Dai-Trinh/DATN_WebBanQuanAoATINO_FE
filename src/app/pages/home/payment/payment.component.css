@@ -65,7 +65,7 @@
   line-height: 50px;
   border-radius: 50%;
   font-size: 1.25rem;
-  border: 1px solid #c1c1c1;
+  border: 1px solid black;
 }
 
 .card-content,
@@ -134,8 +134,10 @@
 }
 
 .image-product {
-  width: 100px;
+  width: 120px;
   object-fit: cover;
+  margin-right: 10px;
+  height: 160px;
 }
 
 .form-information__product-name,
@@ -210,4 +212,22 @@
   border-radius: 30px;
   height: 45px;
   font-size: 16px;
+}
+
+.list-product {
+  overflow-y: scroll;
+  height: 170px;
+}
+
+.list-product::-webkit-scrollbar {
+  width: 20px; /* Độ rộng của thanh cuộn */
+  
+}
+
+.form-information__product-num p {
+  font-size: 13px;
+}
+
+.form-information__product-des {
+  font-size: 13px;
 }

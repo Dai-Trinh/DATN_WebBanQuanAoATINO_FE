@@ -19,6 +19,7 @@ import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { GioHangComponent } from './gio-hang/gio-hang.component';
 import { TinTucComponent } from './tin-tuc/tin-tuc.component';
+import { ChiTietTinTucComponent } from './tin-tuc/chi-tiet-tin-tuc/chi-tiet-tin-tuc.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { TinTucComponent } from './tin-tuc/tin-tuc.component';
     ProductDetailComponent,
     GioHangComponent,
     TinTucComponent,
+    ChiTietTinTucComponent,
   ],
   imports: [
     CommonModule,

@@ -6,23 +6,35 @@
       alt="" />
   </div>
   <!-- row -->
-  <div class="row" >
-    <div *ngFor="let item of listNew" class="card" >
-      <img [src]="item.avatar ? urlPreview + '/' + item.avatar : ''" alt="" />
-      <div class="abc">
-        <p style="float: left">Tin tức Atino</p>
-        <p style="float: right">Ngày {{item.createdAt * 1000 | date:'dd/MM/yyyy'}}</p>
+  <div class="row">
+    <div *ngFor="let item of listNew" class="card">
+      <div class="card-container">
+
+        <div class="card-content" (click)="naviateDetail(item.id)">
+          <a >
+            <img class="card-content__img" [src]="item.avatar ? urlPreview + '/' + item.avatar : ''" alt="" /></a>
+          <div class="abc">
+            <p style="float: left">Tin tức Atino</p>
+            <p style="float: right">Ngày {{item.updatedAt * 1000 | date:'dd/MM/yyyy'}}</p>
+          </div>
+          <div class="content">
+            <h3>
+              <a class="content-title" href="">{{item.title ? getFileDisplayName(item.title, 60) : ''}}</a>
+            </h3>
+            <p>
+              {{item.briefDescription ? getFileDisplayName(item.briefDescription, 60) : ''}}
+            </p>
+
+          </div>
+        </div>
+        <div class="button-more">
+          <a href="" class="button-content">Xem thêm <i class="fas fa-chevron-right fa-xs"></i></a>
+
+        </div>
       </div>
-      <div class="content">
-        <h3>
-          {{item.title}}
-        </h3>
-        <p>
-          {{item.briefDescription}}
-        </p>
-        <a href="">Xem thêm <i class="fas fa-chevron-right fa-xs"></i></a>
-      </div>
+
     </div>
+
     <!-- <div class="card">
       <img
         src="https://images.pexels.com/photos/389819/pexels-photo-389819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"

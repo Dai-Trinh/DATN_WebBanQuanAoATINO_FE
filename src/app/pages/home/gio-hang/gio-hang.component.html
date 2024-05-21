@@ -2,7 +2,7 @@
     <div class="header-last">
         <div class="header-last__card">
           <div class="card-icon">
-            <span nzTheme="outline">1</span>
+            <span style="color: black;" nz-icon nzType="check" nzTheme="outline"></span>
           </div>
           <div class="card-content__wrap">
             <p class="card-content">Giỏ hàng</p>
@@ -47,9 +47,9 @@
                     </div>
                 </div>
                 <div class="gia">
-                    <p>{{item.price}}đ</p>
+                    <p>{{item.price | number}}đ</p>
                 </div>
-                <div class="yeuthich">
+                <div class="yeuthich">  
                     <i class="ti-heart"></i>
                 </div>
                 <div class="clear"></div>
@@ -60,16 +60,16 @@
         <div class="giohang-right">
             <div class="tamtinh">
                 <p class="tam">Tạm tính:</p>
-                <p class="giatamtinh">{{tolal}}đ</p>
+                <p class="giatamtinh">{{tolal | number}}đ</p>
                 <div class="clear"></div>
             </div>
             <div class="clear"></div>
             <p class="mienphi">Miễn phí vấn chuyển cho đơn hàng từ 500k</p>
-            <div class="tienhanhdat">
+            <div class="tienhanhdat" (click)="navigatePayment()">
                 <p>TIẾN HÀNH ĐẶT HÀNG</p>
             </div>
             <p class="uudai">Ưu đãi hội viên</p>
-            <p class="tichdiem">Tích điểm đổi quà và rất nhiều ưu đãi đặc biệt khác, chỉ dành cho hội viên của Aristino.</p>
+            <p class="tichdiem">Tích điểm đổi quà và rất nhiều ưu đãi đặc biệt khác, chỉ dành cho hội viên của Atino.</p>
             <p class="dnhap">Đăng nhập</p>
         </div>
     </div>

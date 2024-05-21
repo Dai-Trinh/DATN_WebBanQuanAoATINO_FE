@@ -158,4 +158,17 @@ export class AdminService {
     return this._baseService.deleteData("admin/collection/" + id);
   }
 
+  //GET BILL
+  getAllBill(dataRequest: any){
+    return this._baseService.postData('admin/bills', dataRequest)
+  }
+
+  getDetailBill(id: any){
+    return this._baseService.getData("bills/" + id)
+  }
+
+  changeStatus(id: any, status: any){
+    return this._baseService.getData('bills/' + id +'/change/' + status)
+  }
+
 }
