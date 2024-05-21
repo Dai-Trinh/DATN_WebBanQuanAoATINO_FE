@@ -8,6 +8,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { TinTucComponent } from './tin-tuc/tin-tuc.component';
 import { GioHangComponent } from './gio-hang/gio-hang.component';
 import { ChiTietTinTucComponent } from './tin-tuc/chi-tiet-tin-tuc/chi-tiet-tin-tuc.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
@@ -28,20 +29,24 @@ const routes: Routes = [
       },
       {
         path: 'product-detail/:id',
-        component: ProductDetailComponent
+        component: ProductDetailComponent,
       },
       {
         path: 'new',
-        component: TinTucComponent
+        component: TinTucComponent,
       },
       {
         path: 'new/detail/:id',
-        component: ChiTietTinTucComponent
+        component: ChiTietTinTucComponent,
       },
       {
         path: 'shopping-cart',
         component: GioHangComponent,
-      }
+      },
+      {
+        path: 'login',
+        component: LoginComponent,
+      },
     ],
   },
 ];

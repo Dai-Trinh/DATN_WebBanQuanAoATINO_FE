@@ -23,14 +23,13 @@ import { ComponentCommonModule } from './shared/component-common.module';
 // import { KeycloakAngularModule } from 'keycloak-angular';
 import { ToastrModule } from 'ngx-toastr';
 import { ExceptionModule } from './shared/exception/exception.module';
-import { LoginComponent } from './pages/login/login.component';
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
