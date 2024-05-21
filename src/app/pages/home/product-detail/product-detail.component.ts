@@ -101,6 +101,7 @@ export class ProductDetailComponent implements OnInit {
       }
     }
   }
+  checkVilidate = true;
 
   saveCart(){
     this.dataSaveCart.id = this.product.id;
@@ -112,11 +113,18 @@ export class ProductDetailComponent implements OnInit {
     this.dataSaveCart.price = this.product.price;
     if(this.size === '' || this.color === ''){
       this._messageService.notificationWarning('Bạn phải chọn màu sắc và size');
+      this.checkVilidate = false;
       return;
     }
+    this.checkVilidate = true;
     this._localStorage.setShoppingCart(this.dataSaveCart);
     this.dataSaveCart = {};
-    console.log(localStorage.getItem('shoppingCart'))
+  }
+
+  navigatePayment(){
+    this.saveCart();
+    if(!this.checkVilidate) return;
+    this._router.navigate(['./home/payment']);
   }
 
 }
