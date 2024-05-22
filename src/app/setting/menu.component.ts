@@ -142,7 +142,22 @@ export class MenuComponent {
       url: 'user',
       classIcon: 'user',
       role: null,
-      lstChild: null,
+      lstChild: [
+        {
+          name: 'Thông tin khách hàng',
+          url: 'customer',
+          classIcon: null,
+          role: null,
+          lstChild: null,
+        },
+        {
+          name: 'Thông tin người quản trị',
+          url: 'user',
+          classIcon: null,
+          role: null,
+          lstChild: null,
+        },
+      ],
     },
   ];
 }

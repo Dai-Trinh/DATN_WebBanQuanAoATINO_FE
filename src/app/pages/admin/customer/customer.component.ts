@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import moment from 'moment';
 import { NzResizeEvent } from 'ng-zorro-antd/resizable';
-import { AdminService } from '../admin.service';
 import { MessageService } from '../../../services/message.service';
+import { AdminService } from '../admin.service';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrl: './user.component.css',
+  selector: 'app-customer',
+  templateUrl: './customer.component.html',
+  styleUrl: './customer.component.css'
 })
-export class UserComponent {
+export class CustomerComponent {
+
   constructor(
     private _categoryService: AdminService,
     private _messageService: MessageService
@@ -46,7 +47,6 @@ export class UserComponent {
 
   ngOnInit() {
     this.getLstData();
-    this.getAllRole()
   }
 
   async getLstData() {
@@ -69,7 +69,7 @@ export class UserComponent {
     };
     try {
       await this._categoryService
-        .getAllUserAdmin(dataRequest)
+        .getListCategoryParent(dataRequest)
         .then((item: any) => {
           if (item.result.responseCode == '00') {
             this.lstData = item.data.map((item: any, index: number) => ({
@@ -130,17 +130,19 @@ export class UserComponent {
     this.action = 'create';
     this.visibleModal = true;
     this.titleModal = 'Thêm mới tài khoản';
-    this.dataInformation.createdBy = 'admin',
-    this.dataInformation.updatedBy = 'admin';
+    this.dataInformation.categoryName = '';
+    (this.dataInformation.createdBy = 'admin'),
+      (this.dataInformation.updatedBy = 'admin');
   }
 
   handleUpdate(row: any) {
     this.action = 'update';
     this.visibleModal = true;
     this.titleModal = 'Cập nhật tài khoản';
-    
     this.dataInformation = {
-      ...row,
+      id: row.id,
+      categoryName: row.categoryName,
+      updatedAt: row.updatedAt,
     };
   }
 
@@ -149,7 +151,8 @@ export class UserComponent {
     this.visibleModal = true;
     this.titleModal = 'Xem chi tiết tài khoản';
     this.dataInformation = {
-      ...row,
+      categoryName: row.categoryName,
+      updatedAt: row.updatedAt,
     };
   }
 
@@ -176,7 +179,7 @@ export class UserComponent {
   }
 
   handleConfirm() {
-    if (!this.dataInformation.userName.trim()) {
+    if (!this.dataInformation.categoryName.trim()) {
       this._messageService.notificationWarning(
         `Bạn cần nhập đủ thông tin yêu cầu`
       );
@@ -184,20 +187,20 @@ export class UserComponent {
     } else {
       if (this.action == 'create') {
         /// Xử lý thêm mới (Khi gọi API thành công set dataInformation = {})
-        this.createUser()
+        this.createCategoryParent();
       }
       if (this.action == 'update') {
         /// Xử lý cập nhật (Khi gọi API thành công set dataInformation = {})
-        this.updateUser();
+        this.updateCategoryParent();
       }
     }
   }
 
-  async createUser() {
+  async createCategoryParent() {
     this.spin = true;
     try {
       await this._categoryService
-        .saveUser(this.dataInformation)
+        .saveCategory(this.dataInformation)
         .then((item: any) => {
           if (item.result.responseCode == '00') {
             this._messageService.notificationSuccess(item.result.message);
@@ -215,11 +218,11 @@ export class UserComponent {
     }
   }
 
-  async updateUser() {
+  async updateCategoryParent() {
     this.spin = true;
     try {
       await this._categoryService
-        .updatedUser(this.dataInformation.id, this.dataInformation)
+        .updateCategory(this.dataInformation.id, this.dataInformation)
         .then((item: any) => {
           if (item.result.responseCode == '00') {
             this._messageService.notificationSuccess(item.result.message);
@@ -259,18 +262,10 @@ export class UserComponent {
     }
   }
 
-  async getAllRole(){
-    await this._categoryService.getAllRole().then((item) => {
-      if(item.result.responseCode == '00'){
-        this.lstRoles = item.data;
-      }
-    })
-  }
-
   columns: any[] = [
     {
       title: 'Tên tài khoản',
-      key: 'userName',
+      key: 'username',
       width: '150px',
       visible: true,
       sortOrder: '',
@@ -284,7 +279,7 @@ export class UserComponent {
     },
     {
       title: 'Tên',
-      key: 'lastName',
+      key: 'lsstName',
       width: '150px',
       visible: true,
       sortOrder: '',
@@ -311,4 +306,5 @@ export class UserComponent {
       sortOrder: '',
     },
   ];
+
 }

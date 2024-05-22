@@ -171,4 +171,21 @@ export class AdminService {
     return this._baseService.getData('bills/' + id +'/change/' + status)
   }
 
+  //TODO GET ADMIN
+  getAllUserAdmin(dataRequest: any){
+    return this._baseService.postData('admin/user', dataRequest)
+  }
+
+  getAllRole(){
+    return this._baseService.getData('admin/roles');
+  }
+
+  saveUser(dataRequest: any){
+    return this._baseService.postData('user/new', dataRequest);
+  }
+
+  updatedUser(id: any ,dataRequest: any){
+    return this._baseService.putData('user/' + id, dataRequest);
+  }
+
 }

@@ -19,6 +19,7 @@ import { CollectionComponent } from './collection/collection.component';
 import { UserComponent } from './user/user.component';
 import { BillComponent } from './bill/bill.component';
 import { BillDetailComponent } from './bill/bill-detail/bill-detail.component';
+import { CustomerComponent } from './customer/customer.component';
 
 const routes: Routes = [
   {
@@ -88,6 +89,10 @@ const routes: Routes = [
       {
         path: 'user',
         component: UserComponent,
+      },
+      {
+        path: 'customer',
+        component: CustomerComponent,
       },
       {
         path: 'bill',

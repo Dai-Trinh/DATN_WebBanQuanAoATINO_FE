@@ -41,7 +41,7 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
     UploadFileComponent,
     ModalDeleteComponent,
     AreaUploadComponent,
-    ModalConfirmComponent,
+    ModalConfirmComponent
   ],
   exports: [
     SafePipe,

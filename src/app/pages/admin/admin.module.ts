@@ -27,6 +27,7 @@ import { CollectionComponent } from './collection/collection.component';
 import { UserComponent } from './user/user.component';
 import { BillComponent } from './bill/bill.component';
 import { BillDetailComponent } from './bill/bill-detail/bill-detail.component';
+import { CustomerComponent } from './customer/customer.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { BillDetailComponent } from './bill/bill-detail/bill-detail.component';
     UserComponent,
     BillComponent,
     BillDetailComponent,
+    CustomerComponent,
   ],
   imports: [
     CommonModule,

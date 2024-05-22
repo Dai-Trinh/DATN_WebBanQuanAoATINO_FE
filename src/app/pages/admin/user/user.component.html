@@ -149,7 +149,7 @@
             </ng-container>
             <ng-container *ngIf="column.visible && column.key == 'updatedAt'">
               <td nzAlign="right">
-                {{ row[column.key] | date : "dd/MM/yyyy" }}
+                {{ row[column.key] * 1000 | date : "dd/MM/yyyy" }}
               </td>
             </ng-container>
           </ng-container>
@@ -235,7 +235,7 @@
               <nz-input-group [nzSuffix]="suffixUsername">
                 <input
                   nz-input
-                  [(ngModel)]="dataInformation.username"
+                  [(ngModel)]="dataInformation.userName"
                   [placeholder]="'Nhập tên tài khoản'"
                   [readOnly]="action == 'read'"
                 />
@@ -246,17 +246,17 @@
                   class="ant-input-clear-icon"
                   nzTheme="fill"
                   nzType="close-circle"
-                  *ngIf="dataInformation.username"
-                  (click)="dataInformation.username = ''"
+                  *ngIf="dataInformation.userName"
+                  (click)="dataInformation.userName = ''"
                 ></span>
               </ng-template>
-              <div *ngIf="!dataInformation.username" class="error">
+              <div *ngIf="!dataInformation.userName" class="error">
                 Trường này yêu cầu bắt buộc
               </div>
             </div>
           </div>
         </div>
-        <div nz-col nzSpan="12">
+        <div nz-col nzSpan="12" *ngIf="action == 'create'">
           <div nz-row>
             <div nz-col nzSpan="24">
               <span style="font-weight: bold; font-size: 16px">Mật khẩu</span>
@@ -266,9 +266,9 @@
                 <input
                   nz-input
                   type="password"
-                  [(ngModel)]="dataInformation.password"
+                  [(ngModel)]="dataInformation.passWord"
                   [placeholder]="'Nhập tên tài khoản'"
-                  [readOnly]="action == 'read'"
+                  
                 />
               </nz-input-group>
               <ng-template #suffixPassword>
@@ -277,11 +277,11 @@
                   class="ant-input-clear-icon"
                   nzTheme="fill"
                   nzType="close-circle"
-                  *ngIf="dataInformation.password"
-                  (click)="dataInformation.password = ''"
+                  *ngIf="dataInformation.passWord"
+                  (click)="dataInformation.passWord = ''"
                 ></span>
               </ng-template>
-              <div *ngIf="!dataInformation.password" class="error">
+              <div *ngIf="!dataInformation.passWord" class="error">
                 Trường này yêu cầu bắt buộc
               </div>
             </div>
@@ -411,31 +411,30 @@
                 [disabled]="action == 'read'"
                 mode="multiple"
                 placeholder="select"
-                typeModel="value"
-                label="label"
-                value="value"
+                typeModel="object"
+                label="description"
+                
                 (valueChange)="dataInformation.roles = $event"
               />
             </div>
           </div>
         </div>
-        <div nz-col>
+        <!-- <div nz-col>
           <div nz-row *ngIf="action != 'create'">
             <div nz-col nzSpan="24">
               <span style="font-weight: bold; font-size: 16px"
                 >Ngày cập nhật</span
               >
             </div>
-            <div nz-col nzSpan="24">
-              <nz-date-picker
+            <div nz-col nzSpan="24" style="width: 100%;">
+              <nz-date-picker style="width: 190%;"
                 [nzDisabled]="true"
                 [(ngModel)]="dataInformation.updatedAt"
-                class="w-100"
                 nzFormat="dd/MM/yyyy"
               ></nz-date-picker>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div nz-row class="mt-12" nzJustify="end">
