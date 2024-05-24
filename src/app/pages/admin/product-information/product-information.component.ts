@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AdminService } from '../admin.service';
 import { environment } from '../../../../environment/environment.cloud';
+import moment from 'moment';
 
 @Component({
   selector: 'app-product-information',
@@ -150,13 +151,13 @@ export class ProductInformationComponent {
       visible: true,
       sortOrder: '',
     },
-    {
-      title: 'Thời gian cập nhật',
-      key: 'updatedAt',
-      width: '200px',
-      visible: true,
-      sortOrder: '',
-    },
+    // {
+    //   title: 'Thời gian cập nhật',
+    //   key: 'updatedAt',
+    //   width: '200px',
+    //   visible: true,
+    //   sortOrder: '',
+    // },
     
   ];
 
@@ -302,7 +303,14 @@ export class ProductInformationComponent {
         // productColor: this.filter.productColor,
         productForm: this.filter.productForm,
         sales: this.filter.sales,
-        category: this.filter.category
+        category: this.filter.category,
+        updatedAtSearch:
+          this.filter.updatedAtSearch.length > 0
+            ? [
+                moment(this.filter.updatedAtSearch[0]).format('YYYY-MM-DD'),
+                moment(this.filter.updatedAtSearch[1]).format('YYYY-MM-DD'),
+              ]
+            : [],
       },
       sortOrder: this.sortOrder,
       sortProperty: this.sortProperty

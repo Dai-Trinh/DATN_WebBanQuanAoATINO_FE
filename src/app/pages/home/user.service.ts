@@ -47,5 +47,10 @@ export class UserService {
         return this._baseService.postData('bills/create', dataRequest);
     }
 
+    //GET SHOP
+    getListShop(dataRequest: any){
+        return this._baseService.postData('shop', dataRequest);
+    }
+
   }
   

@@ -73,7 +73,7 @@ export class ProductNewComponent {
     {
       title: 'Size',
       key: 'size',
-      width: '150px',
+      width: '90px',
       visible: true,
       sortOrder: '',
     },
@@ -87,6 +87,20 @@ export class ProductNewComponent {
     {
       title: 'Số lượng nhập',
       key: 'quantityImport',
+      width: '150px',
+      visible: true,
+      sortOrder: '',
+    },
+    {
+      title: 'Giá nhập',
+      key: 'priceImport',
+      width: '150px',
+      visible: true,
+      sortOrder: '',
+    },
+    {
+      title: 'Thành tiền',
+      key: 'totalPrice',
       width: '150px',
       visible: true,
       sortOrder: '',
@@ -203,6 +217,7 @@ export class ProductNewComponent {
       color: row.color,
       size: row.size,
       quantityImport: row.quantityImport,
+      priceImport: row.priceImport
       
     }
     this.getProduct();
@@ -215,10 +230,11 @@ export class ProductNewComponent {
     this.titleModal = "Xem chi sản phẩm nhập"
     this.dataInformation = {
       id: row.id,
-      productEntity: row.productEntity,
+      productEntity: row.product,
       color: row.color,
       size: row.size,
       quantityImport: row.quantityImport,
+      priceImport: row.priceImport
     }
     this.visibleModal = true;
   }

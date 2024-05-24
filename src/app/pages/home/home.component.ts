@@ -9,6 +9,9 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { UserService } from './user.service';
+import { LocalStorage } from '../../services/localstorage.service';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-home',
@@ -21,6 +24,8 @@ export class HomeComponent implements OnInit {
   @ViewChild('firstHorizontalScrollDiv') firstHorizontalScrollDiv!: ElementRef;
   //@ViewChild('secondHorizontalScrollDiv') secondHorizontalScrollDiv: ElementRef;
 
+  private storageSub: Subscription | undefined;
+
   @ViewChild('myOutlet', { static: true }) myOutlet!: RouterOutlet;
 
   arrDem: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -29,11 +34,32 @@ export class HomeComponent implements OnInit {
 
   listCate: any[] = [];
 
+  lstCart: any[] = [];
+
+  totalCart: number = 0;
+
   ngOnInit(): void {
     this.getAllCate();
-    if(this._routerActive.snapshot.routeConfig?.path !== 'home-page'){
+    if(this._routerActive.snapshot.routeConfig?.path !== ''){
       this.isScroll = true;
     }
+    this.getCountCart()
+
+    this.storageSub = this._local.watchStorage().subscribe(() => {
+      this.getCountCart()
+    });
+
+    
+  }
+
+  getCountCart(){
+    this.totalCart = 0;
+    const data = this._local.getShoppingCart();
+    this.lstCart = data ? JSON.parse(data) : [];
+    this.lstCart.map((item) => {
+      this.totalCart += item.quantity;
+    })
+    
   }
 
   isScroll = false;
@@ -52,10 +78,14 @@ export class HomeComponent implements OnInit {
     this.stopAutoplay();
   }
 
-
-
   stopAutoplay() {
     clearInterval(this.interval);
+  }
+
+  navigateMenu(router: any){
+    this._router.navigate([router]);
+    this.closeMenu = false;
+    this.isScroll = true;
   }
 
   nextSlide() {
@@ -66,23 +96,35 @@ export class HomeComponent implements OnInit {
     this.slideClass[currentSlideIndex] = 'banner-slide';
     this.slideClass[nextSlideIndex] = 'banner-slide banner-fade';
   }
+  
 
   constructor(private renderer: Renderer2, 
               private _homeService: UserService,
               private _router: Router,
-              private _routerActive: ActivatedRoute) {
-             
+              private _routerActive: ActivatedRoute,
+            private _local: LocalStorage,
+            ) {
+              window.addEventListener('storage', (event) => {
+                console.log(12)
+                if (event.key == 'shoppingCart') {
+                  console.log(12)
+                  const data = this._local.getShoppingCart();
+                  this.lstCart = data ? JSON.parse(data) : [];
+                  this.totalCart = this.lstCart.length;
+                }
+              });
               }
 
   handleRoute(item: any){
     this._router.navigate(['./home/list-product/' + item.id])
     this.closeMenu = false;
+    this.isScroll = true;
   }
 
 
   @HostListener('window:scroll', ['$event'])
   onScroll() {
-    if(this._routerActive.snapshot.routeConfig?.path == 'home'){
+    if(this._routerActive.snapshot.routeConfig?.path != ''){
       this.isScroll = window.scrollY > 150;
     } else{
       this.isScroll = true;

@@ -10,9 +10,9 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const translateService = inject(TranslateService);
   let authMessage = '';
-  translateService
-    .get('auth.message')
-    .subscribe((item) => (authMessage = item));
+  // translateService
+  //   .get('auth.message')
+  //   .subscribe((item) => (authMessage = item));
   // Lấy danh sách các vai trò được phân quyền từ Backend
   const rolesFromBackend: string[] = JSON.parse(roles);
 
@@ -20,15 +20,17 @@ export const authGuard: CanActivateFn = (route, state) => {
   const rolesRequired = route.data['roles'] as Array<string>;
 
   // Kiểm tra xem người dùng có vai trò không
-  const hasRequiredRoles = rolesFromBackend?.some((role) =>
-    rolesRequired.includes(role)
-  );
+  // const hasRequiredRoles = rolesFromBackend?.some((role) =>
+  //   rolesRequired.includes(role)
+  // );
+
+  const hasRequiredRoles = false;
 
   if (hasRequiredRoles) {
     return true;
   } else {
-    messageService.notificationWarning(authMessage);
-    router.navigate(['/home']);
+    //messageService.notificationWarning(authMessage);
+    router.navigate(['./home/login']);
     return false;
   }
 };

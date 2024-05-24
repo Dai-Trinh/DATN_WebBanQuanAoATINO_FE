@@ -1,9 +1,7 @@
 <section class="page-category">
   <!-- container -->
   <div class="container">
-    <img
-      src="https://images.pexels.com/photos/389819/pexels-photo-389819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-      alt="" />
+    <p>TIN TỨC ATINO</p>
   </div>
   <!-- row -->
   <div class="row">
@@ -19,12 +17,11 @@
           </div>
           <div class="content">
             <h3>
-              <a class="content-title" href="">{{item.title ? getFileDisplayName(item.title, 60) : ''}}</a>
+              <a class="content-title">{{item.title ? getFileDisplayName(item.title, 60) : ''}}</a>
             </h3>
             <p>
-              {{item.briefDescription ? getFileDisplayName(item.briefDescription, 60) : ''}}
+              {{item.briefDescription ? getFileDisplayName(item.briefDescription, 120) : ''}}
             </p>
-
           </div>
         </div>
         <div class="button-more">
@@ -77,5 +74,13 @@
         <a href="">Xem thêm <i class="fas fa-chevron-right fa-xs"></i></a>
       </div>
     </div> -->
+  </div>
+  <div class="page">
+    <nz-pagination
+      [(nzPageIndex)]="current"
+      [nzTotal]="total"
+      [nzPageSize]="pageSize"
+      [nzSize]="'small'"
+    ></nz-pagination>
   </div>
 </section>

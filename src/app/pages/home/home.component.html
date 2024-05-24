@@ -8,7 +8,9 @@
     <i class="ti-search icon-right"></i>
     <span nz-icon nzType="user" class="icon-right"></span>
     <i class="ti-heart icon-right"></i>
-    <i class="ti-bag icon-right" (click)="toShoppingCart()"></i>
+    <i class="ti-bag icon-right" (click)="toShoppingCart()">
+      <p class="shopping-count">{{totalCart}}</p>
+    </i>
   </div>
 </div>
 <div class="clear"></div>
@@ -28,9 +30,9 @@
         <li *ngFor="let sub of item.categoryChild" nz-menu-item (click)="handleRoute(sub)">{{sub.categoryName}}</li>
       </ul>
     </li>
-    <li class="menu-parent"  nz-menu-item routerLink="new"> TIN TỨC
+    <li class="menu-parent"  nz-menu-item (click)="navigateMenu('./home/new')"> TIN TỨC
     </li>
-    <li class="menu-parent"  nz-menu-item> CỬA HÀNG
+    <li class="menu-parent"  nz-menu-item (click)="navigateMenu('./home/shop')"> CỬA HÀNG
     </li>
   </ul>
 </div>

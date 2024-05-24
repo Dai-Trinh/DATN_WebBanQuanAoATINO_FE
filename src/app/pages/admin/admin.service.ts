@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from '../../services/base.service';
+import { ReturnStatement } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root',
@@ -188,4 +189,55 @@ export class AdminService {
     return this._baseService.putData('user/' + id, dataRequest);
   }
 
+  deleteUser(id: any){
+    return this._baseService.deleteData('admin/delete/' + id);
+  }
+
+  changePassword(id: any, dataRequest: any){
+    return this._baseService.postData("admin/change-password/" + id, dataRequest);
+  }
+
+  getAllCustomer(dataRequest: any){
+    return this._baseService.postData('user', dataRequest);
+  }
+
+  //TODO DOANH THU
+  getListRevenueQuantity(){
+    return this._baseService.getData('admin/revenue/product');
+  }
+
+  getTotalPrice(){
+    return this._baseService.getData('admin/total-price')
+  }
+
+  getTotalPriceMothYear(month: any, year: any){
+    return this._baseService.getData('admin/total-price/' + month + '/' + year);
+  }
+
+  getRevenueByMonth(month: any, year: any){
+    return this._baseService.getData('admin/revenue/' + month + '/' + year);
+  }
+
+  getRevenueForManyMonth(){
+    return this._baseService.getData('admin/revenue/many-month');
+  }
+
+
+  //TODO CHI PHÍ
+
+  getExpensiveTotalPrice(){
+    return this._baseService.getData('admin/expensive/total-price')
+  }
+
+  getExpensiveTotalPriceMothYear(month: any, year: any){
+    return this._baseService.getData('admin/expensive/total-price/' + month + '/' + year);
+  }
+
+  getExpensiveRevenueByMonth(month: any, year: any){
+    return this._baseService.getData('admin/expensive/' + month + '/' + year);
+  }
+
+  getExpensiveForManyMonth(){
+    return this._baseService.getData('admin/expensive/many-month');
+  }
 }

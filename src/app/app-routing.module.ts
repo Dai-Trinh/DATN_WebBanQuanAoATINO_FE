@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { authGuard } from './services/auth.guard';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home/home-page' },
@@ -13,6 +14,7 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () =>
       import('./pages/admin/admin.module').then((m) => m.AdminModule),
+    //canActivate: [authGuard]
   },
   {
     path: 'components-selector',

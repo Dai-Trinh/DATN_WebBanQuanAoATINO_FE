@@ -182,6 +182,15 @@
                 >
                 </app-button>
               </div>
+              <div>
+                <app-button
+                  btnType="text"
+                  btnIconType="key"
+                  btnIconTheme="outline"
+                  (btnClick)="handleChangePass(row)"
+                >
+                </app-button>
+              </div>
             </div>
           </td>
         </tr>
@@ -267,7 +276,7 @@
                   nz-input
                   type="password"
                   [(ngModel)]="dataInformation.passWord"
-                  [placeholder]="'Nhập tên tài khoản'"
+                  [placeholder]="'Nhập mật khảu'"
                   
                 />
               </nz-input-group>
@@ -287,6 +296,40 @@
             </div>
           </div>
         </div>
+        <div nz-col nzSpan="12" *ngIf="action == 'create'">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <span style="font-weight: bold; font-size: 16px">Nhập lại mật khẩu</span>
+            </div>
+            <div nz-col nzSpan="24">
+              <nz-input-group [nzSuffix]="suffixConfirmPassword">
+                <input
+                  nz-input
+                  type="password"
+                  [(ngModel)]="dataInformation.confirmPassword"
+                  [placeholder]="'Nhập lại mật khẩu'"
+                  
+                />
+              </nz-input-group>
+              <ng-template #suffixConfirmPassword>
+                <span
+                  nz-icon
+                  class="ant-input-clear-icon"
+                  nzTheme="fill"
+                  nzType="close-circle"
+                  *ngIf="dataInformation.confirmPassword"
+                  (click)="dataInformation.confirmPassword = ''"
+                ></span>
+              </ng-template>
+              <div *ngIf="!dataInformation.confirmPassword" class="error">
+                Trường này yêu cầu bắt buộc
+              </div>
+              <div *ngIf="dataInformation.confirmPassword && dataInformation.confirmPassword != dataInformation.passWord" class="error">
+                Mật khẩu không khớp
+              </div>
+            </div>
+          </div>
+        </div>
         <div nz-col nzSpan="12">
           <div nz-row>
             <div nz-col nzSpan="24">
@@ -297,7 +340,7 @@
                 <input
                   nz-input
                   [(ngModel)]="dataInformation.firstName"
-                  [placeholder]="'Nhập tên tài khoản'"
+                  [placeholder]="'Nhập họ'"
                   [readOnly]="action == 'read'"
                 />
               </nz-input-group>
@@ -324,7 +367,7 @@
                 <input
                   nz-input
                   [(ngModel)]="dataInformation.lastName"
-                  [placeholder]="'Nhập tên tài khoản'"
+                  [placeholder]="'Nhập tên'"
                   [readOnly]="action == 'read'"
                 />
               </nz-input-group>
@@ -351,7 +394,7 @@
                 <input
                   nz-input
                   [(ngModel)]="dataInformation.email"
-                  [placeholder]="'Nhập tên tài khoản'"
+                  [placeholder]="'Nhập Email'"
                   [readOnly]="action == 'read'"
                 />
               </nz-input-group>
@@ -380,7 +423,7 @@
                 <input
                   nz-input
                   [(ngModel)]="dataInformation.phoneNumber"
-                  [placeholder]="'Nhập tên tài khoản'"
+                  [placeholder]="'Nhập số điện thoại'"
                   [readOnly]="action == 'read'"
                 />
               </nz-input-group>
@@ -410,7 +453,7 @@
                 [allowAdd]="false"
                 [disabled]="action == 'read'"
                 mode="multiple"
-                placeholder="select"
+                placeholder="Chọn quyền"
                 typeModel="object"
                 label="description"
                 
@@ -462,13 +505,13 @@
 
 <app-modal-content
   [show]="visibleModalDelete"
-  title="Xóa danh mục sản phẩm"
+  title="Xóa tài khoản"
   header="
-    Bạn có xác nhận xóa danh mục sản phẩm {{ dataInformation.categoryName }}
+    Bạn có xác nhận xóa tài khoản {{ dataInformation.categoryName }}
   "
   content="
-    Nếu bạn xác nhận, hệ thống sẽ xóa danh mục sản phẩm {{
-    dataInformation.categoryName
+    Nếu bạn xác nhận, hệ thống sẽ xóa tài khoản {{
+    dataInformation.userName
   }} khỏi danh sách và cập nhật lại danh sách
   "
   titleBtnConfirm="button.confirm"
@@ -476,3 +519,73 @@
   (cancelChange)="visibleModal = $event"
   (confirmChange)="handleConfirmDelete()"
 />
+
+
+<nz-modal [(nzVisible)]="modalChangePass" [nzFooter]="null" [nzTitle]="'Đổi mật khẩu'" [nzContent]="modalChangeContent"
+  [nzWidth]="'500px'" [nzBodyStyle]="{
+    padding: '12px 24px'
+  }" (nzOnCancel)="cancelChangePass()">
+  <ng-template #modalChangeTitle>
+    <div style="font-size: 20px; font-weight: 700; color: #244a64">
+      <img style="height: 20px; margin-right: 12px" src="./../../../../assets/icons/information.svg" />
+      {{ titleModal | translate }}
+    </div>
+  </ng-template>
+  <ng-template #modalChangeContent>
+    <div>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <span style="font-weight: bold; font-size: 16px">Nhập mật khẩu mới</span>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-input-group [nzSuffix]="suffixShop">
+            <input nz-input [(ngModel)]="dataChangePassword.newPassword" [placeholder]="'Nhập mật khẩu mới'"
+              [disabled]="action == 'read'" />
+          </nz-input-group>
+          <ng-template #suffixShop>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle"
+              *ngIf="dataChangePassword.newPassword && action !== 'read'"
+              (click)="dataChangePassword.newPassword = ''"></span>
+          </ng-template>
+          <div *ngIf="!dataChangePassword.newPassword" class="error">
+            Trường này yêu cầu bắt buộc
+          </div>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <span style="font-weight: bold; font-size: 16px">Nhập lại mật khẩu</span>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-input-group [nzSuffix]="suffixAddress">
+            <input nz-input [(ngModel)]="dataChangePassword.confirmNewPassword" [placeholder]="'Nhập địa chỉ'"
+               />
+          </nz-input-group>
+          <ng-template #suffixAddress>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle"
+              *ngIf="dataChangePassword.confirmNewPassword && action !== 'read'"
+              (click)="dataChangePassword.confirmNewPassword = ''"></span>
+          </ng-template>
+          <div *ngIf="!dataChangePassword.confirmNewPassword" class="error">
+            Trường này yêu cầu bắt buộc
+          </div>
+          <div *ngIf="dataChangePassword.confirmNewPassword != '' && dataChangePassword.confirmNewPassword != dataChangePassword.newPassword" class="error">
+            Mật khẩu không khớp
+          </div>
+        </div>
+      </div>
+
+      <div nz-row class="mt-12" nzJustify="end">
+        <div>
+          <app-button btnClass="btn-cancel" btnType="primary"
+            [btnTitle]="'button.cancel'" (btnClick)="cancelChangePass()">
+          </app-button>
+        </div>
+        <div class="ml-12">
+          <app-button [btnDisabled]="!dataChangePassword.newPassword || !dataChangePassword.confirmNewPassword || dataChangePassword.newPassword != dataChangePassword.confirmNewPassword" btnType="primary" btnTitle="button.confirm" (btnClick)="handleChangePassConfirm()">
+          </app-button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</nz-modal>

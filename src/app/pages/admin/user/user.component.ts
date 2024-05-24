@@ -33,6 +33,8 @@ export class UserComponent {
   dataInformation: any = {
     categoryName: null,
   };
+  dataChangePassword: any = {};
+  modalChangePass: boolean = false;
   lstRoles: any[] = [
     {
       value: 1,
@@ -163,6 +165,12 @@ export class UserComponent {
     };
   }
 
+  handleChangePass(row: any){
+    this.modalChangePass = true;
+    this.dataInformation.id = row.id;
+    console.log(row)
+  }
+
   handleConfirmDelete() {
     // Xử lý xóa  (Khi gọi API thành công set dataInformation = {})
     this.deleteCategoryParent();
@@ -175,7 +183,20 @@ export class UserComponent {
     this.dataInformation = {};
   }
 
+  handleChangePassConfirm(){
+    this.changePassword();
+  }
+
+  cancelChangePass(){
+    this.modalChangePass = false;
+    this.dataChangePassword = {};
+  }
+
   handleConfirm() {
+    if(this.dataInformation.passWord != this.dataInformation.confirmPassword){
+      this._messageService.notificationWarning("Mật khẩu không khớp nhau")
+      return;
+    }
     if (!this.dataInformation.userName.trim()) {
       this._messageService.notificationWarning(
         `Bạn cần nhập đủ thông tin yêu cầu`
@@ -241,7 +262,7 @@ export class UserComponent {
     this.spin = true;
     try {
       await this._categoryService
-        .deleteCategory(this.dataInformation.id)
+        .deleteUser(this.dataInformation.id)
         .then((item: any) => {
           if (item.result.responseCode == '00') {
             this._messageService.notificationSuccess(item.result.message);
@@ -257,6 +278,17 @@ export class UserComponent {
       this.visibleModalDelete = false;
       this.spin = false;
     }
+  }
+
+  async changePassword(){
+    await this._categoryService.changePassword(this.dataInformation.id, this.dataChangePassword).then((res) => {
+      if(res.result.responseCode == '00'){
+        this._messageService.notificationSuccess('Thành công')
+      } else {
+        this._messageService.notificationError(res.result.message);
+      }
+      this.modalChangePass = false;
+    })
   }
 
   async getAllRole(){

@@ -1,11 +1,22 @@
 import { Injectable } from "@angular/core";
+import { Observable, Subject } from "rxjs";
 
 @Injectable({
     providedIn: 'root',
   })
 export class LocalStorage{
 
-    constructor(){};
+    private storageSub = new Subject<void>();
+
+  constructor() {
+    window.addEventListener('storage', () => {
+      this.storageSub.next();
+    });
+  }
+
+  watchStorage(): Observable<void> {
+    return this.storageSub.asObservable();
+  }
 
     listDataProduct: any[] = [];
 
@@ -28,6 +39,7 @@ export class LocalStorage{
             this.listDataProduct.push(dataInput);
         }
         localStorage.setItem(this.keyCard, JSON.stringify(this.listDataProduct));
+        this.storageSub.next()
     }
 
     removeShoppingCart(dataInput: any){
@@ -45,6 +57,7 @@ export class LocalStorage{
         // }
         
         localStorage.setItem(this.keyCard, JSON.stringify(this.listDataProduct));
+        this.storageSub.next()
     }
 
     getShoppingCart(){

@@ -9,6 +9,7 @@ import { TinTucComponent } from './tin-tuc/tin-tuc.component';
 import { GioHangComponent } from './gio-hang/gio-hang.component';
 import { ChiTietTinTucComponent } from './tin-tuc/chi-tiet-tin-tuc/chi-tiet-tin-tuc.component';
 import { LoginComponent } from './login/login.component';
+import { CuaHangComponent } from './cua-hang/cua-hang.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
       {
         path: 'shopping-cart',
         component: GioHangComponent,
+      },
+      {
+        path: 'shop',
+        component: CuaHangComponent,
       },
       {
         path: 'login',

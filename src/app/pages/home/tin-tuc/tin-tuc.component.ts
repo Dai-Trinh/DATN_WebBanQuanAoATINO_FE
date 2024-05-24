@@ -15,6 +15,9 @@ export class TinTucComponent {
   listNew: any[] = [];
 
   urlPreview: string = environment.api_end_point_preview;
+  current = 1;
+  total = 12
+  pageSize = 12
 
   ngOnInit(): void {
     this.getDataNews();

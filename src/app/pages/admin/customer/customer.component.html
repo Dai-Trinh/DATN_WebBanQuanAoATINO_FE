@@ -149,13 +149,13 @@
               </ng-container>
               <ng-container *ngIf="column.visible && column.key == 'updatedAt'">
                 <td nzAlign="right">
-                  {{ row[column.key] | date : "dd/MM/yyyy" }}
+                  {{ row[column.key] * 1000 | date : "dd/MM/yyyy" }}
                 </td>
               </ng-container>
             </ng-container>
             <td nzRight>
               <div class="d-flex j-center a-center">
-                <div>
+                <!-- <div>
                   <app-button
                     btnType="text"
                     btnIconType="edit"
@@ -163,7 +163,7 @@
                     (btnClick)="handleUpdate(row)"
                   >
                   </app-button>
-                </div>
+                </div> -->
                 <div>
                   <app-button
                     btnType="text"
@@ -173,7 +173,7 @@
                   >
                   </app-button>
                 </div>
-                <div>
+                <!-- <div>
                   <app-button
                     btnType="text"
                     btnIconType="delete"
@@ -181,7 +181,7 @@
                     (btnClick)="handleDelete(row)"
                   >
                   </app-button>
-                </div>
+                </div> -->
               </div>
             </td>
           </tr>
@@ -202,264 +202,297 @@
   </div>
   
   <nz-modal
-    [(nzVisible)]="visibleModal"
-    [nzFooter]="null"
-    [nzTitle]="modalTitle"
-    [nzContent]="modalContent"
-    [nzWidth]="'1000px'"
-    [nzBodyStyle]="{
-      padding: '12px 24px'
-    }"
-    (nzOnCancel)="onHandleCancel()"
-  >
-    <ng-template #modalTitle>
-      <div style="font-size: 20px; font-weight: 700; color: #244a64">
-        <img
-          style="height: 20px; margin-right: 12px"
-          src="./../../../../assets/icons/information.svg"
-        />
-        {{ titleModal | translate }}
-      </div>
-    </ng-template>
-    <ng-template #modalContent>
-      <div>
-        <div nz-row [nzGutter]="[24, 12]">
-          <div nz-col nzSpan="12">
-            <div nz-row>
-              <div nz-col nzSpan="24">
-                <span style="font-weight: bold; font-size: 16px"
-                  >Tên tài khoản</span
-                >
-              </div>
-              <div nz-col nzSpan="24">
-                <nz-input-group [nzSuffix]="suffixUsername">
-                  <input
-                    nz-input
-                    [(ngModel)]="dataInformation.username"
-                    [placeholder]="'Nhập tên tài khoản'"
-                    [readOnly]="action == 'read'"
-                  />
-                </nz-input-group>
-                <ng-template #suffixUsername>
-                  <span
-                    nz-icon
-                    class="ant-input-clear-icon"
-                    nzTheme="fill"
-                    nzType="close-circle"
-                    *ngIf="dataInformation.username"
-                    (click)="dataInformation.username = ''"
-                  ></span>
-                </ng-template>
-                <div *ngIf="!dataInformation.username" class="error">
-                  Trường này yêu cầu bắt buộc
-                </div>
-              </div>
+  [(nzVisible)]="visibleModal"
+  [nzFooter]="null"
+  [nzTitle]="modalTitle"
+  [nzContent]="modalContent"
+  [nzWidth]="'1000px'"
+  [nzBodyStyle]="{
+    padding: '12px 24px'
+  }"
+  (nzOnCancel)="onHandleCancel()"
+>
+  <ng-template #modalTitle>
+    <div style="font-size: 20px; font-weight: 700; color: #244a64">
+      <img
+        style="height: 20px; margin-right: 12px"
+        src="./../../../../assets/icons/information.svg"
+      />
+      {{ titleModal | translate }}
+    </div>
+  </ng-template>
+  <ng-template #modalContent>
+    <div>
+      <div nz-row [nzGutter]="[24, 12]">
+        <div nz-col nzSpan="12">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <span style="font-weight: bold; font-size: 16px"
+                >Tên tài khoản</span
+              >
             </div>
-          </div>
-          <div nz-col nzSpan="12">
-            <div nz-row>
-              <div nz-col nzSpan="24">
-                <span style="font-weight: bold; font-size: 16px">Mật khẩu</span>
-              </div>
-              <div nz-col nzSpan="24">
-                <nz-input-group [nzSuffix]="suffixPassword">
-                  <input
-                    nz-input
-                    type="password"
-                    [(ngModel)]="dataInformation.password"
-                    [placeholder]="'Nhập tên tài khoản'"
-                    [readOnly]="action == 'read'"
-                  />
-                </nz-input-group>
-                <ng-template #suffixPassword>
-                  <span
-                    nz-icon
-                    class="ant-input-clear-icon"
-                    nzTheme="fill"
-                    nzType="close-circle"
-                    *ngIf="dataInformation.password"
-                    (click)="dataInformation.password = ''"
-                  ></span>
-                </ng-template>
-                <div *ngIf="!dataInformation.password" class="error">
-                  Trường này yêu cầu bắt buộc
-                </div>
-              </div>
-            </div>
-          </div>
-          <div nz-col nzSpan="12">
-            <div nz-row>
-              <div nz-col nzSpan="24">
-                <span style="font-weight: bold; font-size: 16px">Họ</span>
-              </div>
-              <div nz-col nzSpan="24">
-                <nz-input-group [nzSuffix]="suffixfirstName">
-                  <input
-                    nz-input
-                    [(ngModel)]="dataInformation.firstName"
-                    [placeholder]="'Nhập tên tài khoản'"
-                    [readOnly]="action == 'read'"
-                  />
-                </nz-input-group>
-                <ng-template #suffixfirstName>
-                  <span
-                    nz-icon
-                    class="ant-input-clear-icon"
-                    nzTheme="fill"
-                    nzType="close-circle"
-                    *ngIf="dataInformation.firstName"
-                    (click)="dataInformation.firstName = ''"
-                  ></span>
-                </ng-template>
-              </div>
-            </div>
-          </div>
-          <div nz-col nzSpan="12">
-            <div nz-row>
-              <div nz-col nzSpan="24">
-                <span style="font-weight: bold; font-size: 16px">Tên</span>
-              </div>
-              <div nz-col nzSpan="24">
-                <nz-input-group [nzSuffix]="suffixlastName">
-                  <input
-                    nz-input
-                    [(ngModel)]="dataInformation.lastName"
-                    [placeholder]="'Nhập tên tài khoản'"
-                    [readOnly]="action == 'read'"
-                  />
-                </nz-input-group>
-                <ng-template #suffixlastName>
-                  <span
-                    nz-icon
-                    class="ant-input-clear-icon"
-                    nzTheme="fill"
-                    nzType="close-circle"
-                    *ngIf="dataInformation.lastName"
-                    (click)="dataInformation.lastName = ''"
-                  ></span>
-                </ng-template>
-              </div>
-            </div>
-          </div>
-          <div nz-col nzSpan="12">
-            <div nz-row>
-              <div nz-col nzSpan="24">
-                <span style="font-weight: bold; font-size: 16px">Email</span>
-              </div>
-              <div nz-col nzSpan="24">
-                <nz-input-group [nzSuffix]="suffixemail">
-                  <input
-                    nz-input
-                    [(ngModel)]="dataInformation.email"
-                    [placeholder]="'Nhập tên tài khoản'"
-                    [readOnly]="action == 'read'"
-                  />
-                </nz-input-group>
-                <ng-template #suffixemail>
-                  <span
-                    nz-icon
-                    class="ant-input-clear-icon"
-                    nzTheme="fill"
-                    nzType="close-circle"
-                    *ngIf="dataInformation.email"
-                    (click)="dataInformation.email = ''"
-                  ></span>
-                </ng-template>
-              </div>
-            </div>
-          </div>
-          <div nz-col nzSpan="12">
-            <div nz-row>
-              <div nz-col nzSpan="24">
-                <span style="font-weight: bold; font-size: 16px"
-                  >Số điện thoại</span
-                >
-              </div>
-              <div nz-col nzSpan="24">
-                <nz-input-group [nzSuffix]="suffixphoneNumber">
-                  <input
-                    nz-input
-                    [(ngModel)]="dataInformation.phoneNumber"
-                    [placeholder]="'Nhập tên tài khoản'"
-                    [readOnly]="action == 'read'"
-                  />
-                </nz-input-group>
-                <ng-template #suffixphoneNumber>
-                  <span
-                    nz-icon
-                    class="ant-input-clear-icon"
-                    nzTheme="fill"
-                    nzType="close-circle"
-                    *ngIf="dataInformation.phoneNumber"
-                    (click)="dataInformation.phoneNumber = ''"
-                  ></span>
-                </ng-template>
-              </div>
-            </div>
-          </div>
-          <div nz-col nzSpan="12">
-            <div nz-row>
-              <div nz-col nzSpan="24">
-                <span style="font-weight: bold; font-size: 16px">Quyền</span>
-              </div>
-              <div nz-col nzSpan="24">
-                <app-select
-                  [model]="dataInformation.roles"
-                  [listOption]="lstRoles"
-                  [hasBorderLess]="false"
-                  [allowAdd]="false"
-                  [disabled]="action == 'read'"
-                  mode="multiple"
-                  placeholder="select"
-                  typeModel="value"
-                  label="label"
-                  value="value"
-                  (valueChange)="dataInformation.roles = $event"
+            <div nz-col nzSpan="24">
+              <nz-input-group [nzSuffix]="suffixUsername">
+                <input
+                  nz-input
+                  [(ngModel)]="dataInformation.userName"
+                  [placeholder]="'Nhập tên tài khoản'"
+                  [readOnly]="action == 'read'"
                 />
-              </div>
-            </div>
-          </div>
-          <div nz-col>
-            <div nz-row *ngIf="action != 'create'">
-              <div nz-col nzSpan="24">
-                <span style="font-weight: bold; font-size: 16px"
-                  >Ngày cập nhật</span
-                >
-              </div>
-              <div nz-col nzSpan="24">
-                <nz-date-picker
-                  [nzDisabled]="true"
-                  [(ngModel)]="dataInformation.updatedAt"
-                  class="w-100"
-                  nzFormat="dd/MM/yyyy"
-                ></nz-date-picker>
+              </nz-input-group>
+              <ng-template #suffixUsername>
+                <span
+                  nz-icon
+                  class="ant-input-clear-icon"
+                  nzTheme="fill"
+                  nzType="close-circle"
+                  *ngIf="dataInformation.userName"
+                  (click)="dataInformation.userName = ''"
+                ></span>
+              </ng-template>
+              <div *ngIf="!dataInformation.userName" class="error">
+                Trường này yêu cầu bắt buộc
               </div>
             </div>
           </div>
         </div>
-  
-        <div nz-row class="mt-12" nzJustify="end">
-          <div>
-            <app-button
-              btnClass="btn-cancel"
-              btnType="primary"
-              [btnTitle]="action == 'read' ? 'button.close' : 'button.cancel'"
-              (btnClick)="onHandleCancel()"
-            >
-            </app-button>
+        <div nz-col nzSpan="12" *ngIf="action == 'create'">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <span style="font-weight: bold; font-size: 16px">Mật khẩu</span>
+            </div>
+            <div nz-col nzSpan="24">
+              <nz-input-group [nzSuffix]="suffixPassword">
+                <input
+                  nz-input
+                  type="password"
+                  [(ngModel)]="dataInformation.passWord"
+                  [placeholder]="'Nhập mật khảu'"
+                  
+                />
+              </nz-input-group>
+              <ng-template #suffixPassword>
+                <span
+                  nz-icon
+                  class="ant-input-clear-icon"
+                  nzTheme="fill"
+                  nzType="close-circle"
+                  *ngIf="dataInformation.passWord"
+                  (click)="dataInformation.passWord = ''"
+                ></span>
+              </ng-template>
+              <div *ngIf="!dataInformation.passWord" class="error">
+                Trường này yêu cầu bắt buộc
+              </div>
+            </div>
           </div>
-          <div *ngIf="action !== 'read'" class="ml-12">
-            <app-button
-              btnType="primary"
-              btnTitle="button.confirm"
-              (btnClick)="handleConfirm()"
-            >
-            </app-button>
+        </div>
+        <div nz-col nzSpan="12" *ngIf="action == 'create'">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <span style="font-weight: bold; font-size: 16px">Nhập lại mật khẩu</span>
+            </div>
+            <div nz-col nzSpan="24">
+              <nz-input-group [nzSuffix]="suffixConfirmPassword">
+                <input
+                  nz-input
+                  type="password"
+                  [(ngModel)]="dataInformation.confirmPassword"
+                  [placeholder]="'Nhập lại mật khẩu'"
+                  
+                />
+              </nz-input-group>
+              <ng-template #suffixConfirmPassword>
+                <span
+                  nz-icon
+                  class="ant-input-clear-icon"
+                  nzTheme="fill"
+                  nzType="close-circle"
+                  *ngIf="dataInformation.confirmPassword"
+                  (click)="dataInformation.confirmPassword = ''"
+                ></span>
+              </ng-template>
+              <div *ngIf="!dataInformation.confirmPassword" class="error">
+                Trường này yêu cầu bắt buộc
+              </div>
+              <div *ngIf="dataInformation.confirmPassword && dataInformation.confirmPassword != dataInformation.passWord" class="error">
+                Mật khẩu không khớp
+              </div>
+            </div>
           </div>
+        </div>
+        <div nz-col nzSpan="12">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <span style="font-weight: bold; font-size: 16px">Họ</span>
+            </div>
+            <div nz-col nzSpan="24">
+              <nz-input-group [nzSuffix]="suffixfirstName">
+                <input
+                  nz-input
+                  [(ngModel)]="dataInformation.firstName"
+                  [placeholder]="'Nhập họ'"
+                  [readOnly]="action == 'read'"
+                />
+              </nz-input-group>
+              <ng-template #suffixfirstName>
+                <span
+                  nz-icon
+                  class="ant-input-clear-icon"
+                  nzTheme="fill"
+                  nzType="close-circle"
+                  *ngIf="dataInformation.firstName"
+                  (click)="dataInformation.firstName = ''"
+                ></span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div nz-col nzSpan="12">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <span style="font-weight: bold; font-size: 16px">Tên</span>
+            </div>
+            <div nz-col nzSpan="24">
+              <nz-input-group [nzSuffix]="suffixlastName">
+                <input
+                  nz-input
+                  [(ngModel)]="dataInformation.lastName"
+                  [placeholder]="'Nhập tên'"
+                  [readOnly]="action == 'read'"
+                />
+              </nz-input-group>
+              <ng-template #suffixlastName>
+                <span
+                  nz-icon
+                  class="ant-input-clear-icon"
+                  nzTheme="fill"
+                  nzType="close-circle"
+                  *ngIf="dataInformation.lastName"
+                  (click)="dataInformation.lastName = ''"
+                ></span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div nz-col nzSpan="12">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <span style="font-weight: bold; font-size: 16px">Email</span>
+            </div>
+            <div nz-col nzSpan="24">
+              <nz-input-group [nzSuffix]="suffixemail">
+                <input
+                  nz-input
+                  [(ngModel)]="dataInformation.email"
+                  [placeholder]="'Nhập Email'"
+                  [readOnly]="action == 'read'"
+                />
+              </nz-input-group>
+              <ng-template #suffixemail>
+                <span
+                  nz-icon
+                  class="ant-input-clear-icon"
+                  nzTheme="fill"
+                  nzType="close-circle"
+                  *ngIf="dataInformation.email"
+                  (click)="dataInformation.email = ''"
+                ></span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div nz-col nzSpan="12">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <span style="font-weight: bold; font-size: 16px"
+                >Số điện thoại</span
+              >
+            </div>
+            <div nz-col nzSpan="24">
+              <nz-input-group [nzSuffix]="suffixphoneNumber">
+                <input
+                  nz-input
+                  [(ngModel)]="dataInformation.phoneNumber"
+                  [placeholder]="'Nhập số điện thoại'"
+                  [readOnly]="action == 'read'"
+                />
+              </nz-input-group>
+              <ng-template #suffixphoneNumber>
+                <span
+                  nz-icon
+                  class="ant-input-clear-icon"
+                  nzTheme="fill"
+                  nzType="close-circle"
+                  *ngIf="dataInformation.phoneNumber"
+                  (click)="dataInformation.phoneNumber = ''"
+                ></span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <!-- <div nz-col nzSpan="12">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <span style="font-weight: bold; font-size: 16px">Quyền</span>
+            </div>
+            <div nz-col nzSpan="24">
+              <app-select
+                [model]="dataInformation.roles"
+                [listOption]="lstRoles"
+                [hasBorderLess]="false"
+                [allowAdd]="false"
+                [disabled]="action == 'read'"
+                mode="multiple"
+                placeholder="Chọn quyền"
+                typeModel="object"
+                label="description"
+                
+                (valueChange)="dataInformation.roles = $event"
+              />
+            </div>
+          </div>
+        </div> -->
+        <!-- <div nz-col>
+          <div nz-row *ngIf="action != 'create'">
+            <div nz-col nzSpan="24">
+              <span style="font-weight: bold; font-size: 16px"
+                >Ngày cập nhật</span
+              >
+            </div>
+            <div nz-col nzSpan="24" style="width: 100%;">
+              <nz-date-picker style="width: 190%;"
+                [nzDisabled]="true"
+                [(ngModel)]="dataInformation.updatedAt"
+                nzFormat="dd/MM/yyyy"
+              ></nz-date-picker>
+            </div>
+          </div>
+        </div> -->
+      </div>
+
+      <div nz-row class="mt-12" nzJustify="end">
+        <div>
+          <app-button
+            btnClass="btn-cancel"
+            btnType="primary"
+            [btnTitle]="action == 'read' ? 'button.close' : 'button.cancel'"
+            (btnClick)="onHandleCancel()"
+          >
+          </app-button>
+        </div>
+        <div *ngIf="action !== 'read'" class="ml-12">
+          <app-button
+            btnType="primary"
+            btnTitle="button.confirm"
+            (btnClick)="handleConfirm()"
+          >
+          </app-button>
         </div>
       </div>
-    </ng-template>
-  </nz-modal>
+    </div>
+  </ng-template>
+</nz-modal>
   
   <app-modal-content
     [show]="visibleModalDelete"

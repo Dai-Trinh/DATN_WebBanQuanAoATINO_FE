@@ -69,7 +69,7 @@ export class CustomerComponent {
     };
     try {
       await this._categoryService
-        .getListCategoryParent(dataRequest)
+        .getAllCustomer(dataRequest)
         .then((item: any) => {
           if (item.result.responseCode == '00') {
             this.lstData = item.data.map((item: any, index: number) => ({
@@ -151,8 +151,7 @@ export class CustomerComponent {
     this.visibleModal = true;
     this.titleModal = 'Xem chi tiết tài khoản';
     this.dataInformation = {
-      categoryName: row.categoryName,
-      updatedAt: row.updatedAt,
+      ...row,
     };
   }
 
@@ -265,7 +264,7 @@ export class CustomerComponent {
   columns: any[] = [
     {
       title: 'Tên tài khoản',
-      key: 'username',
+      key: 'userName',
       width: '150px',
       visible: true,
       sortOrder: '',
@@ -279,7 +278,7 @@ export class CustomerComponent {
     },
     {
       title: 'Tên',
-      key: 'lsstName',
+      key: 'lastName',
       width: '150px',
       visible: true,
       sortOrder: '',

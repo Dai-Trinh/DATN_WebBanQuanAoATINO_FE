@@ -19,6 +19,7 @@ import { GioHangComponent } from './gio-hang/gio-hang.component';
 import { TinTucComponent } from './tin-tuc/tin-tuc.component';
 import { ChiTietTinTucComponent } from './tin-tuc/chi-tiet-tin-tuc/chi-tiet-tin-tuc.component';
 import { LoginComponent } from './login/login.component';
+import { CuaHangComponent } from './cua-hang/cua-hang.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { LoginComponent } from './login/login.component';
     TinTucComponent,
     ChiTietTinTucComponent,
     LoginComponent,
+    CuaHangComponent,
   ],
   imports: [
     CommonModule,
