@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { NzI18nService, en_US, vi_VN } from 'ng-zorro-antd/i18n';
 import { DOCUMENT } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -11,11 +12,12 @@ import { DOCUMENT } from '@angular/common';
 export class AdminComponent {
   constructor(
     private __translateSerice: TranslateService,
+    private _router: Router,
     @Inject(DOCUMENT) private document: any
   ) {}
 
   isCollapsed: boolean = false;
-  name?: string = 'Đổi bằng tên login...';
+  name?: any = localStorage.getItem('userName') ? localStorage.getItem('userName') : '';
   isvisibleChooseLanguage: boolean = false;
   urlImg: string = '';
   showNotification: boolean = false;
@@ -26,7 +28,14 @@ export class AdminComponent {
     { name: 'en_US', locale: en_US, srcImg: './assets/img/eng.png' },
   ];
 
+  visiableLogout = false;
+
   ngOnInit(): void {
+    if(!localStorage.getItem('token')
+      || !localStorage.getItem('roles')?.split(',').includes('atino_admin')  
+    ){
+      this._router.navigate(['./admin/login'])
+    }
     let hasLanguage = localStorage.getItem('language');
     if (!hasLanguage) {
       this.urlImg = './assets/img/vie.png';
@@ -39,7 +48,10 @@ export class AdminComponent {
         this.urlImg = './assets/img/vie.png';
         this.__translateSerice.use('vi');
       }
+
+      
     }
+      
     // this.getName();
   }
 
@@ -77,5 +89,19 @@ export class AdminComponent {
     }
   }
 
-  logout() {}
+  openLogout(){
+    this.visiableLogout = true;
+  }
+
+  confirmLogout(){
+    this.visiableLogout = false;
+    this.logout();
+    this._router.navigate(['./admin/login'])
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('roles');
+  }
 }

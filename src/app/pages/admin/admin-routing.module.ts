@@ -20,11 +20,14 @@ import { UserComponent } from './user/user.component';
 import { BillComponent } from './bill/bill.component';
 import { BillDetailComponent } from './bill/bill-detail/bill-detail.component';
 import { CustomerComponent } from './customer/customer.component';
+import { LoginComponent } from './login/login.component';
+import { authGuard } from '../../services/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
+    
     children: [
       {
         path: 'dashboard/expense',
@@ -101,7 +104,11 @@ const routes: Routes = [
       {
         path: 'bill/detail/:id',
         component: BillDetailComponent,
-      }
+      },
+      // {
+      //   path: 'login',
+      //   component: LoginComponent
+      // }
     ],
   },
 ];

@@ -181,6 +181,10 @@ export class AdminService {
     return this._baseService.getData('admin/roles');
   }
 
+  getUserDetail(userName: any){
+    return this._baseService.getData('user/' + userName);
+  }
+
   saveUser(dataRequest: any){
     return this._baseService.postData('user/new', dataRequest);
   }
@@ -240,4 +244,24 @@ export class AdminService {
   getExpensiveForManyMonth(){
     return this._baseService.getData('admin/expensive/many-month');
   }
+
+  //TODO LỢI NHUẬN
+  getProfitTotalPrice(){
+    return this._baseService.getData('admin/profit/total-price')
+  }
+
+  getProfitAll(){
+    return this._baseService.getData('admin/all-profit')
+  }
+
+
+  //LOGIN
+  loginAdmin(dataRequest: any){
+    return this._baseService.postData('login', dataRequest)
+  }
+
+  getRoleByUser(userName: any){
+    return this._baseService.getData('admin/' + userName + '/roles')
+  }
+
 }

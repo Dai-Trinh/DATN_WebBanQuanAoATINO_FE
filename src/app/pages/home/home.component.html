@@ -6,7 +6,7 @@
 
   <div class="right">
     <i class="ti-search icon-right"></i>
-    <span nz-icon nzType="user" class="icon-right"></span>
+    <span nz-icon nzType="user" class="icon-right" (click)="handleUser()"></span>
     <i class="ti-heart icon-right"></i>
     <i class="ti-bag icon-right" (click)="toShoppingCart()">
       <p class="shopping-count">{{totalCart}}</p>

@@ -152,7 +152,7 @@ export class DashboardRevenueComponent implements OnInit {
     this.chart = new Chart({
       container: 'container',
       autoFit: true,
-      height: 100,
+      height: 700,
     });
     this.chart.data(this.listData);
     this.chart
@@ -200,7 +200,7 @@ export class DashboardRevenueComponent implements OnInit {
     this.chartManyMonth = new Chart({
       container: 'container-man-month',
       autoFit: true,
-      height: 500,
+      height: 700,
     });
     
     this.chartManyMonth.data(this.dataManyMonth);

@@ -16,10 +16,12 @@ export class DashboardExpenseComponent {
     differenceInCalendarDays(current, this.today) > 0;
 
   spin: boolean = false;
-  title: string = "Thống kê doanh thu"
+  title: string = "Thống kê chi phí"
   dateMoth: Date = new Date();
   totalPrice: any = 0;
   totalPriceMoth: any = 0;
+
+  minChart = 0;
 
   listData: any[] = [];
 
@@ -64,6 +66,7 @@ export class DashboardExpenseComponent {
             year: itemData.dateSell.split('-')[1] + ' - ' + itemData.dateSell.split('-')[2],
             value: itemData.totalPrice
           }
+          if(this.minChart > itemData.totalPrice) this.minChart = itemData.totalPrice;
           this.dataManyMonth.push(dataItem);
         }
         console.log(this.dataManyMonth)
@@ -151,7 +154,7 @@ export class DashboardExpenseComponent {
         range: [0, 1],
       },
       value: {
-        min: 0,
+        min: this.minChart,
         nice: true,
       },
     });

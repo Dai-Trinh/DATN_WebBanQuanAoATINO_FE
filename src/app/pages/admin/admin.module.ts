@@ -7,7 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ComponentCommonModule } from '../../shared/component-common.module';
 import { AdminComponent } from './admin.component';
 import { MenuComponent } from '../../setting/menu.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardExpenseComponent } from './dashboard-expense/dashboard-expense.component';
 import { DashboardRevenueComponent } from './dashboard-revenue/dashboard-revenue.component';
 import { DashboardProfitComponent } from './dashboard-profit/dashboard-profit.component';
@@ -28,6 +28,7 @@ import { UserComponent } from './user/user.component';
 import { BillComponent } from './bill/bill.component';
 import { BillDetailComponent } from './bill/bill-detail/bill-detail.component';
 import { CustomerComponent } from './customer/customer.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { CustomerComponent } from './customer/customer.component';
     BillComponent,
     BillDetailComponent,
     CustomerComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,
@@ -61,7 +63,8 @@ import { CustomerComponent } from './customer/customer.component';
     TranslateModule,
     ComponentCommonModule,
     FormsModule,
-    CKEditorModule
+    CKEditorModule,
+    ReactiveFormsModule
   ],
 })
 export class AdminModule {}

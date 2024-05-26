@@ -137,7 +137,7 @@
         ></span>
         <span
           class="ml-8 mr-8"
-          (click)="logout()"
+          (click)="openLogout()"
           nz-icon
           style="font-size: 18px"
           [nzType]="'logout'"
@@ -177,15 +177,22 @@
     <div class="container-footer">
       <div class="footer-content">
         <p>
-          &copy; Copyright FaceNet 2024. All rights reserved. Designed by
+          &copy; Copyright DaiTrinh 2024. All rights reserved. Designed by
           <a
             style="text-decoration: none; color: gray; font-weight: 600"
             href="https://facenet.vn/"
             target="_blank"
-            >FaceNet</a
+            >DaiTrinh</a
           >
         </p>
       </div>
     </div>
   </footer>
 </nz-layout>
+
+<app-modal-content [show]="visiableLogout" title="Đăng xuất" header="
+    Bạn có xác nhận Đăng xuất không?
+  " content="
+  Nếu bạn ấn xác nhận, bạn sẽ đăng xuất khỏi hệ thống, mọi thông tin sẽ không được lưu lại.
+  " titleBtnConfirm="button.confirm" titleBtnCancel="button.cancel" (cancelChange)="visiableLogout = $event"
+  (confirmChange)="confirmLogout()" />

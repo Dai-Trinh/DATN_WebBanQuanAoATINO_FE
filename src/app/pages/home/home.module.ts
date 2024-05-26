@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
@@ -20,6 +20,9 @@ import { TinTucComponent } from './tin-tuc/tin-tuc.component';
 import { ChiTietTinTucComponent } from './tin-tuc/chi-tiet-tin-tuc/chi-tiet-tin-tuc.component';
 import { LoginComponent } from './login/login.component';
 import { CuaHangComponent } from './cua-hang/cua-hang.component';
+import { AccoutingComponent } from './accouting/accouting.component';
+import { BillComponent } from '../home/bill/bill.component';
+import { PaymentSuccessComponent } from './payment/payment-success/payment-success.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import { CuaHangComponent } from './cua-hang/cua-hang.component';
     ChiTietTinTucComponent,
     LoginComponent,
     CuaHangComponent,
+    AccoutingComponent,
+    BillComponent,
+    PaymentSuccessComponent
   ],
   imports: [
     CommonModule,
@@ -46,5 +52,6 @@ import { CuaHangComponent } from './cua-hang/cua-hang.component';
     ComponentCommonModule,
     NzBreadCrumbModule,
   ],
+  providers: [DecimalPipe]
 })
 export class HomeModule {}

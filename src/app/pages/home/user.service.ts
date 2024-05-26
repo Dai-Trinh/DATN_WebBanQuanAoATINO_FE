@@ -47,6 +47,14 @@ export class UserService {
         return this._baseService.postData('bills/create', dataRequest);
     }
 
+    getExchangeRate(){
+        return this._baseService.getDataV2('https://api.exchangerate-api.com/v4/latest/USD');
+    }
+
+    paypalReciver(moneyUSD: any){
+        return this._baseService.getData('pay/' + moneyUSD)
+    }
+
     //GET SHOP
     getListShop(dataRequest: any){
         return this._baseService.postData('shop', dataRequest);

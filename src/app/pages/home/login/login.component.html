@@ -4,7 +4,7 @@
       <div *ngIf="activeTab === 'login'">
         <h1>Đăng Nhập</h1>
         <div class="field-wrap">
-          <label> Tên đăng nhập<span class="req">*</span> </label>
+          <p class="title-login"> Tên đăng nhập<span class="req">*</span> </p>
           <input
             name="username"
             type="text"
@@ -14,7 +14,7 @@
           />
         </div>
         <div class="field-wrap">
-          <label> Mật khẩu<span class="req">*</span> </label>
+          <p class="title-login"> Mật khẩu<span class="req">*</span> </p>
           <input
             name="pass"
             type="password"
@@ -23,7 +23,7 @@
             [(ngModel)]="loginData.password"
           />
         </div>
-        <button type="submit" class="button button-block">Đăng Nhập</button>
+        <button (click)="handleLogin()" type="submit" class="button button-block">Đăng Nhập</button>
       </div>
 
       <div *ngIf="activeTab !== 'login'">
@@ -51,13 +51,13 @@
           </div>
         </div>
         <div class="field-wrap">
-          <label> Địa chỉ Email<span class="req">*</span> </label>
+          <label> Số điện thoại<span class="req">*</span> </label>
           <input
-            name="email"
-            type="email"
+            name="phoneNumber"
+            type="text"
             required
             autocomplete="off"
-            [(ngModel)]="signupData.email"
+            [(ngModel)]="signupData.phoneNumber"
           />
         </div>
         <div class="field-wrap">
@@ -67,7 +67,7 @@
             type="text"
             required
             autocomplete="off"
-            [(ngModel)]="signupData.username"
+            [(ngModel)]="signupData.userName"
           />
         </div>
         <div class="field-wrap">
@@ -77,10 +77,10 @@
             type="password"
             required
             autocomplete="off"
-            [(ngModel)]="signupData.password"
+            [(ngModel)]="signupData.passWord"
           />
         </div>
-        <button type="submit" class="button button-block">Tạo tài khoản</button>
+        <button type="submit" class="button button-block" (click)="signUp()">Tạo tài khoản</button>
       </div>
     </div>
     <ul class="tab-group">

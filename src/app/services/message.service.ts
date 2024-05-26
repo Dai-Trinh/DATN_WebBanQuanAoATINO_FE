@@ -11,7 +11,7 @@ export class MessageService {
     private _translateService: TranslateService
   ) {
     this._translateService
-      .get('notification.message')
+      .get('Thông báo')
       .subscribe((item) => (this.notification = item));
   }
   notification: string = '';

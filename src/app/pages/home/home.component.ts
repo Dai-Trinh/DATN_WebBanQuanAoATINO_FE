@@ -82,6 +82,7 @@ export class HomeComponent implements OnInit {
     clearInterval(this.interval);
   }
 
+
   navigateMenu(router: any){
     this._router.navigate([router]);
     this.closeMenu = false;
@@ -119,6 +120,14 @@ export class HomeComponent implements OnInit {
     this._router.navigate(['./home/list-product/' + item.id])
     this.closeMenu = false;
     this.isScroll = true;
+  }
+
+  handleUser(){
+    if(!localStorage.getItem('customerUserName')){
+      this._router.navigate(['./home/login'])
+    } else {
+      this._router.navigate(['./home/information-account'])
+    }
   }
 
 

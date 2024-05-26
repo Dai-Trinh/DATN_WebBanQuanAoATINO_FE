@@ -14,23 +14,28 @@ export const authGuard: CanActivateFn = (route, state) => {
   //   .get('auth.message')
   //   .subscribe((item) => (authMessage = item));
   // Lấy danh sách các vai trò được phân quyền từ Backend
-  const rolesFromBackend: string[] = JSON.parse(roles);
+  
+  const rolesFromBackend: string[] = roles ? roles.split(',') : [];
 
-  // Lấy các vai trò cần thiết từ route data
-  const rolesRequired = route.data['roles'] as Array<string>;
+   // Lấy các vai trò cần thiết từ route data
+   const rolesRequired = route.data['roles'] as Array<string>;
 
-  // Kiểm tra xem người dùng có vai trò không
-  // const hasRequiredRoles = rolesFromBackend?.some((role) =>
-  //   rolesRequired.includes(role)
-  // );
-
-  const hasRequiredRoles = false;
-
-  if (hasRequiredRoles) {
-    return true;
-  } else {
-    //messageService.notificationWarning(authMessage);
-    router.navigate(['./home/login']);
-    return false;
-  }
+   let hasRequiredRoles = true;
+   // Kiểm tra xem người dùng có vai trò không
+  
+   for(let role of rolesFromBackend){
+    if(role == 'atino_admin'){
+      hasRequiredRoles = false;
+    }
+   }
+ 
+   console.log(hasRequiredRoles)
+   if (hasRequiredRoles) {
+    router.navigate(['./admin/login']);
+     return true;
+   } else {
+     //messageService.notificationWarning(authMessage);
+     router.navigate(['./admin']);
+     return false;
+   }
 };

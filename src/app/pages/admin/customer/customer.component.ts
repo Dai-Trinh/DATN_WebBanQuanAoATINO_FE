@@ -55,12 +55,17 @@ export class CustomerComponent {
       pageNumber: this.page - 1,
       pageSize: this.perPage,
       filter: {
-        categoryName: this.filter.categoryName,
+        userName: this.filter.userName,
+        address: this.filter.address,
+        email: this.filter.email,
+        phoneNumber: this.filter.phoneNumber,
+        firstName: this.filter.firstName,
+        lastName: this.filter.lastName,
         updatedAtSearch:
           this.filter.updatedAtSearch.length > 0
             ? [
-                moment(this.filter.updatedAtSearch[0]).format('YYYY-MM-DD'),
-                moment(this.filter.updatedAtSearch[1]).format('YYYY-MM-DD'),
+                moment(this.filter.updatedAtSearch[0]).format('YYYY-MM-DD') + 'T00:00:00.000Z',
+                moment(this.filter.updatedAtSearch[1]).format('YYYY-MM-DD') + 'T00:00:00.000Z',
               ]
             : [],
       },
@@ -110,8 +115,9 @@ export class CustomerComponent {
   onHandleFilter($event: any) {
     if ($event.keyCode == 13 || $event.type == 'click') {
       //  Gọi API
-      this.getLstData();
+      
     }
+    this.getLstData();
   }
 
   onHandleClearFilter(key: any) {

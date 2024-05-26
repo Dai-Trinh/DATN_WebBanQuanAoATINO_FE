@@ -10,6 +10,8 @@ import { GioHangComponent } from './gio-hang/gio-hang.component';
 import { ChiTietTinTucComponent } from './tin-tuc/chi-tiet-tin-tuc/chi-tiet-tin-tuc.component';
 import { LoginComponent } from './login/login.component';
 import { CuaHangComponent } from './cua-hang/cua-hang.component';
+import { AccoutingComponent } from './accouting/accouting.component';
+import { PaymentSuccessComponent } from './payment/payment-success/payment-success.component';
 
 const routes: Routes = [
   {
@@ -51,6 +53,14 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
+      },
+      {
+        path: 'information-account',
+        component: AccoutingComponent,
+      },
+      {
+        path: 'payment-success',
+        component: PaymentSuccessComponent,
       },
     ],
   },

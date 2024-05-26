@@ -227,8 +227,8 @@ export class InformationShopComponent {
         updatedAtSearch:
           this.filter.updatedAtSearch.length > 0
             ? [
-                moment(this.filter.updatedAtSearch[0]).format('YYYY-MM-DD'),
-                moment(this.filter.updatedAtSearch[1]).format('YYYY-MM-DD'),
+                moment(this.filter.updatedAtSearch[0]).format('YYYY-MM-DD') + 'T00:00:00.000Z',
+                moment(this.filter.updatedAtSearch[1]).format('YYYY-MM-DD') + 'T00:00:00.000Z',
               ]
             : [],
       },

@@ -5,6 +5,9 @@ import {
   NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
+import { AdminService } from '../../admin/admin.service';
+import { MessageService } from '../../../services/message.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +17,10 @@ import {
 export class LoginComponent {
   ngOnInit(): void {}
 
-  constructor() {}
+  constructor(private _loginService: AdminService,
+    private _messageService: MessageService,
+    private _router: Router
+  ) {}
 
   activeTab: any = 'login';
 
@@ -26,9 +32,14 @@ export class LoginComponent {
   signupData = {
     firstName: '',
     lastName: '',
-    email: '',
-    username: '',
-    password: '',
+    phoneNumber: '',
+    userName: '',
+    passWord: '',
+    roles: [{
+      id: 1,
+      name: 'atino_user',
+      description: 'Quyền người dùng'
+    }]
   };
 
   isNotEmpty(obj: any) {
@@ -41,16 +52,38 @@ export class LoginComponent {
   }
 
   setActiveTab(tab: string) {
+    console.log(tab)
     this.activeTab = tab;
   }
 
-  logIn() {
-    console.log('Logging in with', this.loginData);
-    return false;
+  handleLogin(){
+    if(!this.loginData.username || !this.loginData.password){
+      this._messageService.notificationWarning('Bạn phải nhập đủ thông tin')
+      return;
+    }
+    this.logIn();
   }
 
-  signUp() {
-    console.log('Signing up with', this.signupData);
-    return false;
+
+  async logIn() {
+    await this._loginService.loginAdmin(this.loginData).then((res) => {
+      if(res.result.responseCode == '00'){
+        localStorage.setItem('customerUserName', res.data.userName)
+        this._router.navigate(['./home/home-page'])
+      } else {
+        this._messageService.notificationError(res.result.message);
+      }
+    })
+  }
+
+  async signUp() {
+    await this._loginService.saveUser(this.signupData).then((res) => {
+      if(res.result.responseCode == '00'){
+        this.loginData.username = this.signupData.userName;
+        this.loginData.password = this.signupData.passWord;
+        this.activeTab = 'login'
+      }
+    })
+    
   }
 }

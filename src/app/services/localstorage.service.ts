@@ -66,6 +66,7 @@ export class LocalStorage{
 
     removeAllShoppingCart(){
         localStorage.removeItem(this.keyCard);
+        this.storageSub.next()
     }
 
 }

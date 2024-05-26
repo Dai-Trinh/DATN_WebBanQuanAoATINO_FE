@@ -32,9 +32,14 @@ export class BillComponent {
   sortProperty: string = 'updatedAt';
   filter: any = {
     updatedAtSearch: [],
-    shopName: "",
+    billCode: "",
+    reciver: "",
+    phoneNumber: "",
+    email: "",
     address: "",
-    phoneNumber: ""
+    billNote: "",
+    totalPrice: "",
+    status: ""
   };
   action: string = "";
   spin: boolean = false;
@@ -263,9 +268,14 @@ export class BillComponent {
       pageNumber: this.page - 1,
       pageSize: this.perPage,
       filter: {
-        shopName: this.filter.shopName,
+        billCode: this.filter.billCode,
         address: this.filter.address,
         phoneNumber: this.filter.phoneNumber,
+        email: this.filter.email,
+        reciver: this.filter.reciver,
+        billNote: this.filter.billNote,
+        status: this.filter.status,
+        totalPrice: this.filter.totalPrice,
         updatedAtSearch:
           this.filter.updatedAtSearch.length > 0
             ? [

@@ -104,7 +104,7 @@
                 <tr>
                   <td nzLeft></td>
                   <ng-container *ngFor="let column of columns">
-                <ng-container *ngIf="column.visible && column.key !== 'category' && column.key !== 'status' && column.key !== 'updatedAt' && column.key !== 'productName' && column.key !== 'avatar'">
+                <ng-container *ngIf="column.visible && column.key !== 'avatar' && column.key !== 'category' && column.key !== 'status' && column.key !== 'updatedAt' && column.key !== 'productName' && column.key !== 'avatar'">
                       <td>
                         <nz-input-group
                           nzSearch
@@ -146,7 +146,7 @@
                         /> -->
                       </td>
                     </ng-container>
-                    <ng-container *ngIf="column.visible && (column.key == 'productName' || column.key == 'avatar')">
+                    <ng-container *ngIf="column.visible && (column.key == 'productName')">
                         <td nzLeft>
                             <nz-input-group
                               nzSearch
@@ -187,6 +187,9 @@
                               (handleClearChange)="onHandleClearFilter(column)"
                             /> -->
                           </td>
+                    </ng-container>
+                    <ng-container *ngIf="column.visible && (column.key == 'avatar')">
+                      <td nzLeft></td>
                     </ng-container>
                     <ng-container *ngIf="column.visible && (column.key == 'category')">
                       <td>

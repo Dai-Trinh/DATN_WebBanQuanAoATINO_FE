@@ -1,0 +1,108 @@
+<section class="container">
+  <header>
+    <p>Xin chào, <span>{{name}}</span> | <a (click)="logout()">Đăng xuất</a></p>
+  </header>
+  <nav>
+    <!-- <ul>
+      <li><a href="#" class="active">Tài khoản</a></li>
+      <li><a href="#">Đơn hàng</a></li>
+      <li><a href="#">Sản phẩm yêu thích</a></li>
+      <li><a href="#">Địa chỉ</a></li>
+      <li><a href="#">Dịch vụ</a></li>
+    </ul> -->
+    <nz-tabset>
+      <nz-tab nzTitle="Thông tin tài khoản" >
+        <ng-template nz-tab>
+          <nz-row nzGutter="48" nzAlign="top">
+            <ng-container *ngFor="let column of columns">
+              <nz-col
+                nzXs="48"
+                nzSm="48"
+                nzMd="48"
+                nzLg="24"
+                nzXl="24"
+                nzXXl="24"
+                class="mb-20"
+                *ngIf="column.keyName !== 'sex' && column.keyName !== 'birthday'"
+              >
+                <p class="m-0 p-label">
+                  {{ column.keyTitle }}
+                  <span *ngIf="column.isRequired" class="span-error">*</span>
+                </p>
+      
+                <div class="ant-input-affix-wrapper-textarea-with-clear-btn">
+                  <textarea
+                    nz-input
+                    [(ngModel)]="dataInformation[column.keyName]"
+                    rows="1"
+                  ></textarea>
+                </div>
+              </nz-col>
+      
+              <nz-col
+                nzXs="48"
+                nzSm="48"
+                nzMd="48"
+                nzLg="24"
+                nzXl="24"
+                nzXXl="24"
+                class="mb-20"
+                *ngIf="column.keyName === 'sex'"
+              >
+                <p class="m-0 p-label">
+                  {{ column.keyTitle }}
+                  <span *ngIf="column.isRequired" class="span-error">*</span>
+                </p>
+      
+                <nz-select
+                  nzShowSearch
+                  nzMode="default"
+                  [(ngModel)]="dataInformation[column.keyName]"
+                  style="width: 100%"
+                  nzAllowClear
+                >
+                  <nz-option
+                    *ngFor="let item of listSex"
+                    [nzLabel]="item.name"
+                    [nzValue]="item.type"
+                  ></nz-option>
+                </nz-select>
+              </nz-col>
+      
+              <nz-col
+                nzXs="48"
+                nzSm="48"
+                nzMd="48"
+                nzLg="24"
+                nzXl="24"
+                nzXXl="24"
+                class="mb-20"
+                *ngIf="column.keyName === 'birthday'"
+              >
+                <p class="m-0 p-label">
+                  {{ column.keyTitle }}
+                  <span *ngIf="column.isRequired" class="span-error">*</span>
+                </p>
+      
+                <nz-date-picker
+                  [(ngModel)]="dataInformation[column.keyName]"
+                  nzAllowClear="true"
+                  class="w-100"
+                  nzFormat="dd/MM/yyyy"
+                ></nz-date-picker>
+              </nz-col>
+            </ng-container>
+          </nz-row>
+          <button type="submit">Cập nhật</button>
+        </ng-template>
+      </nz-tab>
+      <nz-tab nzTitle="Thông tin đơn hàng">
+        <ng-template nz-tab>
+          <app-bill></app-bill>
+        </ng-template>
+      </nz-tab>
+      <nz-tab nzTitle="Sản phẩm yêu thích">Content of Tab Pane 3</nz-tab>
+    </nz-tabset>
+  </nav>
+  
+</section>

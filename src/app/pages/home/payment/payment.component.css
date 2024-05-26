@@ -42,9 +42,6 @@
   justify-content: center;
 }
 
-.card-icon {
-  margin-bottom: 20px;
-}
 
 .card-icon span,
 .final-icon {
@@ -230,4 +227,9 @@
 
 .form-information__product-des {
   font-size: 13px;
+}
+
+
+.radio-value {
+  font-size: 17px;
 }
