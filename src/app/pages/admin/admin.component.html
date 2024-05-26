@@ -121,11 +121,89 @@
         </nz-badge>
         <ng-template #notificationContent>
           <div style="width: 400px; height: 50vh">
-            Notification content work!
+            <ng-container *ngFor="let item of listNotification">
+              
+              <a >
+                <div
+                  style="
+                    width: 100%;
+                    border-radius: 8px;
+                    border: 1px solid #eee;
+                    padding: 12px;
+                    margin-bottom: 12px;
+                  "
+                  class="hover-notification"
+                  
+                >
+                  <nz-row
+                    nzAlign="top"
+                    nzJustify="space-between"
+                    [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 8, xl: 24 }"
+                  >
+                    <nz-col nzSpan="2">
+                      <nz-row nzJustify="center">
+                        <nz-col>
+                          <span
+                            *ngIf="!item.read"
+                            style="
+                              width: 12px;
+                              height: 12px;
+                              background-color: #00ffff;
+                              border-radius: 50%;
+                              display: block;
+                              margin-top: 6px;
+                            "
+                          >
+                          </span>
+                        </nz-col>
+                      </nz-row>
+                    </nz-col>
+                    <nz-col nzSm="12" nzLg="16" nzXl="18">
+                      <nz-row nzGutter="24">
+                        <nz-col nzSpan="24">
+                          <b>
+                            <p
+                              style="margin: 0"
+                              nz-typography
+                              nzEllipsis
+                              [nzEllipsisRows]="3"
+                              [nzContent]="item.title"
+                            ></p>
+                          </b>
+                        </nz-col>
+                        <nz-col nzSpan="24">
+                          <p
+                            style="margin: 0"
+                            nz-typography
+                            nzEllipsis
+                            [nzEllipsisRows]="3"
+                            [nzContent]="item.content"
+                          ></p>
+                        </nz-col>
+                      </nz-row>
+                    </nz-col>
+                    <nz-col nzSm="10" nzLg="6" nzXl="4">
+                      <nz-row>
+                        <nz-col nzSpan="24">
+                          <nz-row nzJustify="end">
+                            {{ item.createdAt * 1000 | date : "dd/MM/yyyy" }}
+                          </nz-row>
+                        </nz-col>
+                        <nz-col nzSpan="24">
+                          <nz-row nzJustify="end">
+                            {{ item.createdAt | date : "HH:mm:ss" }}
+                          </nz-row>
+                        </nz-col>
+                      </nz-row>
+                    </nz-col>
+                  </nz-row>
+                </div>
+              </a>
+            </ng-container>
           </div>
         </ng-template>
         <ng-template #notificationTitle>
-          Notification header work!
+          Thông báo
         </ng-template>
         <span
           class="ml-8 mr-8"

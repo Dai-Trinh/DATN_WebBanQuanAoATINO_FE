@@ -76,6 +76,11 @@ h2 {
   box-sizing: border-box;
 }
 
+.button-wrap {
+  display: flex;
+  align-items: center;
+}
+
 button {
   padding: 10px 20px;
   background-color: black;
@@ -90,6 +95,9 @@ button {
   background-color: #0056b3;
 } */
 
+button:first-child {
+  margin-right: 12px;
+}
 .span-error {
   color: red;
 }
@@ -100,4 +108,8 @@ button {
 
 .mb-20 {
   margin-bottom: 20px;
+}
+
+.req {
+  color: red;
 }

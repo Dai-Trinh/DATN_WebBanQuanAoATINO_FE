@@ -1,0 +1,71 @@
+import { KeycloakService } from 'keycloak-angular';
+import { Injectable } from '@angular/core';
+import { NotificationMessageService } from './notification-message.service';
+import SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
+import { environment } from '../../environment/environment.cloud';
+
+
+@Injectable({
+  providedIn: 'root',
+})
+
+
+export class WebsocketService {
+  stompClient: any;
+
+  WEBSOCKET_ENDPOINT = environment.api_end_point + '/atino-notification'
+  constructor(
+    private notificationService: NotificationMessageService,
+  ) {}
+
+  connect(): void {
+    if(!localStorage.getItem('userName')) return;
+    // console.log('webSocket Connection');
+    const ws = new SockJS(this.WEBSOCKET_ENDPOINT);
+    // console.log('webSocketEndpoint: ', WEBSOCKET_ENDPOINT);
+    this.stompClient = Stomp.over(ws);
+    const _this = this;
+    _this.stompClient.connect(
+      {},
+      (frame: any) => {
+        _this.stompClient.subscribe(
+          `${this.WEBSOCKET_ENDPOINT}/${localStorage.getItem('userName')}`,
+          function (sdkEvent: any) {
+            _this.notificationService.notificationInfo(` Bạn có thông báo mới`);
+            _this.onMessageReceived(sdkEvent);
+          }
+        );
+        // this.stompClient.subscribe(
+        //   WEBSOCKET_NOTIFY_TOPIC_ALL,
+        //   function (sdkEvent: any) {
+        //     _this.onMessageReceived(sdkEvent);
+        //   }
+        // );
+      },
+      this.errorCallBack
+    );
+    // console.log('webSocket Connection');
+  }
+
+  disconnect(): void {
+    if (this.stompClient !== null) {
+      this.stompClient.disconnect();
+    }
+    // console.log('Disconnected');
+  }
+
+  // on error, schedule a reconnection attempt
+  errorCallBack(error: string) {
+    // console.log('errorCallBack -> ' + error);
+    setTimeout(() => {
+      this.connect();
+    }, 5000);
+  }
+
+  onMessageReceived(message: any) {
+    // console.log('Message Recieved from Server :: ' + message);
+    // Emits the event.
+    //this.tempService.notificationMessage.emit(JSON.parse(message?.body));
+  }
+}

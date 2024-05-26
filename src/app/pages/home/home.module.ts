@@ -23,6 +23,8 @@ import { CuaHangComponent } from './cua-hang/cua-hang.component';
 import { AccoutingComponent } from './accouting/accouting.component';
 import { BillComponent } from '../home/bill/bill.component';
 import { PaymentSuccessComponent } from './payment/payment-success/payment-success.component';
+import { CollectionComponent } from './collection/collection.component';
+import { CollectionDetailComponent } from './collection/collection-detail/collection-detail.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { PaymentSuccessComponent } from './payment/payment-success/payment-succe
     CuaHangComponent,
     AccoutingComponent,
     BillComponent,
-    PaymentSuccessComponent
+    PaymentSuccessComponent,
+    CollectionComponent,
+    CollectionDetailComponent
   ],
   imports: [
     CommonModule,

@@ -23,7 +23,7 @@
     <i class="ti-close" (click)="openMenu()"></i>
   </div>
   <ul nzMode="inline" nzTheme="light" nz-menu class="menu-list">
-    <li class="menu-parent" nz-menu-item routerLink="colection">Bộ sưu tập
+    <li class="menu-parent" nz-menu-item (click)="navigateMenu('./home/collection')">Bộ sưu tập
     </li>
     <li *ngFor="let item of listCate" class="menu-parent" nz-submenu [nzTitle]="item.categoryName">
       <ul>

@@ -18,6 +18,10 @@ export class UserService {
         return this._baseService.postData('collection', dataRequest);
     }
 
+    getCollectionDetail(id: any){
+        return this._baseService.getData('collection/' + id);
+    }
+
     //TODO GET PRODUCT
     getProduct(dataRequest: any){
         return this._baseService.postData('product', dataRequest);

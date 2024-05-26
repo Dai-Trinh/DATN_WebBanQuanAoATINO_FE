@@ -58,6 +58,8 @@ export class AccoutingComponent implements OnInit {
     },
   ];
 
+  visibleModal: boolean  = false;
+
   async getUserDetail(){
     const userName = localStorage.getItem('customerUserName')
     await this.userService.getUserDetail(userName).then((res) => {
@@ -78,4 +80,34 @@ export class AccoutingComponent implements OnInit {
     this._router.navigate(['./home/home-page'])
   }
 
+  changePassword: any = {
+    oldPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  }
+
+  onHandleChangePassword() {
+    this.visibleModal = true;
+  }
+
+  onHandleCancel() {
+    this.visibleModal = false;
+  }
+
+  handleConfirm() {
+
+  }
+
+  passwordVisible: boolean = false;
+  passwordNewVisible: boolean = false;
+  confirmPasswordVisible: boolean = false;
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+  }
+  togglePasswordNewVisibility() {
+    this.passwordNewVisible = !this.passwordNewVisible;
+  }
+  toggleConfirmPasswordVisibility() {
+    this.confirmPasswordVisible = !this.confirmPasswordVisible;
+  }
 }

@@ -156,6 +156,7 @@ export class PaymentComponent implements OnInit {
         if(item.result.responseCode == '00'){
           this.dataInformation = {};
           this._localStorage.removeAllShoppingCart();
+          this._router.navigate(['./payment-success'])
         }
       })
     } else {

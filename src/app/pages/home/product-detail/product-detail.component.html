@@ -24,7 +24,7 @@
             alt=""
           />
         </div>
-        <p class="gia">{{ product.price }}đ</p>
+        <p class="gia">{{ product.price | number }}đ</p>
         <div class="mau">
           <p>Màu sắc</p>
           <nz-select nzShowSearch [(ngModel)]="color">

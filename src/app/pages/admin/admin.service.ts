@@ -264,4 +264,13 @@ export class AdminService {
     return this._baseService.getData('admin/' + userName + '/roles')
   }
 
+  //NOTIFICATION
+  getNotification(){
+    return this._baseService.getData('admin/notification');
+  }
+
+  getCountNotification(){
+    return this._baseService.getData('admin/notification/count');
+  }
+
 }

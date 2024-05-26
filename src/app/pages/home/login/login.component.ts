@@ -86,4 +86,25 @@ export class LoginComponent {
     })
     
   }
+
+  onFocus(event: FocusEvent) {
+    const label = (event.target as HTMLElement).previousElementSibling;
+    if (label) {
+      label.classList.add('active');
+      label.classList.add('highlight');
+    }
+  }
+
+  onBlur(event: FocusEvent) {
+    const input = event.target as HTMLInputElement;
+    const label = input.previousElementSibling;
+    if (label) {
+      if (input.value === '') {
+        label.classList.remove('active');
+        label.classList.remove('highlight');
+      } else {
+        label.classList.remove('highlight');
+      }
+    }
+  }
 }

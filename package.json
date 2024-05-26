@@ -24,6 +24,8 @@
     "@ckeditor/ckeditor5-build-classic": "^41.3.1",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
+    "@stomp/stompjs": "^7.0.0",
+    "angular-websocket": "^2.0.1",
     "file-saver": "^2.0.5",
     "keycloak-angular": "^15.2.1",
     "keycloak-js": "^24.0.2",
@@ -33,7 +35,9 @@
     "ngx-ui-loader": "^13.0.0",
     "numeral": "^2.0.6",
     "rxjs": "~7.8.0",
+    "sockjs-client": "^1.6.1",
     "tslib": "^2.3.0",
+    "websocket": "^1.0.35",
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
@@ -43,6 +47,7 @@
     "@types/file-saver": "^2.0.7",
     "@types/jasmine": "~5.1.0",
     "@types/numeral": "^2.0.5",
+    "@types/sockjs-client": "^1.5.4",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
