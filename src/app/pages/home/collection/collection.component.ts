@@ -55,7 +55,7 @@ export class CollectionComponent {
   }
 
   handleProductDetail(item: any){
-    this._router.navigate(['./home/product-detail/' + item.id])
+    this._router.navigate(['./home/collection/detail/' + item.id])
   }
 
 }

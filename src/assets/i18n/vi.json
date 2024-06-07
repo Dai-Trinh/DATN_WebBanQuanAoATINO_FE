@@ -42,7 +42,8 @@
   },
   "sort": {
     "desc": "Sắp xếp giảm dần",
-    "asc": "Sắp xếp tăng dần"
+    "asc": "Sắp xếp tăng dần",
+    "search": "Tìm kiếm"
   },
   "message": {
     "no_data": "Không có dữ liệu",

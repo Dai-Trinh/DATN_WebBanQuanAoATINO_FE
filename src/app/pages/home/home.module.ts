@@ -25,6 +25,7 @@ import { BillComponent } from '../home/bill/bill.component';
 import { PaymentSuccessComponent } from './payment/payment-success/payment-success.component';
 import { CollectionComponent } from './collection/collection.component';
 import { CollectionDetailComponent } from './collection/collection-detail/collection-detail.component';
+import { FavoriteProductComponent } from './favorite-product/favorite-product.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { CollectionDetailComponent } from './collection/collection-detail/collec
     BillComponent,
     PaymentSuccessComponent,
     CollectionComponent,
-    CollectionDetailComponent
+    CollectionDetailComponent,
+    FavoriteProductComponent
   ],
   imports: [
     CommonModule,

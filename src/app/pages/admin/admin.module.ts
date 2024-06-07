@@ -29,6 +29,12 @@ import { BillComponent } from './bill/bill.component';
 import { BillDetailComponent } from './bill/bill-detail/bill-detail.component';
 import { CustomerComponent } from './customer/customer.component';
 import { LoginComponent } from './login/login.component';
+import { ColorConfigComponent } from './color-config/color-config.component';
+import { AddColorComponent } from './color-config/add-color/add-color.component';
+import { ReadColorComponent } from './color-config/read-color/read-color.component';
+import { SizeComponent } from './size/size.component';
+import { AddSizeComponent } from './size/add-size/add-size.component';
+import { ReadSizeComponent } from './size/read-size/read-size.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +60,13 @@ import { LoginComponent } from './login/login.component';
     BillComponent,
     BillDetailComponent,
     CustomerComponent,
-    LoginComponent
+    LoginComponent,
+    ColorConfigComponent,
+    AddColorComponent,
+    ReadColorComponent,
+    SizeComponent,
+    AddSizeComponent,
+    ReadSizeComponent
   ],
   imports: [
     CommonModule,

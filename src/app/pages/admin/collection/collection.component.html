@@ -299,7 +299,7 @@
         </div>
         <div nz-col nzSpan="24">
           <nz-select [disabled]="action == 'read'" nzShowSearch nzAllowClear nzPlaceHolder="Chọn sản phẩm" [(ngModel)]="listIdSelected" nzMode="multiple">
-            <nz-option *ngFor="let item of listProduct" [nzValue]="item.id" [nzLabel]="item.productName"></nz-option>
+            <nz-option *ngFor="let item of listProduct" [nzValue]="item" [nzLabel]="item.productName"></nz-option>
         </nz-select>
           <ng-template #suffixPhone>
             <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle"

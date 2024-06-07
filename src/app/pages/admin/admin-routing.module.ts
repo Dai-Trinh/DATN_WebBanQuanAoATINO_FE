@@ -22,6 +22,8 @@ import { BillDetailComponent } from './bill/bill-detail/bill-detail.component';
 import { CustomerComponent } from './customer/customer.component';
 import { LoginComponent } from './login/login.component';
 import { authGuard } from '../../services/auth.guard';
+import { ColorConfigComponent } from './color-config/color-config.component';
+import { SizeComponent } from './size/size.component';
 
 const routes: Routes = [
   {
@@ -104,6 +106,18 @@ const routes: Routes = [
       {
         path: 'bill/detail/:id',
         component: BillDetailComponent,
+      },
+      {
+        path: 'bill/detail/:id',
+        component: BillDetailComponent,
+      },
+      {
+        path: 'color',
+        component: ColorConfigComponent,
+      },
+      {
+        path: 'size',
+        component: SizeComponent,
       },
       // {
       //   path: 'login',

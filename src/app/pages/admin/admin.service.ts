@@ -71,10 +71,34 @@ export class AdminService {
     return this._baseService.postData('admin/color', dataRequest)
   }
 
+  saveColor(dataRequest: any){
+    return this._baseService.postData('admin/color/save', dataRequest);
+  }
+
+  updateColor(dataRequest: any){
+    return this._baseService.postData('admin/color/update', dataRequest);
+  }
+
+  deleteColor(id: any){
+    return this._baseService.deleteData('admin/color/delete/' + id);
+  }
+
 
   //TODO: QUẢN LÝ SIZE
   getListSize(dataRequest: any){
     return this._baseService.postData('admin/size', dataRequest)
+  }
+
+  saveSize(dataRequest: any){
+    return this._baseService.postData('admin/size/save', dataRequest);
+  }
+
+  updateSize(dataRequest: any){
+    return this._baseService.postData('admin/size/update', dataRequest);
+  }
+
+  deleteSize(id: any){
+    return this._baseService.deleteData('admin/size/delete/' + id);
   }
 
 
@@ -272,5 +296,8 @@ export class AdminService {
   getCountNotification(){
     return this._baseService.getData('admin/notification/count');
   }
+
+
+
 
 }

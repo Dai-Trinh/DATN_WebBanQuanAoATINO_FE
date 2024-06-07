@@ -279,7 +279,7 @@ export class InformationNewsComponent {
 
   async deleteShop(){
     this.spin = true;
-    await this._newsService.deleteShop(this.dataInformation.id).then((res) => {
+    await this._newsService.deleteNews(this.dataInformation.id).then((res) => {
       if(res.result.responseCode == '00'){
         this.getListData();
         this._messageService.notificationSuccess(res.result.message);

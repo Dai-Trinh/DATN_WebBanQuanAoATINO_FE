@@ -186,7 +186,7 @@
                         *ngIf="column.visible && column.key == 'totalPrice'"
                       >
                         <td>
-                          {{row.totalPrice*row.priceImport | number}}
+                          {{row.quantityImport*row.priceImport | number}}
                         </td>
                       </ng-container>
                       <ng-container

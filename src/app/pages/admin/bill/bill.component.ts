@@ -257,7 +257,7 @@ export class BillComponent {
 
   handleConfirmDelete(){
     this.visibleModalDelete = false;
-    this.changeStatusConfirm(this.billId, this.status);
+    this.changeStatusConfirm(this.billId, this.status + 1);
   
   }
 

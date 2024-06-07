@@ -24,7 +24,7 @@
         <p>{{product.productName}}</p>
         <i class="ti-heart"></i>
       </div>
-      <p class="price">{{product.price}}</p>
+      <p class="price">{{product.price | number}}đ</p>
       <div [class]="cartProductClass[i]">
         <i class="ti-bag"></i>
       </div>

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { WebsocketService } from '../../services/websocket.service';
 import { TempNotificationService } from '../../services/tempNotification.service';
 import { AdminService } from './admin.service';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-admin',
@@ -19,8 +20,12 @@ export class AdminComponent {
     private _webSocket: WebsocketService,
     private _tempService: TempNotificationService,
     private _adminService: AdminService,
+    private _messageService: MessageService,
     @Inject(DOCUMENT) private document: any
-  ) {}
+  ) {
+    this.connect()
+
+  }
 
   isCollapsed: boolean = false;
   name?: any = localStorage.getItem('userName') ? localStorage.getItem('userName') : '';
@@ -122,34 +127,21 @@ export class AdminComponent {
     })
   }
 
-  // connect(): void {
-  //   this._webSocket.connect();
-  //   this._webSocket.notificationMessage.subscribe((data) => {
-  //     this.getNotification().then(() => {
-  //       this.__notification.notificationInfo(`Bạn có thông báo mới`);
-  //     });
-  //     this.getCountReport();
-  //     this.getCountDocumentApproval();
-  //     // this.getCountPayroll();
-  //     // this.getCountSailor();
-  //     // this.getCountSailorSalary();
-  //     // this.getCountVoyage();
-  //     // this.getCountApprovalEstimated();
-  //     // this.getCountPaymentOrder();
-  //     // this.getCountAdvanceShipFund();
-  //     // this.getCountAdvanceFund();
-  //     // this.getCountRevenueRecognition();
-  //     // this.getCountSailorReplace();
-  //     // this.getCountBunkering();
-  //     // this.getCountApprovalAdvanceSalarySailor();
-  //     // this.getCountApprovalRemainingFuel();
-  //     // this.getCountApprovalFinalVoyageEvaluation();
-  //   });
-  // }
+  connect(): void {
+    this._webSocket.connect();
+    this._tempService.notificationMessage.subscribe((data) => {
+      this.getListNotification().then(() => {
+        this._messageService.notificationInfo(`Bạn có thông báo mới`);
+      });
+     
+      
+      
+    });
+  }
 
-  // disconnect(): void {
-  //   this.websocketService.disconnect();
-  // }
+  disconnect(): void {
+    this._webSocket.disconnect();
+  }
 
   
 }

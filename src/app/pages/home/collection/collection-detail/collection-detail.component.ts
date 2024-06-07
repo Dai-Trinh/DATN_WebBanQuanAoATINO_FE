@@ -13,6 +13,7 @@ export class CollectionDetailComponent {
   @ViewChild('carouselWrapperLast') carouselWrapperLast!: ElementRef;
   @ViewChild('carouselProduct') carouselProduct!: ElementRef;
   isDragging = false;
+  
   startX: number = 0;
   scrollLeft: number = 0;
   constructor(private _router: Router,

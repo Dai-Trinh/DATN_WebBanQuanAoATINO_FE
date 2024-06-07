@@ -166,7 +166,11 @@ export class ProductInformationComponent {
     this.getListCate();
   }
 
-  onHandlePagination(event: any) {}
+  onHandlePagination(event: any) {
+    this.page = event.page;
+    this.perPage = event.size;
+    this.getListProduct();
+  }
 
   handleClickButton(){
     this._router.navigate(['./admin/product/information/create'])
@@ -318,6 +322,7 @@ export class ProductInformationComponent {
     await this._productService.getListProduct(dataRequest).then((res) => {
       if(res.result.responseCode == '00'){
         this.lstData = res.data;
+        this.total = res.dataCount
       }
       this.spin = false;
     })

@@ -104,7 +104,11 @@
           <app-bill></app-bill>
         </ng-template>
       </nz-tab>
-      <nz-tab nzTitle="Sản phẩm yêu thích">Content of Tab Pane 3</nz-tab>
+      <nz-tab nzTitle="Sản phẩm yêu thích">
+        <ng-template nz-tab>
+          <app-favorite-product></app-favorite-product>
+        </ng-template>
+      </nz-tab>
     </nz-tabset>
   </nav>
   

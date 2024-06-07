@@ -161,5 +161,27 @@ export class MenuComponent {
         },
       ],
     },
+    {
+      name: 'Quản lý cấu hình',
+      url: 'config',
+      classIcon: 'setting',
+      role: null,
+      lstChild: [
+        {
+          name: 'Cấu hình màu',
+          url: 'color',
+          classIcon: null,
+          role: null,
+          lstChild: null,
+        },
+        {
+          name: 'Cấu hình size',
+          url: 'size',
+          classIcon: null,
+          role: null,
+          lstChild: null,
+        },
+      ],
+    },
   ];
 }

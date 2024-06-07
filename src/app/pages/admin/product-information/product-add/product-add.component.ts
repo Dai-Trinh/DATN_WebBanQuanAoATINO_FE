@@ -191,9 +191,10 @@ export class ProductAddComponent {
     if(this.validate()){
       this.dataInformation.avatar = this.avatarUrl[0].savedFileName;
       console.log(this.descriptionUrl)
-      for(let item of this.descriptionUrl){
-        this.dataInformation.imageDescription.push(item?.response)
-      }
+      // for(let item of this.descriptionUrl){
+      //   this.dataInformation.imageDescription.push(item?.response)
+      // }
+      this.dataInformation.imageDescription = this.descriptionUrl;
       this.saveProduct();
       
     }
@@ -294,24 +295,24 @@ export class ProductAddComponent {
     }
   }
 
-  // async uploadDescriptionUrl(event: any){
+  async uploadDescriptionUrl(event: any){
     
-  //   if(event && event.length !== 0) {
-  //     this.tempFileDocument = event;
-  //   const formData = new FormData();
-  //   this.tempFileDocument.forEach((file) => {
-  //     formData.append('files', file, file.name);
-  //   });
-  //   const response = await this.__fileService.uploadFileDocument(formData);
-  //   if (response.result.responseCode == '00') {
-  //     let listFile = response.data.map((item: any) => ({
-  //       savedFileName: item.savedFileName,
-  //       fileName: item.fileName,
-  //     }));
-  //     this.descriptionUrl = listFile;
-  //   }
-  //   }
-  // }
+    if(event && event.length !== 0) {
+      this.tempFileDocument = event;
+    const formData = new FormData();
+    this.tempFileDocument.forEach((file) => {
+      formData.append('files', file, file.name);
+    });
+    const response = await this.__fileService.uploadFileDocument(formData);
+    if (response.result.responseCode == '00') {
+      let listFile = response.data.map((item: any) => ({
+        savedFileName: item.savedFileName,
+        fileName: item.fileName,
+      }));
+      this.descriptionUrl = listFile;
+    }
+    }
+  }
 
   async deleteFile(event: any){
     this.avatarUrl = [];

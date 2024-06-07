@@ -1,73 +1,61 @@
 <div class="container">
-    <div class="banner">
-        <img src="https://aristino.com/Data/upload/images/BANNER/BST-2024/1920x900.png" alt="" class="banner-img" />
+  <div class="banner">
+    <img [src]="urlPreview + '/' + datatInformation.files[0].savedFileName" alt="" class="banner-img" />
+  </div>
+
+  <div class="list-product">
+    <div class="carousel-wrapp" #carouselWrapperLast>
+      <div class="wrapper">
+
+        <ul class="carousel" #carouselProduct>
+          <li class="card-product" *ngFor="let item of datatInformation.files">
+            <div class="img">
+              <img [src]="urlPreview + '/' + item.savedFileName" alt="img" class="img-last" />
+            </div>
+          </li>
+        </ul>
+
+      </div>
     </div>
 
-    <div class="list-product">
-        <div class="carousel-wrapp" #carouselWrapperLast>
-            <div class="wrapper">
-             
-              <ul class="carousel" #carouselProduct>
-                <li class="card-product" *ngFor="let item of cards">
-                  <div class="img">
-                    <img [src]="item.imageUrl" alt="img" class="img-last" />
-                  </div>
-                </li>
-              </ul>
-              
-            </div>
-          </div>
-
-        <div class="list-product__product">
-            <div class="list-product__label-wrap">
-                <p class="list-product__label" style="text-transform: uppercase;">{{this.datatInformation.name}}</p>
-            </div>
-            <div class="carousel-wrapp">
-                <div class="wrapper">
-                    <span
-                    nz-icon
-                    nzType="left"
-                    nzTheme="outline"
-                    (click)="scrollProduct('left')"
-                  ></span>
-                    <ul class="carousel" #carousel
-                        >
-                        <li class="content-product product card"
-                            *ngFor="let product of datatInformation.products; index as i"
-                            (click)="handleProductDetail(product)">
-                            <div>
-                                <img [src]="urlPreview + '/' + product.avatar" alt="" />
-                                <div class="product-infor">
-                                    <p>{{ product.productName }}</p>
-                                    <!-- <i class="ti-heart"></i> -->
-                                </div>
-                                <p class="price">{{ product.price | number}}</p>
-                                <!-- <div [class]="cartProductClass[i]">
+    <div class="list-product__product">
+      <div class="list-product__label-wrap">
+        <p class="list-product__label" style="text-transform: uppercase;">{{this.datatInformation.name}}</p>
+      </div>
+      <div class="carousel-wrapp">
+        <div class="wrapper">
+          <span nz-icon nzType="left" nzTheme="outline" (click)="scrollProduct('left')"></span>
+          <ul class="carousel" #carousel>
+            <li class="content-product product card" *ngFor="let product of datatInformation.products; index as i"
+              (click)="handleProductDetail(product)">
+              <div>
+                <img [src]="urlPreview + '/' + product.avatar" alt="" />
+                <div class="product-infor">
+                  <p>{{ product.productName }}</p>
+                  <!-- <i class="ti-heart"></i> -->
+                </div>
+                <p class="price">{{ product.price | number}}</p>
+                <!-- <div [class]="cartProductClass[i]">
                                     <i class="ti-bag"></i>
                                 </div> -->
-                                <div class="new">
-                                    <p>NEW</p>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <span
-                nz-icon
-                nzType="right"
-                nzTheme="outline"
-                (click)="scrollProduct('right')"
-              ></span>
+                <div class="new">
+                  <p>NEW</p>
                 </div>
-            </div>
-            <!-- <div class="list-product__button-wrap">
+              </div>
+            </li>
+          </ul>
+          <span nz-icon nzType="right" nzTheme="outline" (click)="scrollProduct('right')"></span>
+        </div>
+      </div>
+      <!-- <div class="list-product__button-wrap">
           <button nz-button nzType="text" class="list-product__button">
             Xem tất cả sản phẩm
           </button>
         </div> -->
-        </div>
     </div>
+  </div>
 
-    <!-- <div class="banner">
+  <!-- <div class="banner">
       <img
         src="https://aristino.com/Data/upload/images/BANNER/BST-2024/1920x900.png"
         alt=""
