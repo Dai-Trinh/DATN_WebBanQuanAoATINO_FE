@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+  frontend:
+    container_name: atino-frontend
+    build:
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "4200:4200"
