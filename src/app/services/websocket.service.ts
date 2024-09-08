@@ -26,10 +26,14 @@ export class WebsocketService {
     let userName = localStorage.getItem('userName')
     // console.log('webSocket Connection');
     const ws = new SockJS(this.WEBSOCKET_ENDPOINT);
-    console.log('webSocketEndpoint: ', this.WEBSOCKET_ENDPOINT);
+    
     this.stompClient = Stomp.over(
       ws
     );
+    this.stompClient.configure({
+      reconnectDelay: 5000
+    });
+    this.stompClient.activate();
     const _this = this;
     _this.stompClient.connect(
       {},
