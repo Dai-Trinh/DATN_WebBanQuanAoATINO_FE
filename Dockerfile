@@ -4,4 +4,4 @@ ENV NODE_OPTIONS=--max_old_space_size=4096
 COPY package*.json ./
 RUN npm install --legacy-peer-deps --verbose
 COPY . .
-RUN npm run build
+RUN ng s
