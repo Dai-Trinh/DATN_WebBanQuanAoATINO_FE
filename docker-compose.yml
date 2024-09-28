@@ -4,6 +4,6 @@ services:
     container_name: atino-frontend
     build:
       dockerfile: Dockerfile
-    restart: always
+    restart: never
     ports:
-      - "4301:4200"
+      - "4205:4200"
