@@ -8,5 +8,5 @@ RUN npm run build
 
 # Production stage
 FROM nginx:alpine
-COPY --from=build /app/dist/pms-itc-fe /usr/share/nginx/html
+COPY --from=build /usr/local/app/dist/pms-itc-fe /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]
