@@ -7,7 +7,7 @@ COPY . .
 RUN npm run build
 
 # Production stage
-FROM nginx:alpine
+FROM nginx:latest
 RUN rm /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist/pms-itc-fe /usr/share/nginx/html
 COPY --from=build /app/atino-fe.conf /etc/nginx/conf.d/atino-fe.conf
