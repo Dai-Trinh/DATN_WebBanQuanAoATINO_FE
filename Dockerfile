@@ -10,5 +10,5 @@ RUN npm run build
 FROM nginx:alpine
 RUN rm /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist/pms-itc-fe /usr/share/nginx/html
-COPY --from=build /app/atino-fe.conf  /etc/nginx/conf.d/atino-fe.conf
+COPY --from=build /app/atino-fe.conf /etc/nginx/conf.d/atino-fe.conf
 CMD ["nginx", "-g", "daemon off;"]
