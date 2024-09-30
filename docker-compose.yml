@@ -6,4 +6,4 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "4205:4200"
+      - "4300:4300"
